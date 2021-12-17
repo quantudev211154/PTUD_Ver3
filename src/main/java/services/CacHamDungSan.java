@@ -35,6 +35,7 @@ public class CacHamDungSan implements IDSBienMacDinh {
         }
 
         btn.setPreferredSize(dim);
+        btn.setMaximumSize(dim);
         btn.setFont(fntMacDinh);
 
         btn.addMouseListener(new MouseAdapter() {
@@ -210,7 +211,7 @@ public class CacHamDungSan implements IDSBienMacDinh {
         txt.setForeground(Color.GRAY);
     }
 
-    public static void duaTxtVeTrangThaiDaHienThiThongTin(JTextField txt, String plh){
+    public static void duaTxtVeTrangThaiSanSangHienThiThongTin(JTextField txt, String plh){
         txt.setText(plh);
         txt.setForeground(frgMacDinh);
     }
@@ -257,7 +258,7 @@ public class CacHamDungSan implements IDSBienMacDinh {
         pnl.setLayout(new FlowLayout(
                 FlowLayout.LEFT,
                 khoangCachSoVoiLeTraiCuaTieuDe,
-                khoangCachSoVoiLeTrenCuaTieuDe
+                khoangCachSoVoiLeTrenCuaTieuDe - 2
         ));
 
         lbl.setForeground(bgrMacDinh);

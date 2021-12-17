@@ -23,12 +23,18 @@ public class CaNhanHoaLookAndFeel implements IDSBienMacDinh {
     private static void datCacGiaTriMacDinh(){
         UIManager.put("TextField.font", fntMacDinh);
 
+        UIManager.put("List.font", fntMacDinh);
+
         UIManager.put("OptionPane.font", fntMacDinh);
         UIManager.put("OptionPane.background", bgrMacDinh);
         UIManager.put("OptionPane.buttonFont", fntMacDinh);
         UIManager.put("OptionPane.messageFont", fntMacDinh);
-        UIManager.put("OptionPane.questionIcon", new ImageIcon("src/main/resources/BieuTuong/Warning_48px_3.png"));
-        UIManager.put("OptionPane.warningIcon", new ImageIcon("src/main/resources/BieuTuong/Warning_48px_3.png"));
+        UIManager.put("OptionPane.questionIcon", new ImageIcon(
+                Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Warning_48px_3.png")
+        ));
+        UIManager.put("OptionPane.warningIcon", new ImageIcon(
+                Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Warning_48px_3.png")
+        ));
 
         UIManager.put("Panel.background", bgrMacDinh);
 

@@ -4,6 +4,10 @@ import java.awt.*;
 import java.io.File;
 
 public interface IDSBienMacDinh {
+    Rectangle dimManHinhKhongTaskbar = GraphicsEnvironment
+            .getLocalGraphicsEnvironment()
+            .getMaximumWindowBounds();
+
     String tenFontMacDinh = "Helvetica World";
     File fontFile = new File("src/main/resources/Fonts/Helvetica-World.ttf");
 
@@ -29,8 +33,9 @@ public interface IDSBienMacDinh {
 
     String pathLogoMacDinh = "src/main/resources/BieuTuong/Logo2.jpg";
 
-    int chieuCaoHangDuLieuTrongTable = 40;
+    int chieuCaoHangDuLieuTrongTable = 45;
     Color bgrTieuDeTable = new Color(181, 225, 247);
+    Color bgrHangTableLe = new Color(235, 235, 235);
 
     Color bgrTieuDeThanhTienIch = new Color(116, 196, 214);
 
@@ -61,6 +66,8 @@ public interface IDSBienMacDinh {
     );
 
     Color mauNenMacDinhGDThongBao = new Color(225, 245, 245);
+
+    Color bgrBtnThoat = new Color(12, 132, 150);
 
     /**
      * Phục vụ cho việc phân loại kiểu thống kê khi xuất Data ra Excel hoặc PDF

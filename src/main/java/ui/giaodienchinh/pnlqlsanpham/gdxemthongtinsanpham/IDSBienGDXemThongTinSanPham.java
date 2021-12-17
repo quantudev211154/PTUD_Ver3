@@ -21,7 +21,6 @@ public interface IDSBienGDXemThongTinSanPham extends IDSBienMacDinh {
             48
     );
     JButton btnThoat = new JButton("Thoát");
-    Color bgrBtnThoat = new Color(12, 132, 150);
 
     JPanel pnlHienThiTTSanPham = new JPanel();
     Dimension dimPnlHienThiTTSanPham = new Dimension(

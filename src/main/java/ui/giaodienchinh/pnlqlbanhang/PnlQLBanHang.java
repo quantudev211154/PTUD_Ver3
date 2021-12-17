@@ -358,6 +358,10 @@ public class PnlQLBanHang implements IDSBienPnlQLBanHang, ActionListener {
                 txtTimKiem.removeKeyListener(cheDoTimKiemTrenTable);
 
                 txtTimKiem.addKeyListener(cheDoTimKiemTrongCSDL);
+
+                CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(
+                        txtTimKiem, ""
+                );
             }
         });
     }
@@ -371,6 +375,10 @@ public class PnlQLBanHang implements IDSBienPnlQLBanHang, ActionListener {
                 txtTimKiem.removeKeyListener(cheDoTimKiemTrongCSDL);
 
                 txtTimKiem.addKeyListener(cheDoTimKiemTrenTable);
+
+                CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(
+                        txtTimKiem, ""
+                );
             }
         });
     }
@@ -848,7 +856,7 @@ public class PnlQLBanHang implements IDSBienPnlQLBanHang, ActionListener {
                 if (e.getClickCount() == 2 && e.getButton() == 1){
                     int hangDuocChon = tbl.getSelectedRow();
 
-                    if (hangDuocChon != -1){
+                    if (hangDuocChon != -1 && hangDuocChon != 0){
                         int maHDBH = Integer.parseInt(tbl.getValueAt(hangDuocChon, 0).toString());
 
                         HoaDonBanHang hd = HoaDonBanHangDAO.timHoaDonBanHangTheoMa(maHDBH);

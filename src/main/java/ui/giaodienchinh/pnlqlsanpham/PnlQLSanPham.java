@@ -284,6 +284,11 @@ public class PnlQLSanPham implements IDSBienPnlQLSanPham, ActionListener{
                 txtTimKiem.removeKeyListener(cheDoTimKiemTrenTable);
 
                 txtTimKiem.addKeyListener(cheDoTimKiemTrongCSDL);
+
+                CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(
+                        txtTimKiem,
+                        ""
+                );
             }
         });
     }
@@ -297,6 +302,11 @@ public class PnlQLSanPham implements IDSBienPnlQLSanPham, ActionListener{
                 txtTimKiem.removeKeyListener(cheDoTimKiemTrongCSDL);
 
                 txtTimKiem.addKeyListener(cheDoTimKiemTrenTable);
+
+                CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(
+                        txtTimKiem,
+                        ""
+                );
             }
         });
     }

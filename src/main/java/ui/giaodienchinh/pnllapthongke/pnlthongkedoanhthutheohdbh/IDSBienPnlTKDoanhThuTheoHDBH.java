@@ -6,6 +6,7 @@ import ui.giaodienchinh.IDSBienGDChinh;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 
@@ -164,7 +165,9 @@ public interface IDSBienPnlTKDoanhThuTheoHDBH extends IDSBienMacDinh, IDSBienGDC
     );
     JButton btnXuatTKDoanhThuTheoHDBHRaFile = new JButton(
             "Xuất data",
-            new ImageIcon("src/main/resources/BieuTuong/Export_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Export_24px_1.png")
+            )
     );
 
     JPopupMenu pmnXuatData = new JPopupMenu();
@@ -175,19 +178,36 @@ public interface IDSBienPnlTKDoanhThuTheoHDBH extends IDSBienMacDinh, IDSBienGDC
 
     JMenuItem mniXuatExcel = new JMenuItem(
             "Xuất Excel",
-            new ImageIcon("src/main/resources/BieuTuong/Excel_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Excel_24px_1.png")
+            )
     );
 
     JMenuItem mniXuatPDF = new JMenuItem(
             "Xuất PDF",
-            new ImageIcon("src/main/resources/BieuTuong/PDF_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/PDF_24px_1.png")
+            )
     );
 
     String[] tieuDeTableTKDoanhThuTheoHDBH = {"Mã HĐBH", "Mã NV lập", "SĐT KH", "Thời gian lập", "SLSP", "Chưa thuế", "VAT", "Tổng tiền"};
     DefaultTableModel dtmDuLieuTKDoanhThuTheoHDBH = new DefaultTableModel(tieuDeTableTKDoanhThuTheoHDBH, 0);
     TableRowSorter trsDuLieuTKDoanhThuTheoHDBH = new TableRowSorter(dtmDuLieuTKDoanhThuTheoHDBH);
 
-    JTable tblDuLieuTKDoanhThuTheoHDBH = new JTable(dtmDuLieuTKDoanhThuTheoHDBH);
+    JTable tblDuLieuTKDoanhThuTheoHDBH = new JTable(dtmDuLieuTKDoanhThuTheoHDBH){
+        @Override
+        public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+            Component component = super.prepareRenderer(renderer, row, column);
+
+            if (!component.getBackground().equals(getSelectionBackground())){
+                component.setBackground(
+                        row % 2 == 0 ? Color.white : bgrHangTableLe
+                );
+            }
+
+            return component;
+        }
+    };
 
     JScrollPane scrChuaTblDuLieuTKDoanhThuTheoHDBH = new JScrollPane(tblDuLieuTKDoanhThuTheoHDBH);
     Dimension dimScrChuaTblDuLieuTKDoanhThuTheoHDBH = new Dimension(

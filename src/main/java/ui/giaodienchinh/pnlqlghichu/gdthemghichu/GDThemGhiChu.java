@@ -301,6 +301,8 @@ public class GDThemGhiChu extends JDialog implements IDSBienGDThemGhiChu {
 
             dispose();
 
+            PnlQLGhiChu.capNhatSoLuongGhiChuTheoTungLoai();
+
             GDChinh.capNhatSoLuongGhiChuChuaHoanThanh(PnlQLGhiChu.laySoLuongGhiChuChuaHoanThanh());
 
             new Thread(() -> {
@@ -320,7 +322,7 @@ public class GDThemGhiChu extends JDialog implements IDSBienGDThemGhiChu {
     }
 
     private void duaCacThanhPhanTroVeTrangThaiBanDau(){
-        CacHamDungSan.duaTxtVeTrangThaiDaHienThiThongTin(txtChuDe, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtChuDe, "");
 
         CacHamDungSan.duaTxaVeTrangThaiSanSangHienThiThongTin(txaNoiDungGhiChu, "");
 

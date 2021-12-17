@@ -200,7 +200,7 @@ public class PnlTKDoanhThuTheoNhanVien implements IDSBienPnlTKDoanhThuTheoNhanVi
             @Override
             public void mouseClicked(MouseEvent e) {
                 txtLocTheoTungNhanVien.setFocusable(true);
-                CacHamDungSan.duaTxtVeTrangThaiDaHienThiThongTin(txtLocTheoTungNhanVien, "");
+                CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtLocTheoTungNhanVien, "");
             }
         });
     }

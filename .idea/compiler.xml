@@ -7,7 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="SourceCode" />
+        <module name="LGoodDatePicker" />
       </profile>
     </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="LGoodDatePicker" options="-Xlint:deprecation -Xlint:unchecked" />
+    </option>
   </component>
 </project>

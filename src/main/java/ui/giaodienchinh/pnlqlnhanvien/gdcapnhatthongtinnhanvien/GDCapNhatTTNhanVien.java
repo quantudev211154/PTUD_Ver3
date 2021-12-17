@@ -396,12 +396,12 @@ public class GDCapNhatTTNhanVien extends JFrame implements I_DSBienGDCapNhatTTNh
     }
 
     private void datDuLieuTTNhanVienVienMacDinh() {
-        CacHamDungSan.duaTxtVeTrangThaiDaHienThiThongTin(txtMaNhanVien, "");
-        CacHamDungSan.duaTxtVeTrangThaiDaHienThiThongTin(txtHoTen, "");
-        CacHamDungSan.duaTxtVeTrangThaiDaHienThiThongTin(txtDiaChi, "");
-        CacHamDungSan.duaTxtVeTrangThaiDaHienThiThongTin(txtSDT, "");
-        CacHamDungSan.duaTxtVeTrangThaiDaHienThiThongTin(txtNgayVaoLam, "");
-        CacHamDungSan.duaTxtVeTrangThaiDaHienThiThongTin(txtSoCMND, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtMaNhanVien, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtHoTen, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtDiaChi, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtSDT, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtNgayVaoLam, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtSoCMND, "");
 
         cbGioiTinh.setSelectedIndex(0);
         cbCaLamViec.setSelectedIndex(0);

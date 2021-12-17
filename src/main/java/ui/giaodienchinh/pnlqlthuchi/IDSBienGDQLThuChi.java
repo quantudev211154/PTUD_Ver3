@@ -6,6 +6,7 @@ import ui.giaodienchinh.IDSBienGDChinh;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.text.NumberFormat;
@@ -31,7 +32,9 @@ public interface IDSBienGDQLThuChi extends IDSBienMacDinh, IDSBienGDChinh {
 
     JPanel pnlTaoPhieuDoiChung = new JPanel();
     JLabel lblBtTaoPhieuDoiChung = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/Add_64px_3.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Add_64px_3.png")
+            )
     );
     JLabel lblTieuDeTaoPhieuDoiChung = new JLabel("Tạo phiếu đối chứng");
     Color mauVienPnlTaoPhieuDoiChung = new Color(94, 107, 151);
@@ -39,7 +42,9 @@ public interface IDSBienGDQLThuChi extends IDSBienMacDinh, IDSBienGDChinh {
 
     JPanel pnlTaoNhatKiBHTC = new JPanel();
     JLabel lblBtTaoNhatKiBHTC = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/Add_64px_4.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Add_64px_4.png")
+            )
     );
     JLabel lblTieuDeTaoNhatKiBHTC = new JLabel("Tạo nhật kí BHTC");
     Color mauVienPnlTaoNhatKiBHTC = new Color(57, 148, 227);
@@ -161,18 +166,24 @@ public interface IDSBienGDQLThuChi extends IDSBienMacDinh, IDSBienGDChinh {
     JPopupMenu pmnCheDoTimKiem = new JPopupMenu();
 
     JMenuItem mniTimKiemPDCTrongCSDL = new JMenuItem(
-            "Tìm PDC trong CSDL",
-            new ImageIcon("src/main/resources/BieuTuong/find_24px_2.png")
+            "Tìm phiếu đối chứng trong kho dữ liệu",
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/find_24px_2.png")
+            )
     );
     JMenuItem mniTimKiemNKBHTrongCSDL = new JMenuItem(
-            "Tìm NKBH trong CSDL",
-            new ImageIcon("src/main/resources/BieuTuong/find_24px_2.png")
+            "Tìm nhật kí bán hàng trong kho dữ liệu",
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/find_24px_2.png")
+            )
     );
 
 
     JMenuItem mniTimKiemTrenTable = new JMenuItem(
-            "Tìm trên table",
-            new ImageIcon("src/main/resources/BieuTuong/find_24px_1.png")
+            "Tìm trên bảng bên dưới",
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/find_24px_1.png")
+            )
     );
 
     JPopupMenu pmnKetQuaTimKiem = new JPopupMenu();
@@ -184,7 +195,20 @@ public interface IDSBienGDQLThuChi extends IDSBienMacDinh, IDSBienGDChinh {
     String[] tieuDeDanhDauChoTblKetQuaTimKiemNhatKiBHTC = {"Mã NKBH", "Mã NV lập", "Thời gian lập"};
     DefaultTableModel dtmKetQuaTimKiemNhatKiBHTC = new DefaultTableModel(tieuDeDanhDauChoTblKetQuaTimKiemNhatKiBHTC, 0);
 
-    JTable tblKetQuaTimKiem = new JTable(dtmKetQuaTimKiemPhieuDoiChung);
+    JTable tblKetQuaTimKiem = new JTable(dtmKetQuaTimKiemPhieuDoiChung){
+        @Override
+        public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+            Component component = super.prepareRenderer(renderer, row, column);
+
+            if (!component.getBackground().equals(getSelectionBackground())){
+                component.setBackground(
+                        row % 2 == 0 ? Color.white : bgrHangTableLe
+                );
+            }
+
+            return component;
+        }
+    };
 
     JPanel pnlHopCongCu = new JPanel();
     Dimension dimPnlHopCongCu = new Dimension(
@@ -201,7 +225,9 @@ public interface IDSBienGDQLThuChi extends IDSBienMacDinh, IDSBienGDChinh {
 
     JButton btnThemPhieu = new JButton(
             "Thêm phiếu",
-            new ImageIcon("src/main/resources/BieuTuong/Add_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Add_24px_1.png")
+            )
     );
     JPopupMenu pmnCacLoaiPhieuCanThem = new JPopupMenu();
     Color mauNenPmnCacLoaiPhieuCanThem = new Color(212, 247, 255);
@@ -209,18 +235,24 @@ public interface IDSBienGDQLThuChi extends IDSBienMacDinh, IDSBienGDChinh {
 
     JMenuItem mniLapPhieuDoiChung = new JMenuItem(
             "Phiếu đối chứng",
-            new ImageIcon("src/main/resources/BieuTuong/Add_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Add_24px_1.png")
+            )
     );
 
     JMenuItem mniLapNhatKiBHTC = new JMenuItem(
             "Nhật kí bán hàng theo ca",
-            new ImageIcon("src/main/resources/BieuTuong/Add_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Add_24px_1.png")
+            )
     );
 
 
     JButton btnXuatDuLieuTrongTableRaFile = new JButton(
             " Xuất data",
-            new ImageIcon("src/main/resources/BieuTuong/Export_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Export_24px_1.png")
+            )
     );
 
     JPopupMenu pmnXuatData = new JPopupMenu();
@@ -231,12 +263,16 @@ public interface IDSBienGDQLThuChi extends IDSBienMacDinh, IDSBienGDChinh {
 
     JMenuItem mniXuatExcel = new JMenuItem(
             "Xuất Excel",
-            new ImageIcon("src/main/resources/BieuTuong/Excel_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Excel_24px_1.png")
+            )
     );
 
     JMenuItem mniXuatPDF = new JMenuItem(
             "Xuất PDF",
-            new ImageIcon("src/main/resources/BieuTuong/PDF_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/PDF_24px_1.png")
+            )
     );
 
     JPanel pnlKetQuaTraCuu = new JPanel();
@@ -258,7 +294,20 @@ public interface IDSBienGDQLThuChi extends IDSBienMacDinh, IDSBienGDChinh {
     DefaultTableModel dtmDuLieuNhatKiBHTheoCa = new DefaultTableModel(tieuDeTableNhatKiBHTheoCa, 0);
     TableRowSorter trsDuLieuNhatKiBHTC = new TableRowSorter(dtmDuLieuNhatKiBHTheoCa);
 
-    JTable tblDuLieuTraCuuDuoc = new JTable();
+    JTable tblDuLieuTraCuuDuoc = new JTable(){
+        @Override
+        public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+            Component component = super.prepareRenderer(renderer, row, column);
+
+            if (!component.getBackground().equals(getSelectionBackground())){
+                component.setBackground(
+                        row % 2 == 0 ? Color.white : bgrHangTableLe
+                );
+            }
+
+            return component;
+        }
+    };
 
     Dimension dimScrChuaTableDulieuTraCuuDuoc = new Dimension(
             dimPnlKetQuaTraCuu.width

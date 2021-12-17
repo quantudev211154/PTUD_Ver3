@@ -1,6 +1,7 @@
 package ui.giaodienchinh.pnlqlghichu;
 
 import ui.giaodienchinh.GDChinh;
+import ui.giaodienchinh.pnlqlghichu.gdchinhsuaghichu.GDCapNhatGhiChu;
 import ui.giaodienchinh.pnlqlghichu.kieudulieudacbiet.GhiChu;
 import ui.giaodienchinh.pnlqlghichu.kieudulieudacbiet.TrangThaiGhiChu;
 import services.CacHamDungSan;
@@ -15,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
     private static JPanel pnlQLGhiChu = null;
@@ -39,6 +41,8 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
         dungPnlDSGhiChuDaHoanThanh();
         pnlDSGhiChuDaHoanThanh.setBackground(bgrPnlChinh);
         pnlQLGC.add(pnlDSGhiChuDaHoanThanh);
+
+        new Thread(PnlQLGhiChu::datBaoThucChoDSGhiChu).start();
 
         return pnlQLGC;
     }
@@ -191,14 +195,24 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
         pnlBaoNgoai.setPreferredSize(dimPnlChuaPnlGhiChu);
         pnlBaoNgoai.setBackground(bgrPnlChinh);
 
-        if (ghiChu.getTrangThaiGhiChu() != TrangThaiGhiChu.DA_HOAN_THANH){
+        if (
+                ghiChu.getTrangThaiGhiChu() == TrangThaiGhiChu.CHUA_HOAN_THANH
+        ){
             dsPnlChuaGhiChu.add(pnlBaoNgoai);
         }
-//        dsPnlChuaGhiChu.add(pnlBaoNgoai);
+
+        /**
+         *
+         */
+
+        int coHieu = dsGhiChu.size() - 1;
+
+        /**
+         *
+         */
 
         JPanel pnlChinh = new JPanel();
         datThuocTinhVaHanhDongChoPnlChinh(pnlChinh);
-
 
         /**
          *
@@ -219,7 +233,9 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
         dsLblChuDe.add(lblChuDe);
         pnlChuaLblChuDe.add(lblChuDe, BorderLayout.WEST);
 
-        if (ghiChu.getTrangThaiGhiChu() != TrangThaiGhiChu.DA_HOAN_THANH){
+        if (
+                ghiChu.getTrangThaiGhiChu() == TrangThaiGhiChu.CHUA_HOAN_THANH
+        ){
             JLabel lblChinhSua = new JLabel(
                     new ImageIcon(
                             Toolkit.getDefaultToolkit().getImage(
@@ -229,13 +245,11 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
             );
             lblChinhSua.setToolTipText("Chỉnh sửa ghi chú này");
             datHanhDongCoBanChoLbl(lblChinhSua, pnlChinh);
+            datHanhDongChoLblCapNhatGhiChu(lblChinhSua, coHieu);
             dsLblChinhSua.add(lblChinhSua);
             pnlChuaLblChuDe.add(Box.createHorizontalStrut(demTraiPnlGhiChu * 7 + demTrenPnlGhiChu));
             pnlChuaLblChuDe.add(lblChinhSua, BorderLayout.EAST);
         }
-//        if (ghiChu.getTrangThaiGhiChu() == TrangThaiGhiChu.DA_HOAN_THANH){
-//            lblChinhSua.setVisible(false);
-//        }
         pnlNoiDung.add(pnlChuaLblChuDe);
 
         /**
@@ -277,7 +291,9 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
         JPanel pnlChuaCacNut = new JPanel();
         dungPnlChuaCacNutGhiChu(pnlChuaCacNut);
 
-        if (ghiChu.getTrangThaiGhiChu() != TrangThaiGhiChu.DA_HOAN_THANH){
+        if (
+                ghiChu.getTrangThaiGhiChu() == TrangThaiGhiChu.CHUA_HOAN_THANH
+        ){
             JLabel lblXoaGhiChu = new JLabel(
                     new ImageIcon(
                             Toolkit.getDefaultToolkit().getImage(
@@ -285,11 +301,17 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
                             )
                     )
             );
-            datHanhDongChoLblXoaGhiChu(lblXoaGhiChu);
+
+            datHanhDongChoLblXoaGhiChu(lblXoaGhiChu, coHieu);
+
             lblXoaGhiChu.setToolTipText("Xoá ghi chú này");
             datHanhDongCoBanChoLbl(lblXoaGhiChu, pnlChinh);
             dsLblXoaGhiChu.add(lblXoaGhiChu);
             pnlChuaCacNut.add(lblXoaGhiChu);
+
+            /**
+             *
+             */
 
             JLabel lblXacNhanDaHoanThanh = new JLabel(
                     new ImageIcon(
@@ -301,7 +323,7 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
             lblXacNhanDaHoanThanh.setToolTipText("Xác nhận rằng ghi chú này đã được hoàn thành");
             datHanhDongCoBanChoLbl(lblXacNhanDaHoanThanh, pnlChinh);
             dsLblXacNhanDaHoanThanh.add(lblXacNhanDaHoanThanh);
-            datHanhDongChoLblXacNhanDaHoanThanh(lblXacNhanDaHoanThanh);
+            datHanhDongChoLblXacNhanDaHoanThanh(lblXacNhanDaHoanThanh, coHieu);
 
             pnlChuaCacNut.add(Box.createHorizontalStrut(demTrai));
             pnlChuaCacNut.add(lblXacNhanDaHoanThanh);
@@ -310,11 +332,6 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
             pnlNoiDung.add(pnlChuaCacNut);
         }
 
-//        if (ghiChu.getTrangThaiGhiChu() == TrangThaiGhiChu.DA_HOAN_THANH){
-//            lblXoaGhiChu.setVisible(false);
-//            lblXacNhanDaHoanThanh.setVisible(false);
-//        }
-
         pnlChinh.add(pnlNoiDung);
 
         pnlBaoNgoai.add(pnlChinh);
@@ -322,8 +339,21 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
         return pnlBaoNgoai;
     }
 
-    private static void datHanhDongChoLblXoaGhiChu(JLabel lblXoaGhiChu){
-        int coHieu = dsGhiChu.size() - 1;
+    private static void datHanhDongChoLblCapNhatGhiChu(JLabel lblCapNhatGhiChu, int coHieu){
+        lblCapNhatGhiChu.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                GDCapNhatGhiChu gdCapNhatGhiChu = GDCapNhatGhiChu.getGdThemGhiChu();
+                gdCapNhatGhiChu.cungCapViTriVaGhiChuCanCapNhat(
+                        coHieu,
+                        dsGhiChu.get(coHieu)
+                );
+                gdCapNhatGhiChu.setVisible(true);
+            }
+        });
+    }
+
+    private static void datHanhDongChoLblXoaGhiChu(JLabel lblXoaGhiChu, int coHieu){
 
         lblXoaGhiChu.addMouseListener(new MouseAdapter() {
             @Override
@@ -337,13 +367,11 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
                 );
 
                 if (luaChon == JOptionPane.YES_OPTION){
-                    dsGhiChu.get(coHieu).setTrangThaiGhiChu(TrangThaiGhiChu.DA_XOA);
-//
-//                    dsPnlChuaGhiChu.get(coHieu).setVisible(false);
-
-//                    dsGhiChu.remove(coHieu);
-
                     dsPnlChuaGhiChu.get(coHieu).setVisible(false);
+
+                    dsGhiChu.get(coHieu).setTrangThaiGhiChu(TrangThaiGhiChu.DA_XOA);
+
+                    capNhatSoLuongGhiChuTheoTungLoai();
 
                     GDChinh.capNhatSoLuongGhiChuChuaHoanThanh(laySoLuongGhiChuChuaHoanThanh());
                 }
@@ -351,8 +379,7 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
         });
     }
 
-    private static void datHanhDongChoLblXacNhanDaHoanThanh(JLabel lbl){
-        int coHieu = dsGhiChu.size() - 1;
+    private static void datHanhDongChoLblXacNhanDaHoanThanh(JLabel lbl, int coHieu){
 
         lbl.addMouseListener(new MouseAdapter() {
             @Override
@@ -366,47 +393,28 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
                 );
 
                 if (luaChon == JOptionPane.YES_OPTION){
+                    JPanel pnlTmp = dsPnlChuaGhiChu.get(coHieu);
+
+                    pnlChuaDSGhiChuDaHoanThanh.add(pnlTmp);
+
+                    dsLblChinhSua.get(coHieu).setVisible(false);
+                    dsLblXoaGhiChu.get(coHieu).setVisible(false);
+                    dsLblXacNhanDaHoanThanh.get(coHieu).setVisible(false);
+
                     dsGhiChu.get(coHieu).setTrangThaiGhiChu(TrangThaiGhiChu.DA_HOAN_THANH);
 
-                    dsPnlChuaGhiChu.get(coHieu).setVisible(false);
-
-//                    dsPnlChuaGhiChu.remove(coHieu);
-
-                    GhiChu ghiChu = dsGhiChu.get(coHieu);
-//                    dsLblChuDe.remove(coHieu);
-//                    dsLblChinhSua.remove(coHieu);
-//                    dsLblHanThucHien.remove(coHieu);
-//                    dsTxaNoiDungGhiChu.remove(coHieu);
-//                    dsLblXoaGhiChu.remove(coHieu);
-//                    dsLblXacNhanDaHoanThanh.remove(coHieu);
+                    capNhatSoLuongGhiChuTheoTungLoai();
 
                     pnlChuaDSGhiChuChuaHoanThanh.repaint();
                     pnlChuaDSGhiChuChuaHoanThanh.revalidate();
 
-                    taoMotGhiChuDaHoanThanh(ghiChu);
+                    pnlChuaDSGhiChuQuaHan.repaint();
+                    pnlChuaDSGhiChuQuaHan.revalidate();
 
                     GDChinh.capNhatSoLuongGhiChuChuaHoanThanh(laySoLuongGhiChuChuaHoanThanh());
                 }
             }
         });
-    }
-
-    private static void taoMotGhiChuDaHoanThanh(GhiChu ghiChu){
-        pnlChuaDSGhiChuDaHoanThanh.add(
-                taoPnlGhiChu(ghiChu)
-        );
-
-        pnlChuaDSGhiChuDaHoanThanh.repaint();
-        pnlChuaDSGhiChuDaHoanThanh.revalidate();
-    }
-
-    private static void taoMotGhiChuDaQuaHan(GhiChu ghiChu){
-        pnlChuaDSGhiChuQuaHan.add(
-                taoPnlGhiChu(ghiChu)
-        );
-
-        pnlChuaDSGhiChuQuaHan.repaint();
-        pnlChuaDSGhiChuQuaHan.revalidate();
     }
 
     private static void datThuocTinhVaHanhDongChoPnlChinh(JPanel pnl){
@@ -668,93 +676,109 @@ public class PnlQLGhiChu implements IDSBienPnlQLGhiChu{
         ).count();
     }
 
-    private static boolean xacNhanDSGhiChuKhongRongVaKhongConGhiChuChuaHoanThanhHoacQuaHan(){
-        int slGhiChu = dsGhiChu.size();
-
-        if (slGhiChu == 0){
-            return false;
-        }
-        else{
+    public static void datBaoThucChoDSGhiChu(){
+        while (true){
             int coHieu = 0;
+            int slGhiChu = dsGhiChu.size();
 
-            while (coHieu < slGhiChu){
-                TrangThaiGhiChu trangThaiGhiChu = dsGhiChu.get(coHieu).getTrangThaiGhiChu();
+            while (coHieu < slGhiChu) {
+                GhiChu ghiChu = dsGhiChu.get(coHieu);
+                TrangThaiGhiChu trangThaiGhiChu = ghiChu.getTrangThaiGhiChu();
+
                 if (
                         trangThaiGhiChu == TrangThaiGhiChu.CHUA_HOAN_THANH
                         || trangThaiGhiChu == TrangThaiGhiChu.QUA_HAN
-                ){
-                   return false;
-                }
-                coHieu++;
-            }
-        }
+                ) {
+                    Time thoiGianHienTai = Time.valueOf(LocalTime.now());
 
-        return true;
-    }
+                    if (ghiChu.getHanThucHien().equals(thoiGianHienTai)) {
+                        dsGhiChu.get(coHieu).setTrangThaiGhiChu(TrangThaiGhiChu.QUA_HAN);
 
-    /**
-     * Ham con nhieu loi
-     * Clear cac panel truoc r hang lam
-     */
-    public static void phanLoaiCacGhiChuTheoThoiGian(){
-        while (true){
-            pnlChuaDSGhiChuQuaHan.removeAll();
+                        JPanel pnlTmp = dsPnlChuaGhiChu.get(coHieu);
+                        pnlChuaDSGhiChuQuaHan.add(pnlTmp);
 
-            if (!xacNhanDSGhiChuKhongRongVaKhongConGhiChuChuaHoanThanhHoacQuaHan()){
-                int coHieu = 0;
-                int slGhiChu = dsGhiChu.size();
+                        capNhatSoLuongGhiChuTheoTungLoai();
 
-                while (coHieu < slGhiChu){
-                    GhiChu ghiChu = dsGhiChu.get(coHieu);
-                    TrangThaiGhiChu trangThaiGhiChu = ghiChu.getTrangThaiGhiChu();
-                    if (
-                            trangThaiGhiChu == TrangThaiGhiChu.DA_HOAN_THANH
-                                    || trangThaiGhiChu == TrangThaiGhiChu.DA_XOA
-                    )
-                        continue;
-                    else{
-                        Time thoiGianHienTai = Time.valueOf(LocalTime.now());
-
-                        if (ghiChu.getHanThucHien().equals(thoiGianHienTai)){
-                            CacHamDungSan.hienThiThongBaoKetQua(
-                                    GDThongBaoKetQua.THONG_BAO_BINH_THUONG,
-                                    "Đã đến lúc thực hiện ghi chú "
-                                            + "'"
-                                            + ghiChu.getChuDe()
-                                            + "'"
-                                            + " rồi nha!!!"
-                            );
-
-                            dsGhiChu.get(coHieu).setTrangThaiGhiChu(TrangThaiGhiChu.QUA_HAN);
-
-                            dsPnlChuaGhiChu.get(coHieu).setVisible(false);
-
+                        new Thread(() -> {
                             pnlChuaDSGhiChuChuaHoanThanh.repaint();
                             pnlChuaDSGhiChuChuaHoanThanh.revalidate();
+                        }).start();
 
-                            taoMotGhiChuDaQuaHan(ghiChu);
-                        }
-                        else if (ghiChu.getHanThucHien().before(thoiGianHienTai)){
-                            dsGhiChu.get(coHieu).setTrangThaiGhiChu(TrangThaiGhiChu.QUA_HAN);
-
-                            dsPnlChuaGhiChu.get(coHieu).setVisible(false);
-
-                            pnlChuaDSGhiChuChuaHoanThanh.repaint();
-                            pnlChuaDSGhiChuChuaHoanThanh.revalidate();
-
-                            taoMotGhiChuDaQuaHan(ghiChu);
+                        if (!GDThongBaoKetQua.getGdThongBaoKetQua().isDisplayable()){
+                            new Thread(() -> {
+                                CacHamDungSan.hienThiThongBaoKetQua(
+                                        GDThongBaoKetQua.THONG_BAO_BINH_THUONG,
+                                        "Đã đến lúc thực hiện ghi chú "
+                                                + "'"
+                                                + ghiChu.getChuDe()
+                                                + "'"
+                                                + " rồi nha!!!"
+                                );
+                            }).start();
                         }
                     }
-
-                    coHieu++;
                 }
+
+                coHieu++;
             }
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (Exception ex){
                 ex.printStackTrace();
             }
+        }
+    }
+
+    public static void capNhatSoLuongGhiChuTheoTungLoai(){
+        AtomicInteger slGCChuaHoanThanh = new AtomicInteger(0);
+        AtomicInteger slGCQuaHan = new AtomicInteger(0);
+        AtomicInteger slGCDaHoanThanh = new AtomicInteger(0);
+
+        dsGhiChu.forEach(g -> {
+            TrangThaiGhiChu trangThaiGhiChu = g.getTrangThaiGhiChu();
+
+            if (trangThaiGhiChu == TrangThaiGhiChu.CHUA_HOAN_THANH)
+                slGCChuaHoanThanh.getAndIncrement();
+            else if (trangThaiGhiChu == TrangThaiGhiChu.QUA_HAN)
+                slGCQuaHan.getAndIncrement();
+            else if (trangThaiGhiChu == TrangThaiGhiChu.DA_HOAN_THANH)
+                slGCDaHoanThanh.getAndIncrement();
+        });
+
+        lblSLGhiChuChuaHoanThanh.setText("(" + slGCChuaHoanThanh.get() + ")");
+        lblSLGhiChuQuaHan.setText("(" + slGCQuaHan.get() + ")");
+        lblSLGhiChuDaHoanThanh.setText("(" + slGCDaHoanThanh.get() + ")");
+    }
+
+    public static void capNhatGhiChu(int viTri, GhiChu ghiChuMoi){
+        GhiChu ghiChu = dsGhiChu.get(viTri);
+
+        ghiChu.setChuDe(ghiChuMoi.getChuDe());
+        dsLblChuDe.get(viTri).setText(ghiChuMoi.getChuDe());
+
+        ghiChu.setHanThucHien(ghiChuMoi.getHanThucHien());
+        dsLblHanThucHien.get(viTri).setText(ghiChuMoi.getHanThucHien().toString());
+
+        ghiChu.setNoiDungGhiChu(ghiChuMoi.getNoiDungGhiChu());
+        dsTxaNoiDungGhiChu.get(viTri).setText(ghiChuMoi.getNoiDungGhiChu());
+
+        if (ghiChuMoi.getHanThucHien().after(Time.valueOf(LocalTime.now()))){
+            JPanel pnlTmp = dsPnlChuaGhiChu.get(viTri);
+
+            pnlChuaDSGhiChuChuaHoanThanh.add(pnlTmp);
+
+            ghiChu.setTrangThaiGhiChu(TrangThaiGhiChu.CHUA_HOAN_THANH);
+
+            capNhatSoLuongGhiChuTheoTungLoai();
+
+            pnlChuaDSGhiChuChuaHoanThanh.repaint();
+            pnlChuaDSGhiChuChuaHoanThanh.revalidate();
+
+            pnlChuaDSGhiChuQuaHan.repaint();
+            pnlChuaDSGhiChuQuaHan.revalidate();
+
+            GDChinh.capNhatSoLuongGhiChuChuaHoanThanh(laySoLuongGhiChuChuaHoanThanh());
         }
     }
 }

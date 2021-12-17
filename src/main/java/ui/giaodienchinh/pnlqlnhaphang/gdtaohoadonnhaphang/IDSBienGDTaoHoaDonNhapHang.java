@@ -6,6 +6,7 @@ import ui.giaodienchinh.IDSBienGDChinh;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -32,7 +33,7 @@ public interface IDSBienGDTaoHoaDonNhapHang extends IDSBienMacDinh, IDSBienGDChi
             KeyEvent.VK_F5, //Btn huy hoa don nhap hang
             KeyEvent.VK_F6, //Txt ma lo hang
             KeyEvent.VK_F7, //Txt ten nguoi giao hang
-            KeyEvent.VK_ENTER // Nut in hoa don
+            KeyEvent.VK_F8 // Nut in hoa don
     };
 
     AtomicReference<LocalDateTime> thoiGianDatHang = new AtomicReference<>();
@@ -72,7 +73,9 @@ public interface IDSBienGDTaoHoaDonNhapHang extends IDSBienMacDinh, IDSBienGDChi
      *
      */
     JButton btnXoaTatCaChiTietHDNHDaThem = new JButton("",
-            new ImageIcon("src/main/resources/BieuTuong/Bin_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Bin_32px_1.png")
+            )
     );
     Dimension dimBtnXoaTatCaChiTietHDNHDaThem = new Dimension(
             40, 40
@@ -100,12 +103,16 @@ public interface IDSBienGDTaoHoaDonNhapHang extends IDSBienMacDinh, IDSBienGDChi
 
     JButton btnThemChiTietHDNH = new JButton(
             "Sản phẩm (F2)",
-            new ImageIcon("src/main/resources/BieuTuong/Add_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Add_24px_1.png")
+            )
     );
 
     JButton btnNhapFileExcel = new JButton(
             "Nhập Excel (F3)",
-            new ImageIcon("src/main/resources/BieuTuong/Excel_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Excel_24px_1.png")
+            )
     );
 
     Color mauNenBtnThuNhoManHinh = new Color(16, 188, 194);
@@ -145,7 +152,7 @@ public interface IDSBienGDTaoHoaDonNhapHang extends IDSBienMacDinh, IDSBienGDChi
 
     Color mauNenBtnInHoaDon = new Color(32, 193, 230);
     Font fntBtnInHoaDon = new Font(tenFontMacDinh, Font.PLAIN, 25);
-    JButton btnInHoaDon = new JButton("In hoá đơn (Enter)");
+    JButton btnInHoaDon = new JButton("In hoá đơn (F8)");
     Dimension dimBtnInHoaDon = new Dimension(
             dimPnlInHoaDon.width - 20,
             dimPnlInHoaDon.height
@@ -220,7 +227,20 @@ public interface IDSBienGDTaoHoaDonNhapHang extends IDSBienMacDinh, IDSBienGDChi
     DefaultTableModel dtmDSChiTietHDNH = new DefaultTableModel(tieuDeTblDSChiTietHDNH, 0);
     TableRowSorter trsDSChiTietHDNH = new TableRowSorter(dtmDSChiTietHDNH);
 
-    JTable tblDSChiTietHDNH = new JTable(dtmDSChiTietHDNH);
+    JTable tblDSChiTietHDNH = new JTable(dtmDSChiTietHDNH){
+        @Override
+        public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+            Component component = super.prepareRenderer(renderer, row, column);
+
+            if (!component.getBackground().equals(getSelectionBackground())){
+                component.setBackground(
+                        row % 2 == 0 ? Color.white : bgrHangTableLe
+                );
+            }
+
+            return component;
+        }
+    };
 
     JScrollPane scrChuaTblDSChiTietHDNH = new JScrollPane(tblDSChiTietHDNH);
 

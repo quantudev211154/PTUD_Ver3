@@ -4,8 +4,7 @@ import services.CacHamDungSan;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class GDThongBaoKetQua extends JDialog implements IDSBienGDThongBaoKetQua{
     private static GDThongBaoKetQua gdThongBaoKetQua = null;
@@ -26,12 +25,31 @@ public class GDThongBaoKetQua extends JDialog implements IDSBienGDThongBaoKetQua
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        datPhimTatAnGiaoDien();
     }
 
     public static GDThongBaoKetQua getGdThongBaoKetQua() {
         if (gdThongBaoKetQua == null)
             gdThongBaoKetQua = new GDThongBaoKetQua();
         return gdThongBaoKetQua;
+    }
+
+    private void datPhimTatAnGiaoDien(){
+
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.CTRL_DOWN_MASK),
+                KeyEvent.VK_ENTER
+        );
+        getRootPane().getActionMap().put(
+                KeyEvent.VK_ENTER,
+                new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        anGiaoDienThongBaoKetQua();
+                    }
+                }
+        );
     }
 
     private void dungUI(){
@@ -114,6 +132,7 @@ public class GDThongBaoKetQua extends JDialog implements IDSBienGDThongBaoKetQua
                 bgrMacDinh,
                 dimBtnXacNhan
         );
+        btnXacNhan.setToolTipText("Đóng giao diện thông báo (Ctrl + Enter)");
         btnXacNhan.setFont(fntBtnXacNhan);
         datHanhDongChoBtnXacNhan();
 
@@ -124,10 +143,14 @@ public class GDThongBaoKetQua extends JDialog implements IDSBienGDThongBaoKetQua
         btnXacNhan.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                SwingUtilities.invokeLater(() -> {
-                    dispose();
-                });
+                anGiaoDienThongBaoKetQua();
             }
+        });
+    }
+
+    private void anGiaoDienThongBaoKetQua(){
+        SwingUtilities.invokeLater(() -> {
+            dispose();
         });
     }
 

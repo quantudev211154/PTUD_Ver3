@@ -5,6 +5,7 @@ import ui.giaodienchinh.IDSBienGDChinh;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -123,6 +124,7 @@ public interface IDSBienGDXemThongTinHoaDonBanHang extends IDSBienMacDinh, IDSBi
     JPanel pnlTTKH = new JPanel();
     JLabel lblTTKH = new JLabel("Khách hàng:");
     JTextField txtTTKH = new JTextField("0");
+    JScrollPane scrTTKH = new JScrollPane(txtTTKH);
 
     JPanel pnlTGLap = new JPanel();
     JLabel lblTGLap = new JLabel("TG lập:");
@@ -179,7 +181,20 @@ public interface IDSBienGDXemThongTinHoaDonBanHang extends IDSBienMacDinh, IDSBi
     DefaultTableModel dtmDanhSachSanPhamKHMua = new DefaultTableModel(tieuDeTableDSSPKHMua, 0);
     TableRowSorter trsDanhSachSPKHMua = new TableRowSorter(dtmDanhSachSanPhamKHMua);
 
-    JTable tblDanhSachSanPhamKHMua = new JTable(dtmDanhSachSanPhamKHMua);
+    JTable tblDanhSachSanPhamKHMua = new JTable(dtmDanhSachSanPhamKHMua){
+        @Override
+        public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+            Component component = super.prepareRenderer(renderer, row, column);
+
+            if (!component.getBackground().equals(getSelectionBackground())){
+                component.setBackground(
+                        row % 2 == 0 ? Color.white : bgrHangTableLe
+                );
+            }
+
+            return component;
+        }
+    };
 
     JScrollPane scrChuaTblDSSanPhamKHMua = new JScrollPane(tblDanhSachSanPhamKHMua);
 

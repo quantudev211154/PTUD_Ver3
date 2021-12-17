@@ -25,10 +25,10 @@ import java.awt.event.*;
 import java.io.File;
 
 public class GDChinh extends JFrame implements IDSBienGDChinh {
-    private static NhanVien nhanVienDangSuDung = null;
+    private static NhanVien nhanVienDangSuDung;
+    private static GDChinh instance = null;
 
-    public GDChinh(NhanVien nhanVien){
-        nhanVienDangSuDung = nhanVien;
+    private GDChinh(){
 
         setTitle(tieuDe);
         setIconImage(Toolkit.getDefaultToolkit().getImage(pathLogoMacDinh));
@@ -36,6 +36,7 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         dungUI();
 
         setUndecorated(true);
+
         setSize(dimGDChinh);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -51,6 +52,54 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         datPhimNong();
 
         chayNgamCacPnlDieuHuong();
+    }
+
+    public static GDChinh getInstance() {
+        if (instance == null)
+            instance = new GDChinh();
+        return instance;
+    }
+
+    public void datNhanVienDangSuDung(NhanVien nhanVien){
+        nhanVienDangSuDung = nhanVien;
+
+        if (nhanVienDangSuDung.isNam()) {
+            lblAvatarNhanVien.setIcon(
+                    new ImageIcon(
+                            Toolkit.getDefaultToolkit().getImage(pathIcnNhanVienNam)
+                    )
+            );
+        }
+        else{
+            lblAvatarNhanVien.setIcon(
+                    new ImageIcon(
+                            Toolkit.getDefaultToolkit().getImage(pathIcnNhanVienNu)
+                    )
+            );
+        }
+
+        mniHoTenNV.setText(nhanVienDangSuDung.getHoTen());
+        mniChucVuNV.setText(
+                nhanVienDangSuDung.isQuanLi() ? "Quản lí" : "Nhân viên bán hàng"
+        );
+
+        if (nhanVienDangSuDung.isQuanLi()){
+            dungCacNutDieuHuong(pnlNutQLNhanVien, lblIcnNutQLNhanVien, lblTieuDeNutQLNhanVien);
+            datHanhDongChoPnlQLNhanVienKhiDuocChon();
+            pnlNutQLNhanVien.setToolTipText("Quản lí nhân viên");
+            pnlThanhDieuHuongChinh.add(pnlNutQLNhanVien);
+
+            dungCacNutDieuHuong(pnlNutThongKe, lblIcnNutQLThongKe, lblTieuDeNutThongKe);
+            datHanhDongChoPnlLapThongKeKhiDuocChon();
+            pnlNutThongKe.setToolTipText("Lập thống kê");
+            pnlThanhDieuHuongChinh.add(pnlNutThongKe);
+        }
+
+        if (nhanVienDangSuDung.isQuanLi()){
+            new Thread(PnlQLNhanVien::getPnlQLNhanVien).start();
+
+            new Thread(PnlLapThongKe::getPnlLapThongKe).start();
+        }
     }
 
     private void hienThiCanhBaoDangXuat(){
@@ -434,17 +483,17 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         pnlNutQLGhiChu.setToolTipText("Quản lí ghi chú");
         pnlThanhDieuHuongChinh.add(pnlNutQLGhiChu);
 
-        if (nhanVienDangSuDung.isQuanLi()){
-            dungCacNutDieuHuong(pnlNutQLNhanVien, lblIcnNutQLNhanVien, lblTieuDeNutQLNhanVien);
-            datHanhDongChoPnlQLNhanVienKhiDuocChon();
-            pnlNutQLNhanVien.setToolTipText("Quản lí nhân viên");
-            pnlThanhDieuHuongChinh.add(pnlNutQLNhanVien);
-
-            dungCacNutDieuHuong(pnlNutThongKe, lblIcnNutQLThongKe, lblTieuDeNutThongKe);
-            datHanhDongChoPnlLapThongKeKhiDuocChon();
-            pnlNutThongKe.setToolTipText("Lập thống kê");
-            pnlThanhDieuHuongChinh.add(pnlNutThongKe);
-        }
+//        if (nhanVienDangSuDung.isQuanLi()){
+//            dungCacNutDieuHuong(pnlNutQLNhanVien, lblIcnNutQLNhanVien, lblTieuDeNutQLNhanVien);
+//            datHanhDongChoPnlQLNhanVienKhiDuocChon();
+//            pnlNutQLNhanVien.setToolTipText("Quản lí nhân viên");
+//            pnlThanhDieuHuongChinh.add(pnlNutQLNhanVien);
+//
+//            dungCacNutDieuHuong(pnlNutThongKe, lblIcnNutQLThongKe, lblTieuDeNutThongKe);
+//            datHanhDongChoPnlLapThongKeKhiDuocChon();
+//            pnlNutThongKe.setToolTipText("Lập thống kê");
+//            pnlThanhDieuHuongChinh.add(pnlNutThongKe);
+//        }
     }
 
     private void datHanhDongChoNutQLBanHangKhiDuocChon(){
@@ -486,11 +535,11 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
 
         new Thread(PnlQLThuChi::getPnlQLThuChi).start();
 
-        if (nhanVienDangSuDung.isQuanLi()){
-            new Thread(PnlQLNhanVien::getPnlQLNhanVien).start();
-
-            new Thread(PnlLapThongKe::getPnlLapThongKe).start();
-        }
+//        if (nhanVienDangSuDung.isQuanLi()){
+//            new Thread(PnlQLNhanVien::getPnlQLNhanVien).start();
+//
+//            new Thread(PnlLapThongKe::getPnlLapThongKe).start();
+//        }
     }
 
     private void datHanhDongChoNutQLKhachHangKhiDuocChon(){
@@ -624,8 +673,7 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
                 pnlNoiDung.removeAll();
 
                 pnlNoiDung.add(PnlQLGhiChu.getPnlQLGhiChu());
-
-                new Thread(PnlQLGhiChu::phanLoaiCacGhiChuTheoThoiGian).start();
+//                PnlQLGhiChu.phanLoaiGhiChuTheoThoiGian();
 
                 pnlNoiDung.revalidate();
                 pnlNoiDung.repaint();
@@ -782,6 +830,7 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         pnlNutDangXuat.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                setOpacity(0.9f);
                 hienThiCanhBaoDangXuat();
             }
         });
@@ -961,17 +1010,6 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         pnlAvatarNhanVien.setPreferredSize(dimPnlAvatarNhanVien);
         pnlAvatarNhanVien.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 5));
 
-        if (nhanVienDangSuDung.isNam()) {
-            lblAvatarNhanVien.setIcon(
-                    new ImageIcon(pathIcnNhanVienNam)
-            );
-        }
-        else{
-            lblAvatarNhanVien.setIcon(
-                    new ImageIcon(pathIcnNhanVienNu)
-            );
-        }
-
         datHanhDongChoLblAvatar();
         pnlAvatarNhanVien.add(lblAvatarNhanVien);
 
@@ -1047,13 +1085,9 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         pmnThongTinNhanVien.setPreferredSize(dimPmnThongTinNhanVien);
         pmnThongTinNhanVien.setBorder(BorderFactory.createEmptyBorder());
 
-        mniHoTenNV.setText(nhanVienDangSuDung.getHoTen());
         pmnThongTinNhanVien.add(mniHoTenNV);
 
 
-        mniChucVuNV.setText(
-                nhanVienDangSuDung.isQuanLi() ? "Quản lí" : "Nhân viên bán hàng"
-        );
         pmnThongTinNhanVien.add(mniChucVuNV);
     }
 
@@ -1079,7 +1113,9 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         NhanVien nv = NhanVienDAO.timNhanVienTheoMa("21100011");
         CaNhanHoaLookAndFeel.caNhanHoaLookAndFeel();
 
-        GDChinh gdChinh = new GDChinh(nv);
+        GDChinh gdChinh = GDChinh.getInstance();
+        gdChinh.datNhanVienDangSuDung(nv);
+
         gdChinh.setVisible(true);
     }
 }

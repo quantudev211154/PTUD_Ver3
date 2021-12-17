@@ -80,7 +80,7 @@ public class GDXemThongTinHoaDonBanHang extends JDialog implements IDSBienGDXemT
             public void keyReleased(KeyEvent e) {
                 trsDanhSachSPKHMua.setRowFilter(
                         RowFilter.regexFilter(
-                                txtTimKiemSanPham.getText().trim()
+                                "(?i)" + txtTimKiemSanPham.getText().trim()
                         )
                 );
             }
@@ -191,7 +191,7 @@ public class GDXemThongTinHoaDonBanHang extends JDialog implements IDSBienGDXemT
         dungCacPnlChuaThongTinCuaHDBH(pnlMaNVLap, lblMaNVLap, txtMaNVLap);
         pnlThongTinHoaDonBanHang.add(pnlMaNVLap);
 
-        dungCacPnlChuaThongTinCuaHDBH(pnlTTKH, lblTTKH, txtTTKH);
+        dungCacPnlChuaThongTinCuaHDBH(pnlTTKH, lblTTKH, scrTTKH);
         pnlThongTinHoaDonBanHang.add(pnlTTKH);
 
         dungCacPnlChuaThongTinCuaHDBH(pnlTGLap, lblTGLap, txtTGLap);
@@ -251,6 +251,39 @@ public class GDXemThongTinHoaDonBanHang extends JDialog implements IDSBienGDXemT
 
         txt.setHorizontalAlignment(SwingConstants.RIGHT);
         pnl.add(txt, BorderLayout.EAST);
+    }
+
+    private void dungCacPnlChuaThongTinCuaHDBH(JPanel pnl, JLabel lbl, JScrollPane scr){
+        pnl.setLayout(new BorderLayout());
+        pnl.setPreferredSize(dimPnlConCuaPnlTTHoaDonBanHang);
+        pnl.setBackground(bgrMacDinh);
+
+        lbl.setFont(fntMacDinh);
+        lbl.setForeground(frgMacDinh);
+        pnl.add(lbl, BorderLayout.WEST);
+
+        CacHamDungSan.datThuocTinhChoTxt(
+                txtTTKH,
+                "",
+                null
+        );
+        txtTTKH.setEnabled(false);
+        txtTTKH.setForeground(frgMacDinh);
+        txtTTKH.setHorizontalAlignment(SwingConstants.RIGHT);
+        txtTTKH.setBorder(BorderFactory.createEmptyBorder());
+
+        scr.setPreferredSize(dimTxtChuaThongTinCuaHDBH);
+        scr.setBorder(
+                BorderFactory.createMatteBorder(
+                        0, 0, doDayVienMacDinh, 0, bgrVienMacDinh
+                )
+        );
+        scr.setBorder(null);
+        scr.setBackground(bgrMacDinh);
+        scr.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+        scr.getViewport().setBackground(bgrMacDinh);
+
+        pnl.add(scr, BorderLayout.EAST);
     }
 
     private void dungPnlThoat(){

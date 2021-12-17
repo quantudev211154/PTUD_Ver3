@@ -7,6 +7,7 @@ import ui.giaodienchinh.IDSBienGDChinh;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
@@ -55,7 +56,7 @@ public interface IDSBienGDTaoHoaDonBanHang extends IDSBienMacDinh, IDSBienGDChin
             KeyEvent.VK_F4, //Txt tim khach hang
             KeyEvent.VK_F5, //Btn them khach hang
             KeyEvent.VK_F6, //Txt tien khach dua
-            KeyEvent.VK_ENTER // Nut thanh toan
+            KeyEvent.VK_F8 // Nut thanh toan
     };
 
     JPopupMenu pmnKetQuaTimKiemSanPham = new JPopupMenu();
@@ -63,13 +64,28 @@ public interface IDSBienGDTaoHoaDonBanHang extends IDSBienMacDinh, IDSBienGDChin
 
     String[] tieuDeDanhDauChoTblKetQuaTimKiemSanPham = {"", "", ""};
     DefaultTableModel dtmKetQuaTimKiemSanPham = new DefaultTableModel(tieuDeDanhDauChoTblKetQuaTimKiemSanPham, 0);
-    JTable tblKetQuaTimKiemSanPham = new JTable(dtmKetQuaTimKiemSanPham);
+    JTable tblKetQuaTimKiemSanPham = new JTable(dtmKetQuaTimKiemSanPham){
+        @Override
+        public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+            Component component = super.prepareRenderer(renderer, row, column);
+
+            if (!component.getBackground().equals(getSelectionBackground())){
+                component.setBackground(
+                        row % 2 == 0 ? Color.white : bgrHangTableLe
+                );
+            }
+
+            return component;
+        }
+    };
 
     /**
      *
      */
     JButton btnXoaTatCaSanPhamDaThem = new JButton("",
-            new ImageIcon("src/main/resources/BieuTuong/Bin_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Bin_32px_1.png")
+            )
     );
     Dimension dimBtnXoaTatCaSanPhamDaThem = new Dimension(
             40, 40
@@ -126,7 +142,7 @@ public interface IDSBienGDTaoHoaDonBanHang extends IDSBienMacDinh, IDSBienGDChin
 
     Color mauNenBtnThanhToan = new Color(59, 209, 176);
     Font fntBtnThanhToan = new Font(tenFontMacDinh, Font.PLAIN, 25);
-    JButton btnThanhToan = new JButton("Thanh toán (Enter)");
+    JButton btnThanhToan = new JButton("Thanh toán (F8)");
     Dimension dimBtnThanhToan = new Dimension(
         dimPnlThanhToan.width - 20,
             dimPnlThanhToan.height
@@ -165,7 +181,9 @@ public interface IDSBienGDTaoHoaDonBanHang extends IDSBienMacDinh, IDSBienGDChin
 
 
     JButton btnThemKHMoi = new JButton("",
-            new ImageIcon("src/main/resources/BieuTuong/Add_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Add_32px_1.png")
+            )
     );
     Dimension dimBtnThemKHMoi = new Dimension(
             40,
@@ -234,7 +252,20 @@ public interface IDSBienGDTaoHoaDonBanHang extends IDSBienMacDinh, IDSBienGDChin
     };
     DefaultTableModel dtmDanhSachSanPhamKHMua = new DefaultTableModel(tieuDeTableDSSPKHMua, 0);
 
-    JTable tblDanhSachSanPhamKHMua = new JTable(dtmDanhSachSanPhamKHMua);
+    JTable tblDanhSachSanPhamKHMua = new JTable(dtmDanhSachSanPhamKHMua){
+        @Override
+        public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+            Component component = super.prepareRenderer(renderer, row, column);
+
+            if (!component.getBackground().equals(getSelectionBackground())){
+                component.setBackground(
+                        row % 2 == 0 ? Color.white : bgrHangTableLe
+                );
+            }
+
+            return component;
+        }
+    };
 
     JScrollPane scrChuaTblDSSanPhamKHMua = new JScrollPane(tblDanhSachSanPhamKHMua);
 

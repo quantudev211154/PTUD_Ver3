@@ -191,7 +191,7 @@ public class PnlTKDoanhThuTheoKhachHang implements IDSBienPnlTKDoanhThuTheoKhach
             @Override
             public void mouseClicked(MouseEvent e) {
                 txtLocTheoTungKhachHang.setFocusable(true);
-                CacHamDungSan.duaTxtVeTrangThaiDaHienThiThongTin(txtLocTheoTungKhachHang, "");
+                CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtLocTheoTungKhachHang, "");
             }
         });
     }

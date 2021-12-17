@@ -6,6 +6,7 @@ import ui.giaodienchinh.IDSBienGDChinh;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -136,13 +137,17 @@ public interface IDSBienPnlQLBanHang extends IDSBienMacDinh, IDSBienGDChinh {
     JPopupMenu pmnCheDoTimKiem = new JPopupMenu();
 
     JMenuItem mniTimKiemTrongCSDL = new JMenuItem(
-            "Tìm trong CSDL",
-            new ImageIcon("src/main/resources/BieuTuong/Find_24px_1.png")
+            "Tìm trong kho dữ liệu",
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Find_24px_1.png")
+            )
     );
 
     JMenuItem mniTimKiemTrenTable = new JMenuItem(
-            "Tìm trên table",
-            new ImageIcon("src/main/resources/BieuTuong/Find_24px_2.png")
+            "Tìm trên bảng bên dưới",
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Find_24px_2.png")
+            )
     );
 
     int chieuRongPmnChuaDSHDBHTimDuoc = dimTxtTimKiem.width + 250;
@@ -151,7 +156,20 @@ public interface IDSBienPnlQLBanHang extends IDSBienMacDinh, IDSBienGDChinh {
     //MaHDBH, maKH, tgLap, tongSLSP, tongTien
     String[] tieuDeTblTam = {"Mã HDBH", "Mã KH", "TG lập", "SLSP", "Tổng tiền"};
     DefaultTableModel dtmHDBHTimDuoc = new DefaultTableModel(tieuDeTblTam, 0);
-    JTable tblHDBHTimDuoc = new JTable(dtmHDBHTimDuoc);
+    JTable tblHDBHTimDuoc = new JTable(dtmHDBHTimDuoc){
+        @Override
+        public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+            Component component = super.prepareRenderer(renderer, row, column);
+
+            if (!component.getBackground().equals(getSelectionBackground())){
+                component.setBackground(
+                        row % 2 == 0 ? Color.white : bgrHangTableLe
+                );
+            }
+
+            return component;
+        }
+    };
 
     JPanel pnlHopCongCu = new JPanel();
     Dimension dimPnlHopCongCu = new Dimension(
@@ -167,11 +185,15 @@ public interface IDSBienPnlQLBanHang extends IDSBienMacDinh, IDSBienGDChinh {
     );
 
     JButton btnTaoHoaDonBanHang = new JButton(" Bán hàng",
-            new ImageIcon("src/main/resources/BieuTuong/Add_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Add_24px_1.png")
+            )
     );
 
     JButton btnXuatDuLieuTrongTableRaFile = new JButton(" Xuất data",
-            new ImageIcon("src/main/resources/BieuTuong/Export_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Export_24px_1.png")
+            )
     );
 
     JPopupMenu pmnXuatData = new JPopupMenu();
@@ -182,12 +204,16 @@ public interface IDSBienPnlQLBanHang extends IDSBienMacDinh, IDSBienGDChinh {
 
     JMenuItem mniXuatExcel = new JMenuItem(
             "Xuất Excel",
-            new ImageIcon("src/main/resources/BieuTuong/Excel_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Excel_24px_1.png")
+            )
     );
 
     JMenuItem mniXuatPDF = new JMenuItem(
             "Xuất PDF",
-            new ImageIcon("src/main/resources/BieuTuong/PDF_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/PDF_24px_1.png")
+            )
     );
 
     JPanel pnlKetQuaTraCuu = new JPanel();
@@ -214,7 +240,20 @@ public interface IDSBienPnlQLBanHang extends IDSBienMacDinh, IDSBienGDChinh {
     DefaultTableModel dtmDuLieuTraCuuDuoc = new DefaultTableModel(tieuDeTable, 0);
     TableRowSorter trsDuLieuTraCuuDuoc = new TableRowSorter(dtmDuLieuTraCuuDuoc);
 
-    JTable tblDuLieuTraCuuDuoc = new JTable(dtmDuLieuTraCuuDuoc);
+    JTable tblDuLieuTraCuuDuoc = new JTable(dtmDuLieuTraCuuDuoc){
+        @Override
+        public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+            Component component = super.prepareRenderer(renderer, row, column);
+
+            if (!component.getBackground().equals(getSelectionBackground())){
+                component.setBackground(
+                        row % 2 == 0 ? Color.white : bgrHangTableLe
+                );
+            }
+
+            return component;
+        }
+    };
 
     Dimension dimScrChuaTableDulieuTraCuuDuoc = new Dimension(
             dimPnlKetQuaTraCuu.width

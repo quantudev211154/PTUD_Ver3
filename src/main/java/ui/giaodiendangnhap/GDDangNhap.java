@@ -263,8 +263,11 @@ public class GDDangNhap extends JFrame implements IDSBienGDDangNhap {
 
                     dispose();
 
-                    GDChinh gdChinh = new GDChinh(nhanVien);
-                    gdChinh.setVisible(true);
+//                    GDChinh gdChinh = new GDChinh(nhanVien);
+//                    gdChinh.setVisible(true);
+                    GDChinh gd = GDChinh.getInstance();
+                    gd.datNhanVienDangSuDung(nhanVien);
+                    gd.setVisible(true);
                 });
             }
             else{

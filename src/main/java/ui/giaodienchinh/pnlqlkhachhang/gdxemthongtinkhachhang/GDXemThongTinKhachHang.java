@@ -106,8 +106,8 @@ public class GDXemThongTinKhachHang extends JDialog implements IDSBienMacDinh {
 
         CacHamDungSan.datThuocTinhChoBtn(
                 btnThoat,
-                null,
-                frgMacDinh,
+                bgrBtnThoat,
+                IDSBienMacDinh.bgrMacDinh,
                 dimBtn
         );
         datHanhDongChoBtnThoat();
@@ -148,7 +148,6 @@ public class GDXemThongTinKhachHang extends JDialog implements IDSBienMacDinh {
     );
 
     private final JPanel pnlChinh = new JPanel();
-    private final Color mauNenPnlChinh = new Color(233, 246, 247);
 
     private final Dimension dimPnlConCuaPnlChinh = new Dimension(
             dimGDThemKhachHang.width - 40,

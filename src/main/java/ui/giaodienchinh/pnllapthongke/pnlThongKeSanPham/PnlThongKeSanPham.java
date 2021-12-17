@@ -180,7 +180,7 @@ public class PnlThongKeSanPham implements IDSBienPnlThongKeSanPham, ActionListen
             @Override
             public void mouseClicked(MouseEvent e) {
                 txtLocTheoTungSanPham.setFocusable(true);
-                CacHamDungSan.duaTxtVeTrangThaiDaHienThiThongTin(txtLocTheoTungSanPham, "");
+                CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtLocTheoTungSanPham, "");
             }
         });
     }

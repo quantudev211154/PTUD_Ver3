@@ -6,13 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public interface IDSBienGDChinh extends IDSBienMacDinh {
-    Rectangle kichThuocManHinhKhongTaskbar = GraphicsEnvironment
-            .getLocalGraphicsEnvironment()
-            .getMaximumWindowBounds();
-
     Dimension dimGDChinh = new Dimension(
-            kichThuocManHinhKhongTaskbar.width,
-            kichThuocManHinhKhongTaskbar.height
+            dimManHinhKhongTaskbar.width,
+            dimManHinhKhongTaskbar.height
     );
 
     String tieuDe = "Quản lí bán hàng - PHT";
@@ -52,7 +48,9 @@ public interface IDSBienGDChinh extends IDSBienMacDinh {
     );
 
     JLabel lblLogo = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/Logo.jpg")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Logo.jpg")
+            )
     );
     Dimension dimLblLogo = new Dimension(50, 50);
 
@@ -67,7 +65,9 @@ public interface IDSBienGDChinh extends IDSBienMacDinh {
 
     JPanel pnlNutDangXuat = new JPanel();
     JLabel lblIcnNutDangXuat = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/Logout_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Logout_32px_1.png")
+            )
     );
     JLabel lblTieuDeNutDangXuat = new JLabel("Đăng xuất");
 
@@ -87,49 +87,65 @@ public interface IDSBienGDChinh extends IDSBienMacDinh {
 
     JPanel pnlNutQLBanHang = new JPanel();
     JLabel lblIcnNutQLBanHang = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/Sell_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Sell_32px_1.png")
+            )
     );
     JLabel lblTieuDeNutQLBanHang = new JLabel("QL Bán hàng");
 
     JPanel pnlNutQLKhachHang = new JPanel();
     JLabel lblIcnNutQLKhachHang = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/CustomerMan_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/CustomerMan_32px_1.png")
+            )
     );
     JLabel lblTieuDeNutQLKhachHang = new JLabel("QL Khách hàng");
 
     JPanel pnlNutQLSanPham = new JPanel();
     JLabel lblIcnNutQLSanPham = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/ProductMan_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/ProductMan_32px_1.png")
+            )
     );
     JLabel lblTieuDeNutQLSanPham = new JLabel("QL Sản phẩm");
 
     JPanel pnlNutQLNhapHang = new JPanel();
     JLabel lblIcnNutQLNhapHang = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/ImportMan_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/ImportMan_32px_1.png")
+            )
     );
     JLabel lblTieuDeNutQLNhapHang = new JLabel("QL Nhập hàng");
 
     JPanel pnlNutQLThuChi = new JPanel();
     JLabel lblIcnNutQLThuChi = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/Receipt_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Receipt_32px_1.png")
+            )
     );
     JLabel lblTieuDeNutQLThuChi = new JLabel("QL Thu chi");
 
     JPanel pnlNutQLGhiChu = new JPanel();
     JLabel lblIcnNutQLGhiChu = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/NoteMan_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/NoteMan_32px_1.png")
+            )
     );
     JLabel lblTieuDeNutQLGhiChu = new JLabel("QL Ghi chú");
 
     JPanel pnlNutQLNhanVien = new JPanel();
     JLabel lblIcnNutQLNhanVien = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/StaffMan_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/StaffMan_32px_1.png")
+            )
     );
     JLabel lblTieuDeNutQLNhanVien = new JLabel("QL Nhân viên");
 
     JPanel pnlNutThongKe = new JPanel();
     JLabel lblIcnNutQLThongKe = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/Analystic_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Analystic_32px_1.png")
+            )
     );
     JLabel lblTieuDeNutThongKe = new JLabel("Lập thống kê");
 
@@ -181,11 +197,15 @@ public interface IDSBienGDChinh extends IDSBienMacDinh {
     JLabel lblHienThiSLGhiChuDenHan = new JLabel("0");
 
     JLabel lblIcnTaoGhiChu = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/Clock_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Clock_32px_1.png")
+            )
     );
 
     JLabel lblSachHDSD = new JLabel(
-            new ImageIcon("src/main/resources/BieuTuong/Book_32px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Book_32px_1.png")
+            )
     );
 
     JPanel pnlAvatarNhanVien = new JPanel();
@@ -210,12 +230,16 @@ public interface IDSBienGDChinh extends IDSBienMacDinh {
 
     JMenuItem mniHoTenNV = new JMenuItem(
             "",
-            new ImageIcon("src/main/resources/BieuTuong/Info_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Info_24px_1.png")
+            )
     );
 
     JMenuItem mniChucVuNV = new JMenuItem(
             "",
-            new ImageIcon("src/main/resources/BieuTuong/Hierachy_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Hierachy_24px_1.png")
+            )
     );
 
     JPopupMenu pmnTinhNangMoRong = new JPopupMenu();
@@ -226,12 +250,16 @@ public interface IDSBienGDChinh extends IDSBienMacDinh {
 
     JMenuItem mniDoiMatKhau = new JMenuItem(
             "Đổi mật khẩu",
-            new ImageIcon("src/main/resources/BieuTuong/Lock_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Lock_24px_1.png")
+            )
     );
 
     JMenuItem mniXemTTNVDangSuDung = new JMenuItem(
             "Xem TT NV đang sử dụng",
-            new ImageIcon("src/main/resources/BieuTuong/Profile_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Profile_24px_1.png")
+            )
     );
 
     JPanel pnlHienThiThaoTacDieuHuong = new JPanel();

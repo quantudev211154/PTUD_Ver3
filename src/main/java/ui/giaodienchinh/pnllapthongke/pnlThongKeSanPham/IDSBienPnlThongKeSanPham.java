@@ -6,6 +6,7 @@ import ui.giaodienchinh.IDSBienGDChinh;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.text.NumberFormat;
@@ -132,7 +133,7 @@ public interface IDSBienPnlThongKeSanPham extends IDSBienMacDinh, IDSBienGDChinh
     JPanel pnlLocTheoDoanhThu = new JPanel();
     Dimension dimPnlLocTheoDoanhThu = new Dimension(
             dimPnlThanhTienIchTKSanPham.width,
-            200
+            210
     );
 
     JPanel pnlTieuDeLocTheoDoanhThu = new JPanel();
@@ -216,7 +217,9 @@ public interface IDSBienPnlThongKeSanPham extends IDSBienMacDinh, IDSBienGDChinh
     );
     JButton btnXuatTKSanPhamRaFile = new JButton(
             "Xuất data",
-            new ImageIcon("src/main/resources/BieuTuong/Export_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Export_24px_1.png")
+            )
     );
 
     JPopupMenu pmnXuatData = new JPopupMenu();
@@ -227,12 +230,16 @@ public interface IDSBienPnlThongKeSanPham extends IDSBienMacDinh, IDSBienGDChinh
 
     JMenuItem mniXuatExcel = new JMenuItem(
             "Xuất Excel",
-            new ImageIcon("src/main/resources/BieuTuong/Excel_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Excel_24px_1.png")
+            )
     );
 
     JMenuItem mniXuatPDF = new JMenuItem(
             "Xuất PDF",
-            new ImageIcon("src/main/resources/BieuTuong/PDF_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/PDF_24px_1.png")
+            )
     );
 
     String[] tieuDeTblTKDoanhThuTheoSanPham = {"Mã SP", "Tên sản phẩm", "Thương hiệu", "SL tồn", "SLSP", "Sức tiêu thụ"};
@@ -243,7 +250,20 @@ public interface IDSBienPnlThongKeSanPham extends IDSBienMacDinh, IDSBienGDChinh
     DefaultTableModel dtmDuLieuTKDoanhThuTheoHDBH = new DefaultTableModel(tieuDeTableTKDoanhThuTheoHDBH, 0);
     TableRowSorter trsDuLieuTKDoanhThuTheoHDBH = new TableRowSorter(dtmDuLieuTKDoanhThuTheoHDBH);
 
-    JTable tblDuLieuTKDoanhThuTheoSanPham = new JTable();
+    JTable tblDuLieuTKDoanhThuTheoSanPham = new JTable(){
+        @Override
+        public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+            Component component = super.prepareRenderer(renderer, row, column);
+
+            if (!component.getBackground().equals(getSelectionBackground())){
+                component.setBackground(
+                        row % 2 == 0 ? Color.white : bgrHangTableLe
+                );
+            }
+
+            return component;
+        }
+    };
 
     JScrollPane scrChuaTblDuLieuTKDoanhThuTheoSanPham = new JScrollPane(tblDuLieuTKDoanhThuTheoSanPham);
     Dimension dimScrChuaTblDuLieuTKDoanhThuTheoSanPham = new Dimension(

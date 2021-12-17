@@ -408,6 +408,11 @@ public class PnlQLNhanVien implements IDSBienQLNhanVien, ActionListener{
                 txtTimKiem.removeKeyListener(cheDoTimKiemTrenTable);
 
                 txtTimKiem.addKeyListener(cheDoTimKiemTrongCSDL);
+
+                CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(
+                        txtTimKiem,
+                        ""
+                );
             }
         });
     }
@@ -421,6 +426,11 @@ public class PnlQLNhanVien implements IDSBienQLNhanVien, ActionListener{
                 txtTimKiem.removeKeyListener(cheDoTimKiemTrongCSDL);
 
                 txtTimKiem.addKeyListener(cheDoTimKiemTrenTable);
+
+                CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(
+                        txtTimKiem,
+                        ""
+                );
             }
         });
     }
@@ -729,7 +739,7 @@ public class PnlQLNhanVien implements IDSBienQLNhanVien, ActionListener{
 
                 int hangDuocChon = tblDuLieuTraCuuDuoc.getSelectedRow();
 
-                if (hangDuocChon != -1){
+                if (hangDuocChon != -1 && hangDuocChon != 0){
                     String maNV = (String) tblDuLieuTraCuuDuoc.getValueAt(
                             hangDuocChon, 0
                     );

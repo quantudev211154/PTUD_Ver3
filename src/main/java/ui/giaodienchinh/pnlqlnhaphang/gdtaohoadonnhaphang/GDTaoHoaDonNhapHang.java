@@ -21,9 +21,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 
 public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNhapHang {
     private static GDTaoHoaDonNhapHang gdTaoHoaDonNhapHang = null;
@@ -62,40 +64,48 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
     }
 
     private void datKeyMap(){
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int nutDuocNhan = e.getKeyCode();
+        for (int i = 0; i < danhSachKeyMap.length; ++i){
 
-                if (nutDuocNhan == danhSachKeyMap[0]){
-                    xoaTatCaSanPhamDaThem();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[1]){
-                    hienThiGDThemSanPham();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[2]){
-                    thucHienThuTucNhapHangBangExcel();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[3]){
-                    thuNhoManHinh();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[4]){
-                    hienThiGDCanhBaoHuyHoaDonNhapHang();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[5]){
-                    txtMaLoHang.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[6]){
-                    txtTenNguoiGiaoHang.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[7]){
-                    thucHienThuTucInHoaDonNhapHang();
-                }
-                else{
-                    txtTimKiemChiTietHoaDonNhapHang.requestFocus();
-                }
-            }
-        });
+            getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                    KeyStroke.getKeyStroke(danhSachKeyMap[i], 0),
+                    danhSachKeyMap[i]
+            );
+
+            int finalI = i;
+
+            getRootPane().getActionMap().put(
+                    danhSachKeyMap[i],
+                    new AbstractAction() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (finalI == 0){
+                                xoaTatCaSanPhamDaThem();
+                            }
+                            else if (finalI == 1){
+                                hienThiGDThemSanPham();
+                            }
+                            else if (finalI == 2){
+                                thucHienThuTucNhapHangBangExcel();
+                            }
+                            else if (finalI == 3){
+                                thuNhoManHinh();
+                            }
+                            else if (finalI == 4){
+                                hienThiGDCanhBaoHuyHoaDonNhapHang();
+                            }
+                            else if (finalI == 5){
+                                txtMaLoHang.requestFocus();
+                            }
+                            else if (finalI == 6){
+                                txtTenNguoiGiaoHang.requestFocus();
+                            }
+                            else {
+                                thucHienThuTucInHoaDonNhapHang();
+                            }
+                        }
+                    }
+            );
+        }
     }
 
     private void hienThiGDCanhBaoHuyHoaDonNhapHang(){
@@ -168,39 +178,11 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
         txtTimKiemChiTietHoaDonNhapHang.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                int nutDuocNhan = e.getKeyCode();
-
-                if (nutDuocNhan == danhSachKeyMap[0]){
-                    xoaTatCaSanPhamDaThem();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[1]){
-                    hienThiGDThemSanPham();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[2]){
-                    thucHienThuTucNhapHangBangExcel();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[3]){
-                    thuNhoManHinh();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[4]){
-                    hienThiGDCanhBaoHuyHoaDonNhapHang();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[5]){
-                    txtMaLoHang.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[6]){
-                    txtTenNguoiGiaoHang.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[7]){
-                    thucHienThuTucInHoaDonNhapHang();
-                }
-                else{
-                    trsDSChiTietHDNH.setRowFilter(
-                            RowFilter.regexFilter(
-                                    ("?i") + txtTimKiemChiTietHoaDonNhapHang.getText().trim()
-                            )
-                    );
-                }
+                trsDSChiTietHDNH.setRowFilter(
+                        RowFilter.regexFilter(
+                                "(?i)" + txtTimKiemChiTietHoaDonNhapHang.getText().trim()
+                        )
+                );
             }
         });
     }
@@ -219,11 +201,7 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
 
                     capNhatTinhHinhNhapHang();
 
-                    Thread luongDanhLaiSTTChoCacChiTietHDNH = new Thread(() -> {
-                        capNhatSTTChoTblDanhSachSanPhamKHMua();
-                    });
-
-                    luongDanhLaiSTTChoCacChiTietHDNH.start();
+                    new Thread(GDTaoHoaDonNhapHang::capNhatSTTChoTblDanhSachSanPhamKHMua).start();
                 }
                 else{
                     ct.setSoLuongNhap(ct.getSoLuongNhap() + soLuong);
@@ -300,7 +278,7 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
             @Override
             public void actionPerformed(ActionEvent e) {
                 JTable table = (JTable)e.getSource();
-                int modelRow = Integer.valueOf( e.getActionCommand() );
+                int modelRow = Integer.parseInt( e.getActionCommand() );
 
                 String maSP = (String) table.getValueAt(modelRow, 2);
 
@@ -310,11 +288,7 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
 
                 capNhatTinhHinhNhapHang();
 
-                Thread luongDanhLaiSTTChoCacChiTietHoaDonBanHang = new Thread(() -> {
-                    capNhatSTTChoTblDanhSachSanPhamKHMua();
-                });
-
-                luongDanhLaiSTTChoCacChiTietHoaDonBanHang.start();
+                new Thread(GDTaoHoaDonNhapHang::capNhatSTTChoTblDanhSachSanPhamKHMua).start();
             }
         };
 
@@ -470,14 +444,12 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
     }
 
     private void dungTblDSChiTietHDNH(){
-        tblDSChiTietHDNH.setDefaultEditor(Object.class, null);
-        tblDSChiTietHDNH.setRowHeight(chieuCaoHangDuLieuTrongTable);
-        tblDSChiTietHDNH.setFont(fntMacDinh);
-        tblDSChiTietHDNH.getTableHeader().setFont(fntMacDinh);
-        tblDSChiTietHDNH.setShowGrid(false);
-        tblDSChiTietHDNH.setGridColor(Color.WHITE);
+        CacHamDungSan.datThuocTinhChoTblDuLieu(
+                tblDSChiTietHDNH,
+                dimPnlDanhSachChiTietHDNH,
+                trsDSChiTietHDNH
+        );
         tblDSChiTietHDNH.getTableHeader().setPreferredSize(new Dimension(0, 0));
-        tblDSChiTietHDNH.setSelectionBackground(bgrTableRowKhiDuocChon);
 
         canLeChoCacGiaTriTrongTblDanhSachSPKHMua();
 
@@ -657,40 +629,15 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
         txtMaLoHang.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                int nutDuocNhan = e.getKeyCode();
-
-                if (nutDuocNhan == danhSachKeyMap[0]){
-                    xoaTatCaSanPhamDaThem();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[1]){
-                    hienThiGDThemSanPham();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[2]){
-                    thucHienThuTucNhapHangBangExcel();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[3]){
-                    thuNhoManHinh();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[4]){
-                    hienThiGDCanhBaoHuyHoaDonNhapHang();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[5]){
+                if (txtMaLoHang.getText().trim().isEmpty()){
+                    CacHamDungSan.hienThiThongBaoKetQua(
+                            GDThongBaoKetQua.THONG_BAO_LOI,
+                            "Mã lô hàng không được rỗng."
+                    );
                     txtMaLoHang.requestFocus();
                 }
-                else if (nutDuocNhan == danhSachKeyMap[6]){
-                    txtTenNguoiGiaoHang.requestFocus();
-                }
                 else{
-                    if (txtMaLoHang.getText().trim().isEmpty()){
-                        CacHamDungSan.hienThiThongBaoKetQua(
-                                GDThongBaoKetQua.THONG_BAO_LOI,
-                                "Mã lô hàng không được rỗng."
-                        );
-                        txtMaLoHang.requestFocus();
-                    }
-                    else{
-                        txtTenNguoiGiaoHang.requestFocus();
-                    }
+                    txtTenNguoiGiaoHang.requestFocus();
                 }
             }
         });
@@ -700,32 +647,13 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
         txtTenNguoiGiaoHang.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                int nutDuocNhan = e.getKeyCode();
-
-                if (nutDuocNhan == danhSachKeyMap[0]){
-                    xoaTatCaSanPhamDaThem();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[1]){
-                    hienThiGDThemSanPham();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[2]){
-                    thucHienThuTucNhapHangBangExcel();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[3]){
-                    thuNhoManHinh();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[4]){
-                    hienThiGDCanhBaoHuyHoaDonNhapHang();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[5]){
-                    txtMaLoHang.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[6]){
-                    txtTenNguoiGiaoHang.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[7]){
-                    thucHienThuTucInHoaDonNhapHang();
-                }
+                txtTenNguoiGiaoHang.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER)
+                            thucHienThuTucInHoaDonNhapHang();
+                    }
+                });
             }
         });
     }
@@ -794,7 +722,7 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
             if (!txtMaLoHang.getText().trim().equals("Mã lô hàng (F6)") && !txtMaLoHang.getText().trim().isEmpty()){
 
                 if (!HoaDonNhapHangDAO.kiemTraTrungMaLoHang(
-                        Integer.parseInt(txtMaLoHang.getText().trim())
+                        Integer.parseInt(txtMaLoHang.getText().trim().toString())
                 )){
                     if (!txtTenNguoiGiaoHang.getText().trim().equals("Tên người giao hàng (F7)") && !txtTenNguoiGiaoHang.getText().trim().isEmpty()){
 
@@ -834,6 +762,13 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
                         );
                         txtTenNguoiGiaoHang.requestFocus();
                     }
+                }
+                else{
+                    CacHamDungSan.hienThiThongBaoKetQua(
+                            GDThongBaoKetQua.THONG_BAO_LOI,
+                            "Cửa hàng đã từng nhập một lô hàng có mã này rồi."
+                    );
+                    txtMaLoHang.requestFocus();
                 }
             }
             else{
@@ -947,7 +882,10 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
                 Integer maLoHang = Integer.parseInt(hmNhapHang.keySet().toArray()[0].toString());
 
                 if (!HoaDonNhapHangDAO.kiemTraTrungMaLoHang(maLoHang)){
-                    txtMaLoHang.setText(maLoHang + "");
+                    CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(
+                            txtMaLoHang,
+                            maLoHang + ""
+                    );
                     dsChiTietHoaDonNhapHang.addAll(hmNhapHang.get(maLoHang));
 
                     dsChiTietHoaDonNhapHang.forEach(i -> {
@@ -962,6 +900,7 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
                             "Không nhập được. Cửa hàng đã từng nhập " +
                                     "một lô hàng có mã này rồi."
                     );
+                    return;
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();

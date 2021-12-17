@@ -421,6 +421,11 @@ public class PnlQLThuChi implements IDSBienGDQLThuChi, ActionListener {
                 tblKetQuaTimKiem.addMouseListener(molXemTTPhieuDoiChungTuPmnKQTimKiem);
 
                 canLeChoTblKQTimKiem(true);
+
+                CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(
+                        txtTimKiem,
+                        ""
+                );
             }
         });
     }
@@ -442,6 +447,11 @@ public class PnlQLThuChi implements IDSBienGDQLThuChi, ActionListener {
                 tblKetQuaTimKiem.addMouseListener(molXemTTNhatKiBHTuPmnKQTimKiem);
 
                 canLeChoTblKQTimKiem(false);
+
+                CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(
+                        txtTimKiem,
+                        ""
+                );
             }
         });
     }
@@ -457,6 +467,11 @@ public class PnlQLThuChi implements IDSBienGDQLThuChi, ActionListener {
                 txtTimKiem.removeKeyListener(klnTimKiemNKBHTC);
 
                 txtTimKiem.addKeyListener(klnTimKiemTrenTable);
+
+                CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(
+                        txtTimKiem,
+                        ""
+                );
             }
         });
     }

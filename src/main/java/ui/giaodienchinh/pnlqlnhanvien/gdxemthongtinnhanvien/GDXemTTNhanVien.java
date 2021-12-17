@@ -186,8 +186,8 @@ public class GDXemTTNhanVien extends JDialog implements I_DsBienGDXemTTNhanVien 
         datHanhDongChoBtnDongGD(btnDongGD);
         CacHamDungSan.datThuocTinhChoBtn(
                 btnDongGD,
-                null,
-                IDSBienMacDinh.frgMacDinh,
+                IDSBienMacDinh.bgrBtnThoat,
+                IDSBienMacDinh.bgrMacDinh,
                 dimBtnDongGD
         );
         panelChuaCacBtn.add(btnDongGD);

@@ -183,7 +183,7 @@ public class HoaDonNhapHangDAO {
     }
 
     public static boolean kiemTraTrungMaLoHang(int maLoHang){
-        String sql = "select * from HoaDonNhapHang where maLoHang = ?1";
+        String sql = "select * from HoaDonNhapHang where maLoHang = ?";
 
         try {
             PreparedStatement ps = KetNoiCSDL.layKetNoi().prepareStatement(sql);
@@ -192,7 +192,7 @@ public class HoaDonNhapHangDAO {
 
             ResultSet rs = ps.executeQuery();
 
-            if (!rs.isBeforeFirst())
+            if (rs.isBeforeFirst())
                 return true;
         } catch (Exception ex){
             ex.printStackTrace();

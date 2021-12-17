@@ -67,37 +67,39 @@ public class GDTaoHoaDonBanHang extends JFrame implements IDSBienGDTaoHoaDonBanH
     }
 
     private void datKeyMap(){
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int nutDuocNhan = e.getKeyCode();
+        for (int i = 0; i < danhSachKeyMap.length; ++i) {
 
-                if (nutDuocNhan == danhSachKeyMap[0]){
-                    xoaTatCaSanPhamDaThem();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[1]){
-                    thuNhoManHinh();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[2]){
-                    hienThiGDCanhBaoHuyHDBH();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[3]){
-                    txtTimKiemKH.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[4]){
-                    hienThiGDThemKhachHang();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[5]){
-                    txtTienKhachDua.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[6]){
-                    thucHienThuTucThanhToan();
-                }
-                else{
-                    txtTimKiemSanPham.requestFocus();
-                }
-            }
-        });
+            getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                    KeyStroke.getKeyStroke(danhSachKeyMap[i], 0),
+                    danhSachKeyMap[i]
+            );
+
+            int finalI = i;
+
+            getRootPane().getActionMap().put(
+                    danhSachKeyMap[i],
+                    new AbstractAction() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (finalI == 0) {
+                                xoaTatCaSanPhamDaThem();
+                            } else if (finalI == 1) {
+                                thuNhoManHinh();
+                            } else if (finalI == 2) {
+                                hienThiGDCanhBaoHuyHDBH();
+                            } else if (finalI == 3) {
+                                txtTimKiemKH.requestFocus();
+                            } else if (finalI == 4) {
+                                hienThiGDThemKhachHang();
+                            } else if (finalI == 5) {
+                                txtTienKhachDua.requestFocus();
+                            } else {
+                                thucHienThuTucThanhToan();
+                            }
+                        }
+                    }
+            );
+        }
     }
 
     private void chongDongGDTaoHoaDonBanHangBuaBai(){
@@ -204,67 +206,42 @@ public class GDTaoHoaDonBanHang extends JFrame implements IDSBienGDTaoHoaDonBanH
         txtTimKiemSanPham.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                int nutDuocNhan = e.getKeyCode();
+                String tuKhoa = txtTimKiemSanPham.getText().trim().toLowerCase();
 
-                if (nutDuocNhan == danhSachKeyMap[0]){
-                    xoaTatCaSanPhamDaThem();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[1]){
-                    thuNhoManHinh();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[2]){
-                    hienThiGDCanhBaoHuyHDBH();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[3]){
-                    txtTimKiemKH.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[4]){
-                    hienThiGDThemKhachHang();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[5]){
-                    txtTienKhachDua.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[6]){
-                    thucHienThuTucThanhToan();
+                ResultSet dssp = SanPhamDAO.timKiemSanPhamTheoMaHoacTen(tuKhoa);
+
+                if (tuKhoa.isEmpty()){
+                    pmnKetQuaTimKiemSanPham.setVisible(false);
                 }
                 else{
-                    String tuKhoa = txtTimKiemSanPham.getText().trim().toLowerCase();
+                    if (tblKetQuaTimKiemSanPham.getRowCount() > 0){
+                        duaDuLieuSanPhamTimDuocVaoTable(dssp);
 
-                    ResultSet dssp = SanPhamDAO.timKiemSanPhamTheoMaHoacTen(tuKhoa);
+                        tblKetQuaTimKiemSanPham.setEnabled(true);
 
-                    if (tuKhoa.isEmpty()){
-                        pmnKetQuaTimKiemSanPham.setVisible(false);
+                        pmnKetQuaTimKiemSanPham.setVisible(true);
+
+                        pmnKetQuaTimKiemSanPham.show(
+                                txtTimKiemSanPham,
+                                0,
+                                txtTimKiemSanPham.getHeight()
+                        );
+
+                        txtTimKiemSanPham.requestFocus();
                     }
-                    else{
-                        if (tblKetQuaTimKiemSanPham.getRowCount() > 0){
-                            duaDuLieuSanPhamTimDuocVaoTable(dssp);
+                    else if (tblKetQuaTimKiemSanPham.getRowCount() == 0){
+                        tblKetQuaTimKiemSanPham.setEnabled(false);
 
-                            tblKetQuaTimKiemSanPham.setEnabled(true);
+                        dtmKetQuaTimKiemSanPham.setRowCount(0);
 
-                            pmnKetQuaTimKiemSanPham.setVisible(true);
+                        Object[] duLieuTrong = {
+                                "",
+                                "( ^ _ ^ )",
+                                ""
+                        };
+                        dtmKetQuaTimKiemSanPham.addRow(duLieuTrong);
 
-                            pmnKetQuaTimKiemSanPham.show(
-                                    txtTimKiemSanPham,
-                                    0,
-                                    txtTimKiemSanPham.getHeight()
-                            );
-
-                            txtTimKiemSanPham.requestFocus();
-                        }
-                        else if (tblKetQuaTimKiemSanPham.getRowCount() == 0){
-                            tblKetQuaTimKiemSanPham.setEnabled(false);
-
-                            dtmKetQuaTimKiemSanPham.setRowCount(0);
-
-                            Object[] duLieuTrong = {
-                                    "",
-                                    "( ^ _ ^ )",
-                                    ""
-                            };
-                            dtmKetQuaTimKiemSanPham.addRow(duLieuTrong);
-
-                            datKichThuocChoPmnKetQuaTimKiemSP(1);
-                        }
+                        datKichThuocChoPmnKetQuaTimKiemSP(1);
                     }
                 }
             }
@@ -607,23 +584,25 @@ public class GDTaoHoaDonBanHang extends JFrame implements IDSBienGDTaoHoaDonBanH
     }
 
     private void xoaTatCaSanPhamDaThem(){
-        int luaChon = JOptionPane.showConfirmDialog(
-                null,
-                "Bạn chắc chắn muốn xoá hết các sản phẩm đã thêm chứ?",
-                "Cảnh báo",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
-        );
+        if (tblDanhSachSanPhamKHMua.getRowCount() > 0){
+            int luaChon = JOptionPane.showConfirmDialog(
+                    null,
+                    "Bạn chắc chắn muốn xoá hết các sản phẩm đã thêm chứ?",
+                    "Cảnh báo",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
 
-        if (luaChon == JOptionPane.YES_OPTION){
-            dtmDanhSachSanPhamKHMua.setRowCount(0);
+            if (luaChon == JOptionPane.YES_OPTION){
+                dtmDanhSachSanPhamKHMua.setRowCount(0);
 
-            dsChiTietHoaDonBanHang.clear();
+                dsChiTietHoaDonBanHang.clear();
 
-            capNhatTinhHinhMuaSamCuaKH();
+                capNhatTinhHinhMuaSamCuaKH();
 
-            txtTienKhachDua.setText("");
-            txtTienThua.setText("");
+                txtTienKhachDua.setText("");
+                txtTienThua.setText("");
+            }
         }
     }
 
@@ -921,42 +900,17 @@ public class GDTaoHoaDonBanHang extends JFrame implements IDSBienGDTaoHoaDonBanH
         txtTienKhachDua.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                int nutDuocNhan = e.getKeyCode();
-
-                if (nutDuocNhan == danhSachKeyMap[0]){
-                    xoaTatCaSanPhamDaThem();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[1]){
-                    thuNhoManHinh();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[2]){
-                    hienThiGDCanhBaoHuyHDBH();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[3]){
-                    txtTimKiemKH.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[4]){
-                    hienThiGDThemKhachHang();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[5]){
-                    txtTienKhachDua.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[6]){
-                    thucHienThuTucThanhToan();
+                if (txtTienKhachDua.getText().trim().isEmpty()){
+                    txtTienThua.setText("");
                 }
                 else{
-                    if (txtTienKhachDua.getText().trim().isEmpty()){
-                        txtTienThua.setText("");
-                    }
-                    else{
-                        String s = txtTienKhachDua.getText().trim()
-                                .replace(".", "")
-                                .replace(",", "");
+                    String s = txtTienKhachDua.getText().trim()
+                            .replace(".", "")
+                            .replace(",", "");
 
-                        txtTienKhachDua.setText(
-                                df.format(Double.parseDouble(s))
-                        );
-                    }
+                    txtTienKhachDua.setText(
+                            df.format(Double.parseDouble(s))
+                    );
                 }
             }
         });
@@ -1000,11 +954,7 @@ public class GDTaoHoaDonBanHang extends JFrame implements IDSBienGDTaoHoaDonBanH
             @Override
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER){
-                    double tienKhachDua = Double.parseDouble(
-                            txtTienKhachDua.getText().trim()
-                                    .replace(".", "")
-                                    .replace(",", "")
-                    );
+                    double tienKhachDua = TienIch.chuyenDinhDangTienTeDaFormatSangNguyenGoc(txtTienKhachDua);
 
                     if (tienKhachDua >= tienKhachPhaiTra.get()){
                         txtTienThua.setText(
@@ -1068,68 +1018,43 @@ public class GDTaoHoaDonBanHang extends JFrame implements IDSBienGDTaoHoaDonBanH
         txtTimKiemKH.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                int nutDuocNhan = e.getKeyCode();
+                String tuKhoa = txtTimKiemKH.getText().toLowerCase();
 
-                if (nutDuocNhan == danhSachKeyMap[0]){
-                    xoaTatCaSanPhamDaThem();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[1]){
-                    thuNhoManHinh();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[2]){
-                    hienThiGDCanhBaoHuyHDBH();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[3]){
-                    txtTimKiemKH.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[4]){
-                    hienThiGDThemKhachHang();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[5]){
-                    txtTienKhachDua.requestFocus();
-                }
-                else if (nutDuocNhan == danhSachKeyMap[6]){
-                    thucHienThuTucThanhToan();
+                if (tuKhoa.isEmpty()){
+                    pmnKetQuaTimKiemKH.setVisible(false);
+                    txtTimKiemKH.setToolTipText("");
                 }
                 else{
-                    String tuKhoa = txtTimKiemKH.getText().toLowerCase();
+                    ArrayList<KhachHangTimDuoc> dsTimDuoc = timKiemKhachHang(tuKhoa);
 
-                    if (tuKhoa.isEmpty()){
-                        pmnKetQuaTimKiemKH.setVisible(false);
-                        txtTimKiemKH.setToolTipText("");
+                    if (!dsTimDuoc.isEmpty()){
+                        duaDuLieuVaoTblKetQuaTimKiemKH(dsTimDuoc);
+
+                        pmnKetQuaTimKiemKH.setVisible(true);
+
+                        tblKetQuaTimKiemKH.setEnabled(true);
+
+                        pmnKetQuaTimKiemKH.show(
+                                txtTimKiemKH,
+                                0,
+                                txtTimKiemKH.getHeight()
+                        );
+
+                        txtTimKiemKH.requestFocus();
                     }
                     else{
-                        ArrayList<KhachHangTimDuoc> dsTimDuoc = timKiemKhachHang(tuKhoa);
+                        tblKetQuaTimKiemKH.setEnabled(false);
 
-                        if (!dsTimDuoc.isEmpty()){
-                            duaDuLieuVaoTblKetQuaTimKiemKH(dsTimDuoc);
+                        dtmKetQuaTimKiemKH.setRowCount(0);
 
-                            pmnKetQuaTimKiemKH.setVisible(true);
+                        Object[] thongBaoKhongTimRaKHNao = {
+                                "",
+                                "( ^ _ ^ )"
+                        };
 
-                            tblKetQuaTimKiemKH.setEnabled(true);
+                        dtmKetQuaTimKiemKH.addRow(thongBaoKhongTimRaKHNao);
 
-                            pmnKetQuaTimKiemKH.show(
-                                    txtTimKiemKH,
-                                    0,
-                                    txtTimKiemKH.getHeight()
-                            );
-
-                            txtTimKiemKH.requestFocus();
-                        }
-                        else{
-                            tblKetQuaTimKiemKH.setEnabled(false);
-
-                            dtmKetQuaTimKiemKH.setRowCount(0);
-
-                            Object[] thongBaoKhongTimRaKHNao = {
-                                    "",
-                                    "( ^ _ ^ )"
-                            };
-
-                            dtmKetQuaTimKiemKH.addRow(thongBaoKhongTimRaKHNao);
-
-                            datKichThuocChoPmnKetQuaTimKiemKhachHang(1);
-                        }
+                        datKichThuocChoPmnKetQuaTimKiemKhachHang(1);
                     }
                 }
             }
@@ -1397,7 +1322,7 @@ public class GDTaoHoaDonBanHang extends JFrame implements IDSBienGDTaoHoaDonBanH
         else{
             CacHamDungSan.hienThiThongBaoKetQua(
                     GDThongBaoKetQua.THONG_BAO_LOI,
-                    "Khách hàng này không mua gì cả."
+                    "Khách hàng này không mua gì cả nên không chấp nhận thanh toán được."
             );
         }
     }

@@ -63,7 +63,9 @@ public interface IDSBienGDDangNhap extends IDSBienMacDinh {
 
     JButton btnDangNhap = new JButton(
             "Đăng nhập",
-            new ImageIcon("src/main/resources/BieuTuong/Login_24px_1.png")
+            new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Login_24px_1.png")
+            )
     );
 
     Color bgrBtnDangNhap = new Color(30, 122, 141);

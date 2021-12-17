@@ -185,6 +185,7 @@ public class GDCanhBaoDangXuat extends JDialog implements IDSBienGDCanhBaoDangXu
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
+                GDChinh.getInstance().setOpacity(1);
             }
         });
     }
