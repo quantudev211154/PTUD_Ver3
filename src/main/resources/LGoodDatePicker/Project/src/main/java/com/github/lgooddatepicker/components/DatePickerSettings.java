@@ -64,21 +64,23 @@ public class DatePickerSettings {
      * be modified). This seems to be enforced by the swing setEnabled() function.
      */
     public enum DateArea {
-        BackgroundClearLabel(new Color(240, 240, 240)),
-        BackgroundMonthAndYearMenuLabels(new Color(240, 240, 240)),
+        BackgroundClearLabel(new Color(255,255, 255)),
+        BackgroundMonthAndYearMenuLabels(new Color(255,255, 255)),
         BackgroundMonthAndYearNavigationButtons(new JButton().getBackground()),
         BackgroundCalendarPanelLabelsOnHover(new Color(184, 207, 229)),
-        BackgroundOverallCalendarPanel(new Color(240, 240, 240)),
-        BackgroundTodayLabel(new Color(240, 240, 240)),
-        BackgroundTopLeftLabelAboveWeekNumbers(new Color(184, 207, 229)),
+        BackgroundOverallCalendarPanel(new Color(255, 255, 255)),
+        BackgroundTodayLabel(new Color(255,255, 255)),
+//        BackgroundTopLeftLabelAboveWeekNumbers(new Color(184, 207, 229)),
+        BackgroundTopLeftLabelAboveWeekNumbers(new Color(255, 255, 255)),
         CalendarBackgroundNormalDates(Color.white),
-        CalendarBackgroundSelectedDate(new Color(163, 184, 204)),
+        CalendarBackgroundSelectedDate(new Color(0,143,253)),
+        CalendarForegroundSelectedDate(Color.white),
         CalendarBackgroundVetoedDates(Color.lightGray),
-        CalendarBorderSelectedDate(new Color(99, 130, 191)),
+        CalendarBorderSelectedDate(new Color(0,143,253)),
         CalendarDefaultBackgroundHighlightedDates(Color.green),
         CalendarDefaultTextHighlightedDates(Color.black),
         CalendarTextNormalDates(Color.black),
-        CalendarTextWeekdays(Color.black),
+        CalendarTextWeekdays(Color.gray),
         CalendarTextWeekNumbers(Color.black),
         TextClearLabel(new JLabel().getForeground()),
         TextMonthAndYearMenuLabels(new JLabel().getForeground()),
@@ -93,7 +95,7 @@ public class DatePickerSettings {
         DatePickerTextInvalidDate(Color.red),
         DatePickerTextValidDate(Color.black),
         DatePickerTextVetoedDate(Color.black),
-        DatePickerTextDisabled(new Color(109, 109, 109));
+        DatePickerTextDisabled(new Color(255,255, 255));
 
         DateArea(Color defaultColor) {
             this.defaultColor = defaultColor;
@@ -174,7 +176,7 @@ public class DatePickerSettings {
      * colorBackgroundWeekdayLabels, This is the calendar background color for the weekday labels.
      * The default color is a medium sky blue.
      */
-    private Color colorBackgroundWeekdayLabels = new Color(184, 207, 229);
+    private Color colorBackgroundWeekdayLabels = new Color(255, 255, 255);
 
     /**
      * colorBackgroundWeekNumberLabels, This is the calendar background color for the week number
@@ -2229,8 +2231,8 @@ public class DatePickerSettings {
         Color textFieldBorderColor = (allowKeyboardEditing)
             ? InternalConstants.colorEditableTextFieldBorder
             : InternalConstants.colorNotEditableTextFieldBorder;
-        parentDatePicker.getComponentDateTextField().setBorder(new CompoundBorder(
-            new MatteBorder(1, 1, 1, 1, textFieldBorderColor), new EmptyBorder(1, 3, 2, 2)));
+//        parentDatePicker.getComponentDateTextField().setBorder(new CompoundBorder(
+//            new MatteBorder(1, 1, 1, 1, textFieldBorderColor), new EmptyBorder(1, 3, 2, 2)));
     }
 
     /**

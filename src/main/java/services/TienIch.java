@@ -217,6 +217,8 @@ public class TienIch {
 
         hmNhapHang.put(maLoHang, dsChiTietHDNH);
 
+        fileInputStream.close();
+
         return hmNhapHang;
     }
 

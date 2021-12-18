@@ -39,7 +39,7 @@ public class KetNoiCSDL {
      * <p>Trả về kết nối đã được khởi tạo có nhiệm vụ kết nối tới cơ sở dữ liệu.</p>
      * @return Kết nối tới cơ sở dữ liệu đã được khởi tạo
      */
-    public static Connection layKetNoi() {
+    public synchronized static Connection layKetNoi() {
         return con;
     }
 

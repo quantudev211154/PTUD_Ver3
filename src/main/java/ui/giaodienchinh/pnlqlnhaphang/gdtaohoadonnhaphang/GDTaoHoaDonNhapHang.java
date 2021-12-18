@@ -45,6 +45,13 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
         datKeyMap();
 
         chongDongGDTaoHoaDonNhapHangBuaBai();
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                txtTimKiemChiTietHoaDonNhapHang.requestFocus();
+            }
+        });
     }
 
     public static GDTaoHoaDonNhapHang getGdTaoHoaDonNhapHang() {
@@ -647,13 +654,9 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
         txtTenNguoiGiaoHang.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                txtTenNguoiGiaoHang.addKeyListener(new KeyAdapter() {
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-                        if (e.getKeyCode() == KeyEvent.VK_ENTER)
-                            thucHienThuTucInHoaDonNhapHang();
-                    }
-                });
+                if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                    thucHienThuTucInHoaDonNhapHang();
+                }
             }
         });
     }
@@ -717,73 +720,70 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
     }
 
     private void thucHienThuTucInHoaDonNhapHang(){
-        if (dtmDSChiTietHDNH.getRowCount() > 0){
-
-            if (!txtMaLoHang.getText().trim().equals("Mã lô hàng (F6)") && !txtMaLoHang.getText().trim().isEmpty()){
-
-                if (!HoaDonNhapHangDAO.kiemTraTrungMaLoHang(
-                        Integer.parseInt(txtMaLoHang.getText().trim().toString())
-                )){
-                    if (!txtTenNguoiGiaoHang.getText().trim().equals("Tên người giao hàng (F7)") && !txtTenNguoiGiaoHang.getText().trim().isEmpty()){
-
-                        int maLoHang = Integer.parseInt(txtMaLoHang.getText().trim().toString());
-                        String tenNguoiGiaoHang = txtTenNguoiGiaoHang.getText().trim();
-                        LocalDateTime tgGiaoHang = LocalDateTime.now();
-
-                        HoaDonNhapHang hoaDonNhapHang = new HoaDonNhapHang(
-                                GDChinh.getNhanVienDangSuDung(),
-                                maLoHang,
-                                tenNguoiGiaoHang,
-                                thoiGianDatHang.get(),
-                                tgGiaoHang,
-                                dsChiTietHoaDonNhapHang
-                        );
-
-                        boolean kqThemHDNH = HoaDonNhapHangDAO.themHoaDonNhapHang(hoaDonNhapHang);
-
-                        if (kqThemHDNH){
-                            CacHamDungSan.hienThiThongBaoKetQua(
-                                    GDThongBaoKetQua.THONG_BAO_THANH_CONG,
-                                    "Thêm thành công hoá đơn nhập hàng mới."
-                            );
-                            datCacThanhPhanCuaGDTaoHoaDonNhapHangHangVeTinhTrangBanDau();
-                        }
-                        else{
-                            CacHamDungSan.hienThiThongBaoKetQua(
-                                    GDThongBaoKetQua.THONG_BAO_LOI,
-                                    "Đã có lỗi xảy ra."
-                            );
-                        }
-                    }
-                    else{
-                        CacHamDungSan.hienThiThongBaoKetQua(
-                                GDThongBaoKetQua.THONG_BAO_LOI,
-                                "Chưa xác định được tên người giao hàng"
-                        );
-                        txtTenNguoiGiaoHang.requestFocus();
-                    }
-                }
-                else{
-                    CacHamDungSan.hienThiThongBaoKetQua(
-                            GDThongBaoKetQua.THONG_BAO_LOI,
-                            "Cửa hàng đã từng nhập một lô hàng có mã này rồi."
-                    );
-                    txtMaLoHang.requestFocus();
-                }
-            }
-            else{
-                CacHamDungSan.hienThiThongBaoKetQua(
-                        GDThongBaoKetQua.THONG_BAO_LOI,
-                        "Chưa xác định được mã lô hàng."
-                );
-               txtMaLoHang.requestFocus();
-            }
-        }
-        else{
+        if (dsChiTietHoaDonNhapHang.size() == 0){
             CacHamDungSan.hienThiThongBaoKetQua(
                     GDThongBaoKetQua.THONG_BAO_LOI,
                     "Không thể thực hiện tác vụ in hoá đơn nhập hàng. " +
                             "Đơn nhập hàng này không có sản phẩm nào cả."
+            );
+            return;
+        }
+
+        if (txtMaLoHang.getText().trim().equals("Mã lô hàng (F6)") || txtMaLoHang.getText().trim().isEmpty()){
+            CacHamDungSan.hienThiThongBaoKetQua(
+                    GDThongBaoKetQua.THONG_BAO_LOI,
+                    "Chưa xác định được mã lô hàng."
+            );
+            txtMaLoHang.requestFocus();
+            return;
+        }
+
+        if (HoaDonNhapHangDAO.kiemTraTrungMaLoHang(
+                Integer.parseInt(txtMaLoHang.getText().trim().toString())
+        )){
+            CacHamDungSan.hienThiThongBaoKetQua(
+                    GDThongBaoKetQua.THONG_BAO_LOI,
+                    "Cửa hàng đã từng nhập một lô hàng có mã này rồi."
+            );
+            txtMaLoHang.requestFocus();
+            return;
+        }
+
+        if (txtTenNguoiGiaoHang.getText().trim().equals("Tên người giao hàng (F7)") || txtTenNguoiGiaoHang.getText().trim().isEmpty()){
+            CacHamDungSan.hienThiThongBaoKetQua(
+                    GDThongBaoKetQua.THONG_BAO_LOI,
+                    "Chưa xác định được tên người giao hàng"
+            );
+            txtTenNguoiGiaoHang.requestFocus();
+            return;
+        }
+
+        int maLoHang = Integer.parseInt(txtMaLoHang.getText().trim().toString());
+        String tenNguoiGiaoHang = txtTenNguoiGiaoHang.getText().trim();
+        LocalDateTime tgGiaoHang = LocalDateTime.now();
+
+        HoaDonNhapHang hoaDonNhapHang = new HoaDonNhapHang(
+                GDChinh.getNhanVienDangSuDung(),
+                maLoHang,
+                tenNguoiGiaoHang,
+                thoiGianDatHang.get(),
+                tgGiaoHang,
+                dsChiTietHoaDonNhapHang
+        );
+
+        boolean kqThemHDNH = HoaDonNhapHangDAO.themHoaDonNhapHang(hoaDonNhapHang);
+
+        if (kqThemHDNH){
+            CacHamDungSan.hienThiThongBaoKetQua(
+                    GDThongBaoKetQua.THONG_BAO_THANH_CONG,
+                    "Thêm thành công hoá đơn nhập hàng mới."
+            );
+            datCacThanhPhanCuaGDTaoHoaDonNhapHangHangVeTinhTrangBanDau();
+        }
+        else{
+            CacHamDungSan.hienThiThongBaoKetQua(
+                    GDThongBaoKetQua.THONG_BAO_LOI,
+                    "Đã có lỗi xảy ra."
             );
         }
     }

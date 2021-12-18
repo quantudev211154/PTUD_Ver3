@@ -275,7 +275,14 @@ public class CalendarPanel extends JPanel {
         // Save the information of whether this is an independent calendar panel.
         this.isIndependentCalendarPanel = isIndependentCalendarPanelInstance;
 
+        popupMonth.setBorder(
+                BorderFactory.createLineBorder(Color.GRAY, 1)
+        );
         popupMonth.addPopupMenuListener(monthPopupCancelWatcher);
+
+        popupYear.setBorder(
+                BorderFactory.createLineBorder(Color.GRAY, 1)
+        );
         popupYear.addPopupMenuListener(yearPopupCancelWatcher);
 
         displayedYearMonth = YearMonth.now(getClockForToday());
@@ -427,7 +434,6 @@ public class CalendarPanel extends JPanel {
             dateLabel.setVerticalAlignment(SwingConstants.CENTER);
             dateLabel.setBackground(Color.white);
             dateLabel.setForeground(Color.black);
-            dateLabel.setBorder(null);
             dateLabel.setOpaque(true);
             dateLabel.setText("" + i);
             CellConstraints constraints = CC.xy(dateLabelColumnX, dateLabelRowY);
@@ -489,7 +495,7 @@ public class CalendarPanel extends JPanel {
             JLabel weekdayLabel = new JLabel();
             weekdayLabel.setHorizontalAlignment(SwingConstants.CENTER);
             weekdayLabel.setVerticalAlignment(SwingConstants.CENTER);
-            weekdayLabel.setBorder(new EmptyBorder(0, 2, 0, 2));
+            weekdayLabel.setBorder(new EmptyBorder(2, 3, 2, 3));
             weekdayLabel.setOpaque(true);
             weekdayLabel.setText("wd" + i);
             CellConstraints constraints = CC.xywh(weekdayLabelColumnX, weekdayLabelRowY,
@@ -747,9 +753,39 @@ public class CalendarPanel extends JPanel {
             dateLabel.setBackground(settings.getColor(DateArea.CalendarBackgroundNormalDates));
             dateLabel.setForeground(settings.getColor(DateArea.CalendarTextNormalDates));
             dateLabel.setFont(settings.getFontCalendarDateLabels());
-            dateLabel.setBorder(new EmptyBorder(1, 1, 1, 1));
+            dateLabel.setBorder(
+                    new CompoundBorder(
+                            BorderFactory.createLineBorder(settings.getColor(DateArea.CalendarBackgroundNormalDates), 1),
+                            BorderFactory.createEmptyBorder(2, 2, 2, 2)
+                    )
+            );
             dateLabel.setEnabled(true);
             dateLabel.setToolTipText(null);
+            dateLabel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    if (!dateLabel.getText().trim().isEmpty()){
+                        dateLabel.setBorder(
+                                new CompoundBorder(
+                                        BorderFactory.createLineBorder(settings.getColor(DateArea.CalendarBackgroundSelectedDate), 1),
+                                        BorderFactory.createEmptyBorder(2, 2, 2, 2)
+                                )
+                        );
+                        dateLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                    }
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    dateLabel.setBorder(
+                            new CompoundBorder(
+                                    BorderFactory.createLineBorder(settings.getColor(DateArea.CalendarBackgroundNormalDates), 1),
+                                    BorderFactory.createEmptyBorder(2, 2, 2, 2)
+                            )
+                    );
+                    dateLabel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+            });
             // Calculate the index to use on the daysOfWeekAsDisplayed array.
             int daysOfWeekAsDisplayedArrayIndex = dateLabelArrayIndex % 7;
             // Check to see if we are inside the valid range for days of this month.
@@ -833,9 +869,16 @@ public class CalendarPanel extends JPanel {
         }
         // If needed, change the color of the selected date.
         if (selectedDateLabel != null) {
+            selectedDateLabel.setBorder(
+                    new CompoundBorder(
+                            BorderFactory.createLineBorder(settings.getColor(DateArea.CalendarBackgroundSelectedDate), 1),
+                            BorderFactory.createEmptyBorder(2, 2, 2, 2)
+                    )
+            );
             selectedDateLabel.setBackground(settings.getColor(DateArea.CalendarBackgroundSelectedDate));
-            selectedDateLabel.setBorder(new LineBorder(
-                settings.getColor(DateArea.CalendarBorderSelectedDate)));
+//            selectedDateLabel.setBorder(new LineBorder(
+//                settings.getColor(DateArea.CalendarBorderSelectedDate)));
+            selectedDateLabel.setForeground(settings.getColor(DateArea.CalendarForegroundSelectedDate));
         }
 
         // If needed, draw the week numbers.
@@ -1005,10 +1048,12 @@ public class CalendarPanel extends JPanel {
             return;
         }
         // Highlight the label.
-        label.setBackground(settings.getColor(DateArea.BackgroundCalendarPanelLabelsOnHover));
-        label.setForeground(settings.getColor(DateArea.TextCalendarPanelLabelsOnHover));
+//        label.setBackground(settings.getColor(DateArea.BackgroundCalendarPanelLabelsOnHover));
+//        label.setForeground(settings.getColor(DateArea.TextCalendarPanelLabelsOnHover));
         label.setBorder(new CompoundBorder(
-            new LineBorder(Color.GRAY), labelIndicatorEmptyBorder));
+            new LineBorder(settings.getColor(DateArea.CalendarBackgroundSelectedDate)), labelIndicatorEmptyBorder)
+        );
+        label.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     /**
@@ -1018,6 +1063,7 @@ public class CalendarPanel extends JPanel {
     private void labelIndicatorMouseExited(MouseEvent e) {
         JLabel label = ((JLabel) e.getSource());
         labelIndicatorSetColorsToDefaultState(label);
+        label.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     /**
@@ -1601,7 +1647,7 @@ public class CalendarPanel extends JPanel {
 
         //======== centerPanel ========
         {
-            centerPanel.setBackground(new Color(210, 210, 210));
+            centerPanel.setBackground(new Color(255, 255, 255));
             centerPanel.setLayout(new FormLayout(
                 "3*(min), 7*(default:grow), min",
                 "fill:min, fill:2px, fill:default:grow, fill:1px, fill:min, 6*(fill:default:grow), fill:min"));
@@ -1624,6 +1670,7 @@ public class CalendarPanel extends JPanel {
             labelSetDateToToday.setText("Today: Feb 12, 2016");
             labelSetDateToToday.setHorizontalAlignment(SwingConstants.CENTER);
             labelSetDateToToday.setOpaque(true);
+            labelSetDateToToday.setBackground(Color.white);
             footerPanel.add(labelSetDateToToday, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 0), 0, 0));

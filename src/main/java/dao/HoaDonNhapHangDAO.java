@@ -60,7 +60,7 @@ public class HoaDonNhapHangDAO {
 
             String queryInsertVaoBangChiTietHDNH =
                     "insert into ChiTietHoaDonNhapHang ([maSP], [soLuongNhap], [donGiaNhap], [thanhTien], [maHDNH]) " +
-                            "values (?, ?, ?, ?, "+ maHDNHMoiNhat +")";
+                            "values (?, ?, ?, ?, ?)";
 
             PreparedStatement pState = KetNoiCSDL.layKetNoi().prepareStatement(queryInsertVaoBangChiTietHDNH);
 
@@ -79,14 +79,15 @@ public class HoaDonNhapHangDAO {
                     }
                     else{
                         SanPhamDAO.themSanPhamMoi(ct.getSanPham());
-
-                        pState.setString(1, ct.getSanPham().getMaSP());
-                        pState.setInt(2, ct.getSoLuongNhap());
-                        pState.setDouble(3, ct.getDonGiaNhap());
-                        pState.setDouble(4, ct.getThanhTien());
-
-                        kqInsert.set(pState.executeUpdate() > 0);
                     }
+
+                    pState.setString(1, ct.getSanPham().getMaSP());
+                    pState.setInt(2, ct.getSoLuongNhap());
+                    pState.setDouble(3, ct.getDonGiaNhap());
+                    pState.setDouble(4, ct.getThanhTien());
+                    pState.setInt(5, maHDNHMoiNhat);
+
+                    kqInsert.set(pState.executeUpdate() > 0);
                 } catch (Exception ex){
                     ex.printStackTrace();
                 }

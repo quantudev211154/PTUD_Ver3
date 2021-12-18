@@ -98,7 +98,7 @@ public interface IDSBienPnlQLKhachHang extends IDSBienMacDinh, IDSBienGDChinh {
             dimPnlNgayBatDauVaKetThuc.width
                     - khoangCachSoVoiLeTraiCuaTieuDe * 2,
             dimPnlNgayBatDauVaKetThuc.height
-                    - 40
+                    - 35
     );
 
     JPanel pnlNgayBatDau = new JPanel();

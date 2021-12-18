@@ -2,7 +2,10 @@ package com.github.lgooddatepicker.components;
 
 import com.privatejgoodies.forms.layout.FormLayout;
 import com.privatejgoodies.forms.factories.CC;
+
+import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 import javax.swing.border.*;
 import com.github.lgooddatepicker.zinternaltools.*;
 import com.github.lgooddatepicker.components.DatePickerSettings.DateArea;
@@ -14,20 +17,11 @@ import java.util.ArrayList;
 import com.github.lgooddatepicker.optionalusertools.DateVetoPolicy;
 import com.github.lgooddatepicker.zinternaltools.CalculateMinimumDateFieldSize;
 import com.github.lgooddatepicker.zinternaltools.CustomPopup.CustomPopupCloseListener;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.Window;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.chrono.IsoEra;
 import java.util.Locale;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 /**
  * DatePicker, This class implements a date picker GUI component.
@@ -929,9 +923,15 @@ public class DatePicker extends JPanel implements CustomPopupCloseListener {
 
         //---- dateTextField ----
         dateTextField.setMargin(new Insets(1, 3, 2, 2));
-        dateTextField.setBorder(new CompoundBorder(
-                new MatteBorder(1, 1, 1, 1, new Color(122, 138, 153)),
-                new EmptyBorder(1, 3, 2, 2)));
+//        dateTextField.setBorder(new CompoundBorder(
+//                new MatteBorder(1, 1, 1, 1, new Color(122, 138, 153)),
+//                new EmptyBorder(1, 3, 2, 2)));
+        dateTextField.setBorder(
+                new CompoundBorder(
+                        dateTextField.getBorder(),
+                        new EmptyBorder(2, 5, 2, 2)
+                )
+        );
         dateTextField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -948,6 +948,16 @@ public class DatePicker extends JPanel implements CustomPopupCloseListener {
             @Override
             public void mousePressed(MouseEvent e) {
                 zEventToggleCalendarButtonMousePressed(e);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                toggleCalendarButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                toggleCalendarButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
         add(toggleCalendarButton, CC.xy(3, 1));

@@ -309,13 +309,6 @@ public class CacHamDungSan implements IDSBienMacDinh {
         dtp.setSettings(dps);
         dtp.setPreferredSize(dim);
         dtp.setDateToToday();
-
-        dtp.getComponentDateTextField().setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
-                        BorderFactory.createEmptyBorder(0, 10, 0, 0)
-                )
-        );
     }
 
     public static void datPhimTatXoaTrangCtrlDChoTxt(JTextField txt){

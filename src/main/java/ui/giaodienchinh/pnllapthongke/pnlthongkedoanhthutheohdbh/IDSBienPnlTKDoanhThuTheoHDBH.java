@@ -74,7 +74,7 @@ public interface IDSBienPnlTKDoanhThuTheoHDBH extends IDSBienMacDinh, IDSBienGDC
                     - khoangCachSoVoiLeTraiCuaTieuDe
                     - 8,
             dimPnlNgayBatDauVaKetThucTKTheoHDBH.height
-                    - 35
+                    - 30
     );
 
     JPanel pnlNgayBatDauTKTheoHDBH = new JPanel();
