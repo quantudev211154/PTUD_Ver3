@@ -207,7 +207,7 @@ public interface IDSBienQLNhanVien extends IDSBienMacDinh, IDSBienGDChinh {
 
     JButton btnThemNhanVien = new JButton("Nhân viên",
             new ImageIcon("src/main/resources/BieuTuong/Add_24px_1.png"));
-    JButton btnXuatDuLieuTrongTableRaFile = new JButton(" Xuất data",
+    JButton btnXuatDuLieuTrongTableRaFile = new JButton("Xuất dữ liệu",
             new ImageIcon("src/main/resources/BieuTuong/Export_24px_1.png")
     );
 

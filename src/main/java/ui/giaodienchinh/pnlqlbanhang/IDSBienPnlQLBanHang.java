@@ -190,7 +190,7 @@ public interface IDSBienPnlQLBanHang extends IDSBienMacDinh, IDSBienGDChinh {
             )
     );
 
-    JButton btnXuatDuLieuTrongTableRaFile = new JButton(" Xuất data",
+    JButton btnXuatDuLieuTrongTableRaFile = new JButton("Xuất dữ liệu",
             new ImageIcon(
                     Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Export_24px_1.png")
             )

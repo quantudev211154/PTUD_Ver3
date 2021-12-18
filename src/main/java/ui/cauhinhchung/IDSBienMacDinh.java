@@ -37,9 +37,9 @@ public interface IDSBienMacDinh {
     Color bgrTieuDeTable = new Color(181, 225, 247);
     Color bgrHangTableLe = new Color(235, 235, 235);
 
-    Color bgrTieuDeThanhTienIch = new Color(116, 196, 214);
+    Color bgrTieuDeThanhTienIch = new Color(71, 169, 191);
 
-    Color bgrTableRowKhiDuocChon = new Color(22, 191, 242);
+    Color bgrTableRowKhiDuocChon = new Color(12, 110, 156);
 
     int chieuRongThanhTienIch = 230;
 
@@ -70,7 +70,7 @@ public interface IDSBienMacDinh {
     Color bgrBtnThoat = new Color(12, 132, 150);
 
     /**
-     * Phục vụ cho việc phân loại kiểu thống kê khi xuất Data ra Excel hoặc PDF
+     * Phục vụ cho việc phân loại kiểu thống kê khiXuất dữ liệu ra Excel hoặc PDF
      */
 
     int THONG_KE_HOA_DON_BAN_HANG = 1;

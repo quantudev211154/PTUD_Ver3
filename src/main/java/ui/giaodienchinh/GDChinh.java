@@ -1,5 +1,4 @@
 package ui.giaodienchinh;
-
 import connectDB.KetNoiCSDL;
 import dao.NhanVienDAO;
 import entity.NhanVien;
@@ -18,6 +17,7 @@ import ui.giaodienchinh.pnlqlsanpham.PnlQLSanPham;
 import ui.giaodienchinh.pnlqlthuchi.PnlQLThuChi;
 import ui.giaodiendoimatkhau.GDDoiMatKhau;
 import ui.giaodienthongbaongoaivi.GDThongBaoKetQua;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -123,6 +123,8 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         moNhanhWebsiteHDSD();
 
         moNhanhGDThemGhiChu();
+
+        thaoTacNhanhVoiPnlDieuHuong();
     }
 
     /**
@@ -280,6 +282,34 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         });
     }
 
+    private void thaoTacNhanhVoiPnlDieuHuong(){
+        Action thaoTacNhanhVoiPnlDieuHuong = new AbstractAction(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tuyChinhKichThuocPnlDieuHuongTheoDieuKien();
+            }
+        };
+
+        KeyStroke hotKey = KeyStroke.getKeyStroke(
+                KeyEvent.VK_B,
+                KeyEvent.CTRL_DOWN_MASK
+        );
+
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(hotKey, "CTRL + B");
+
+        getRootPane().getActionMap().put("CTRL + B", thaoTacNhanhVoiPnlDieuHuong);
+    }
+
+    private void tuyChinhKichThuocPnlDieuHuongTheoDieuKien(){
+        if (pnlDieuHuong.getPreferredSize().width == dimPnlDieuHuongMacDinh.width){
+            bienDoiPnlDieuHuongKhiMoRong();
+        }
+        else{
+            bienDoiPnlDieuHuongKhiThuHepVeMacDinh();
+        }
+    }
+
     private void dungUI(){
         dungLypKhungDaLopChinh();
 
@@ -342,12 +372,7 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         lblLogo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (pnlDieuHuong.getPreferredSize().width == dimPnlDieuHuongMacDinh.width){
-                    bienDoiPnlDieuHuongKhiMoRong();
-                }
-                else{
-                    bienDoiPnlDieuHuongKhiThuHepVeMacDinh();
-                }
+                tuyChinhKichThuocPnlDieuHuongTheoDieuKien();
             }
 
             @Override
@@ -482,18 +507,6 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         datHanhDongChoPnlQLGhiChuKhiDuocChon();
         pnlNutQLGhiChu.setToolTipText("Quản lí ghi chú");
         pnlThanhDieuHuongChinh.add(pnlNutQLGhiChu);
-
-//        if (nhanVienDangSuDung.isQuanLi()){
-//            dungCacNutDieuHuong(pnlNutQLNhanVien, lblIcnNutQLNhanVien, lblTieuDeNutQLNhanVien);
-//            datHanhDongChoPnlQLNhanVienKhiDuocChon();
-//            pnlNutQLNhanVien.setToolTipText("Quản lí nhân viên");
-//            pnlThanhDieuHuongChinh.add(pnlNutQLNhanVien);
-//
-//            dungCacNutDieuHuong(pnlNutThongKe, lblIcnNutQLThongKe, lblTieuDeNutThongKe);
-//            datHanhDongChoPnlLapThongKeKhiDuocChon();
-//            pnlNutThongKe.setToolTipText("Lập thống kê");
-//            pnlThanhDieuHuongChinh.add(pnlNutThongKe);
-//        }
     }
 
     private void datHanhDongChoNutQLBanHangKhiDuocChon(){
@@ -535,11 +548,11 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
 
         new Thread(PnlQLThuChi::getPnlQLThuChi).start();
 
-//        if (nhanVienDangSuDung.isQuanLi()){
-//            new Thread(PnlQLNhanVien::getPnlQLNhanVien).start();
-//
-//            new Thread(PnlLapThongKe::getPnlLapThongKe).start();
-//        }
+        if (nhanVienDangSuDung != null && nhanVienDangSuDung.isQuanLi()){
+            new Thread(PnlQLNhanVien::getPnlQLNhanVien).start();
+
+            new Thread(PnlLapThongKe::getPnlLapThongKe).start();
+        }
     }
 
     private void datHanhDongChoNutQLKhachHangKhiDuocChon(){

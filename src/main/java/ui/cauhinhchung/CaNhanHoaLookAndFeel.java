@@ -54,6 +54,7 @@ public class CaNhanHoaLookAndFeel implements IDSBienMacDinh {
         UIManager.put( "TextComponent.arc", 15 );
         UIManager.put( "Component.arc", 15 );
         UIManager.put( "Button.arc", 15 );
+        UIManager.put( "Button.font", fntMacDinh );
 
         UIManager.put( "TabbedPane.selectedBackground", new Color(135, 194, 224) );
     }

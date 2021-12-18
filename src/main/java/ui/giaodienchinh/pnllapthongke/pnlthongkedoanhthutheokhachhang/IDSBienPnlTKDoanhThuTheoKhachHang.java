@@ -228,7 +228,7 @@ public interface IDSBienPnlTKDoanhThuTheoKhachHang extends IDSBienGDChinh, IDSBi
             dimPnlHopCongCuTKDoanhThuTheoKhachHang.height
     );
     JButton btnXuatTKDoanhThuTheoKhachHangRaFile = new JButton(
-            "Xuất Excel",
+            "Xuất dữ liệu",
             new ImageIcon(
                     Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Export_24px_1.png")
             )

@@ -216,7 +216,7 @@ public interface IDSBienPnlThongKeSanPham extends IDSBienMacDinh, IDSBienGDChinh
             dimPnlHopCongCuTKSanPham.height
     );
     JButton btnXuatTKSanPhamRaFile = new JButton(
-            "Xuất data",
+            "Xuất dữ liệu",
             new ImageIcon(
                     Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Export_24px_1.png")
             )

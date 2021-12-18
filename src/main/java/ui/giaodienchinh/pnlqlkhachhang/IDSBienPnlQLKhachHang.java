@@ -180,7 +180,7 @@ public interface IDSBienPnlQLKhachHang extends IDSBienMacDinh, IDSBienGDChinh {
             dimPnlHopCongCu.height
     );
 
-    JButton btnXuatDuLieuTrongTableRaFile = new JButton(" Xuất data",
+    JButton btnXuatDuLieuTrongTableRaFile = new JButton("Xuất dữ liệu",
             new ImageIcon(
                     Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Export_24px_1.png")
             )

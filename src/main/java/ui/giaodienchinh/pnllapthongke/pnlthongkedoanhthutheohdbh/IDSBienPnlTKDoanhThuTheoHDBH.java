@@ -164,7 +164,7 @@ public interface IDSBienPnlTKDoanhThuTheoHDBH extends IDSBienMacDinh, IDSBienGDC
             dimPnlHopCongCuTKDoanhThuTheoHDBH.height
     );
     JButton btnXuatTKDoanhThuTheoHDBHRaFile = new JButton(
-            "Xuất data",
+            "Xuất dữ liệu",
             new ImageIcon(
                     Toolkit.getDefaultToolkit().getImage("src/main/resources/BieuTuong/Export_24px_1.png")
             )
