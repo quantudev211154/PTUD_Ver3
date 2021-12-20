@@ -414,20 +414,22 @@ public class PnlQLSanPham implements IDSBienPnlQLSanPham, ActionListener{
         tblKetQuaTimKiemSanPham.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int row = tblKetQuaTimKiemSanPham.getSelectedRow();
+                if (e.getClickCount() == 2 && e.getButton() == 1){
+                    int row = tblKetQuaTimKiemSanPham.getSelectedRow();
 
-                String maSPDuocChon = (String) tblKetQuaTimKiemSanPham.getValueAt(                          /* Lấy mã của sản phẩm tương ứng */
-                        row,
-                        0
-                );
+                    String maSPDuocChon = (String) tblKetQuaTimKiemSanPham.getValueAt(                          /* Lấy mã của sản phẩm tương ứng */
+                            row,
+                            0
+                    );
 
-                SanPham sp = SanPhamDAO.laySanPhamTheoMa(maSPDuocChon);
+                    SanPham sp = SanPhamDAO.laySanPhamTheoMa(maSPDuocChon);
 
-                GDXemThongTinSanPham gd = GDXemThongTinSanPham.getGdXemTTSanPham();
+                    GDXemThongTinSanPham gd = GDXemThongTinSanPham.getGdXemTTSanPham();
 
-                GDXemThongTinSanPham.hienThiThongTinSanPham(sp);
+                    GDXemThongTinSanPham.hienThiThongTinSanPham(sp);
 
-                gd.setVisible(true);
+                    gd.setVisible(true);
+                }
             }
         });
     }
@@ -580,7 +582,13 @@ public class PnlQLSanPham implements IDSBienPnlQLSanPham, ActionListener{
             public void mouseClicked(MouseEvent e) {
                 int hangDuocChon = tblDuLieuTraCuuDuoc.getSelectedRow();
 
-                if (hangDuocChon != -1 && hangDuocChon != 0){
+                if (
+                        hangDuocChon != -1 &&
+                        !CacHamDungSan.kiemTraHangTrongTableDuocChonCoPhaiLaHangTongKetKhong(
+                                tblDuLieuTraCuuDuoc,
+                                hangDuocChon
+                        )
+                ){
                     int nutDuocChon = e.getButton();
 
                     int soLanClick = e.getClickCount();

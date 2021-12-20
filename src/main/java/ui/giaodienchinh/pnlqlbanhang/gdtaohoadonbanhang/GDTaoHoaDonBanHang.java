@@ -1239,11 +1239,7 @@ public class GDTaoHoaDonBanHang extends JFrame implements IDSBienGDTaoHoaDonBanH
 
                 if (!txtTienKhachDua.getText().trim().isEmpty()){
                     double soTienKhachPhaiTra = tinhSoTienKhachPhaiTra(dsChiTietHoaDonBanHang);
-                    double soTienKhachDua = Double.parseDouble(
-                            txtTienKhachDua.getText().trim()
-                                    .replace(".", "")
-                                    .replace(",", "")
-                    );
+                    double soTienKhachDua = TienIch.chuyenDinhDangTienTeDaFormatSangNguyenGoc(txtTienKhachDua);
 
                     if (soTienKhachDua >= soTienKhachPhaiTra){
 
@@ -1358,6 +1354,8 @@ public class GDTaoHoaDonBanHang extends JFrame implements IDSBienGDTaoHoaDonBanH
         );
 
         dtmDanhSachSanPhamKHMua.setRowCount(0);
+
+        btnThemKHMoi.setEnabled(true);
 
         txtSLSP.setText("0");
         txtTongTien.setText("0");

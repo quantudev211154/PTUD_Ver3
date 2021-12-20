@@ -722,7 +722,10 @@ public class PnlTKDoanhThuTheoKhachHang implements IDSBienPnlTKDoanhThuTheoKhach
                     if (radLocTheoMoiKhachHang.isSelected()){
                         int row = tblDuLieuTKDoanhThuTheoKhachHang.getSelectedRow();
 
-                        if (row != -1 && row != 0){
+                        if (
+                                row != -1 &&
+                                !CacHamDungSan.kiemTraHangTrongTableDuocChonCoPhaiLaHangTongKetKhong(tblDuLieuTKDoanhThuTheoKhachHang, row)
+                        ){
                             int maKH = Integer.parseInt(
                                     tblDuLieuTKDoanhThuTheoKhachHang.getValueAt(
                                             row, 0
@@ -1031,7 +1034,7 @@ public class PnlTKDoanhThuTheoKhachHang implements IDSBienPnlTKDoanhThuTheoKhach
         dtmTKDTTheoKhachHang.insertRow(
                 0,
                 new Object[]{
-                        "Tổng kết:",
+                        "Tổng cộng:",
                         dtmTKDTTheoKhachHang.getRowCount() + " khách hàng",
                         "",
                         "",

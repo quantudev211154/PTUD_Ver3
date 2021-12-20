@@ -255,8 +255,10 @@ public class GDDangNhap extends JFrame implements IDSBienGDDangNhap {
         if (
             kiemTraTenDangNhap() && kiemTraMatKhau()
         ){
+            String tenDangNhap =  txtTenDangNhap.getText().trim();
+
             boolean ketQuaKiemTraTaiKhoan = TaiKhoanDAO.kiemTraThongTinDangNhap(
-                    txtTenDangNhap.getText().trim(),
+                    tenDangNhap,
                     new String(pwfMatKhau.getPassword())
             );
 
@@ -265,59 +267,48 @@ public class GDDangNhap extends JFrame implements IDSBienGDDangNhap {
                         txtTenDangNhap.getText().trim()
                 );
 
-                if (nhanVien.isQuanLi()){
-                    SwingUtilities.invokeLater(() -> {
-                        dispose();
+                int trangThaiKichHoatCuaTaiKhoanTuongUng = TaiKhoanDAO.layTrangThaiKichHoatCuaTaiKhoan(
+                        tenDangNhap
+                );
 
-                        GDChinh gd = GDChinh.getInstance();
-                        gd.datNhanVienDangSuDung(nhanVien);
-                        gd.setVisible(true);
-                    });
-                }
-                else{
-                    boolean caLamUngVoiThoiGianHienTai =
-                            Time.valueOf(LocalTime.now()).before(Time.valueOf("16:00:00"));
+                boolean hienTaiLaCaSang =
+                        Time.valueOf(LocalTime.now()).before(Time.valueOf("16:00:00"));
 
-                    if (nhanVien.getCaLamViec().isCaSang()  == caLamUngVoiThoiGianHienTai){
-                        int trangThaiKichHoatCuaTaiKhoanTuongUng = TaiKhoanDAO.layTrangThaiKichHoatCuaTaiKhoan(
-                                nhanVien.getMaNV()
-                        );
-
-                        if (trangThaiKichHoatCuaTaiKhoanTuongUng == 1){
-                            SwingUtilities.invokeLater(() -> {
-                                dispose();
-
-                                GDChinh gd = GDChinh.getInstance();
-                                gd.datNhanVienDangSuDung(nhanVien);
-                                gd.setVisible(true);
-                            });
-                        }
-                        else {
+                if (nhanVien.getCaLamViec().isCaSang() == hienTaiLaCaSang){
+                    if (trangThaiKichHoatCuaTaiKhoanTuongUng == 1){
+                        SwingUtilities.invokeLater(() -> {
                             dispose();
 
-                            SwingUtilities.invokeLater(() -> {
-                                GDDoiMatKhau gdDoiMatKhau = GDDoiMatKhau.getGdDoiMatKhau();
-
-                                gdDoiMatKhau.requestFocusInWindow();
-                                gdDoiMatKhau.setCheDoSuDung(GDDoiMatKhau.DOI_MAT_KHAU_BAT_BUOC);
-                                gdDoiMatKhau.setTenDangNhap(nhanVien.getMaNV());
-
-                                gdDoiMatKhau.setVisible(true);
-                            });
-                        }
+                            GDChinh gd = GDChinh.getInstance();
+                            gd.datNhanVienDangSuDung(nhanVien);
+                            gd.setVisible(true);
+                        });
                     }
                     else{
-                        CacHamDungSan.hienThiThongBaoKetQua(
-                                GDThongBaoKetQua.THONG_BAO_LOI,
-                                "Bạn đã vào nhầm ca. Ca làm của bạn không phải lúc này!"
-                        );
+                        dispose();
+
+                        SwingUtilities.invokeLater(() -> {
+                            GDDoiMatKhau gdDoiMatKhau = GDDoiMatKhau.getGdDoiMatKhau();
+
+                            gdDoiMatKhau.setCheDoSuDung(GDDoiMatKhau.DOI_MAT_KHAU_BAT_BUOC);
+                            gdDoiMatKhau.setTenDangNhap(tenDangNhap);
+
+                            gdDoiMatKhau.setVisible(true);
+                            gdDoiMatKhau.requestFocusInWindow();
+                        });
                     }
+                }
+                else{
+                    CacHamDungSan.hienThiThongBaoKetQua(
+                            GDThongBaoKetQua.THONG_BAO_LOI,
+                            "Bạn đã vào nhầm ca. Ca làm của bạn không phải lúc này!"
+                    );
                 }
             }
             else{
                 CacHamDungSan.hienThiThongBaoKetQua(
                         GDThongBaoKetQua.THONG_BAO_LOI,
-                        "Ây chà. Tên đăng nhập hoặc mật khẩu chưa đúng. Vui lòng thử lại."
+                        "Tên đăng nhập hoặc mật khẩu chưa đúng. Vui lòng thử lại!"
                 );
             }
         }

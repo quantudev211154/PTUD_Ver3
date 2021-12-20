@@ -454,4 +454,8 @@ public class CacHamDungSan implements IDSBienMacDinh {
             gdThongBaoKetQua.setVisible(true);
         });
     }
+
+    public static boolean kiemTraHangTrongTableDuocChonCoPhaiLaHangTongKetKhong(JTable tbl, int hang){
+        return tbl.getValueAt(hang, 0).toString().equals("Tổng cộng:");
+    }
 }

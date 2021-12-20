@@ -732,7 +732,13 @@ public class PnlTKDoanhThuTheoNhanVien implements IDSBienPnlTKDoanhThuTheoNhanVi
                     if (radLocTheoMoiNhanVien.isSelected()){
                         int row = tblDuLieuTKDoanhThuTheoNhanVien.getSelectedRow();
 
-                        if (row != -1 && row != 0){
+                        if (
+                                row != -1 &&
+                                !CacHamDungSan.kiemTraHangTrongTableDuocChonCoPhaiLaHangTongKetKhong(
+                                        tblDuLieuTKDoanhThuTheoNhanVien,
+                                        row
+                                )
+                        ){
                             String maNV = tblDuLieuTKDoanhThuTheoNhanVien.getValueAt(
                                     row, 0
                             ).toString();
@@ -1039,7 +1045,7 @@ public class PnlTKDoanhThuTheoNhanVien implements IDSBienPnlTKDoanhThuTheoNhanVi
         dtmTKDTTheoNhanVien.insertRow(
                 0,
                 new Object[]{
-                        "Tổng kết:",
+                        "Tổng cộng:",
                         dtmTKDTTheoNhanVien.getRowCount() + " nhân viên",
                         "",
                         "",

@@ -2,6 +2,7 @@ package ui.giaodienchinh.pnlqlkhachhang.gdcapnhatthongtinkhachhang;
 
 import connectDB.KetNoiCSDL;
 import dao.KhachHangDAO;
+import entity.KhachHang;
 import services.CacHamDungSan;
 import services.MaHoaDuLieu;
 import ui.cauhinhchung.IDSBienMacDinh;
@@ -17,8 +18,8 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 public class GDCapNhatThongTinKhachHang extends JDialog implements IDSBienMacDinh {
@@ -27,7 +28,6 @@ public class GDCapNhatThongTinKhachHang extends JDialog implements IDSBienMacDin
     String maKHCanCapNhat = "";
     String sdtCu = "";
     String diaChiCu = "";
-    Map<String, String> dsSoDienThoai = new TreeMap<>();
 
     public GDCapNhatThongTinKhachHang(int hangDuocChon, String maKHCanCapNhat, String hoTen, String sdtCu, String diaChiCu){
         this.hangDuocChon = hangDuocChon;
@@ -45,35 +45,6 @@ public class GDCapNhatThongTinKhachHang extends JDialog implements IDSBienMacDin
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        luongChuanBiDanhSachSDT();
-    }
-
-    private void luongChuanBiDanhSachSDT(){
-        Thread luongChuanBiDSSDT = new Thread(() -> {
-            try {
-                Connection con = KetNoiCSDL.layKetNoi();
-
-                String query = "select soDT from KhachHang";
-
-                PreparedStatement ps = con.prepareStatement(query);
-
-                ResultSet rs = ps.executeQuery();
-
-                while (rs.next()){
-                    String sdt = MaHoaDuLieu.giaiMa(rs.getString(1));
-
-                    dsSoDienThoai.put(
-                            sdt,
-                            sdt
-                    );
-                }
-            } catch (Exception ex){
-                ex.printStackTrace();
-            }
-        });
-
-        luongChuanBiDSSDT.start();
     }
 
     private void dungUI(){
@@ -204,6 +175,7 @@ public class GDCapNhatThongTinKhachHang extends JDialog implements IDSBienMacDin
                                 GDThongBaoKetQua.THONG_BAO_LOI,
                                 "Hãy cung cấp địa chỉ của khách hàng."
                         );
+                        txtDiaChi.requestFocus();
                     }
                     else{
                         capNhatThongTinKhachHang();
@@ -235,12 +207,20 @@ public class GDCapNhatThongTinKhachHang extends JDialog implements IDSBienMacDin
     private boolean kiemTraTrungSoDienThoai(){
         String sdt = txtSoDT.getText().trim();
 
-        if (dsSoDienThoai.get(sdt) != null){
-            txtSoDT.requestFocus();
+        List<KhachHang> dsKH = new ArrayList<KhachHang>(PnlQLKhachHang.dsKhachHang.values());
 
-            return true;
+        for (KhachHang kh : dsKH){
+            if (kh.getMaKH() != Integer.parseInt(txtMaKH.getText().trim().toString())){
+                if (kh.getSoDT().equals(sdt)){
+                    txtSoDT.setText("");
+                    txtSoDT.requestFocus();
+
+                    return true;
+                }
+            }
         }
 
+        txtDiaChi.requestFocus();
         return false;
     }
 
@@ -272,58 +252,58 @@ public class GDCapNhatThongTinKhachHang extends JDialog implements IDSBienMacDin
         btnCapNhat.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int luaChon = JOptionPane.showConfirmDialog(
-                        null,
-                        "Bạn chắc chắn muốn cập nhật thông tin mới cho khách hàng này?",
-                        "Cảnh báo cập nhật thông tin khách hàng",
-                        JOptionPane.YES_NO_OPTION
-                );
-
-                if (luaChon == JOptionPane.YES_OPTION){
-                    capNhatThongTinKhachHang();
-                }
+                capNhatThongTinKhachHang();
             }
         });
     }
 
     private void capNhatThongTinKhachHang(){
         if ( kiemTraSoDienThoai() && !kiemTraTrungSoDienThoai() && kiemTraHoTenHoacDiaChi(txtDiaChi) ){
-            String maKH = txtMaKH.getText().trim();
-            String sdtMoi = txtSoDT.getText().trim();
-            String diaChiMoi = txtDiaChi.getText().trim();
+            int luaChon = JOptionPane.showConfirmDialog(
+                    null,
+                    "Bạn chắc chắn muốn cập nhật thông tin mới cho khách hàng này?",
+                    "Cảnh báo cập nhật thông tin khách hàng",
+                    JOptionPane.YES_NO_OPTION
+            );
 
-            CountDownLatch countDownLatch = new CountDownLatch(1);
+            if (luaChon == JOptionPane.YES_OPTION){
+                String maKH = txtMaKH.getText().trim();
+                String sdtMoi = txtSoDT.getText().trim();
+                String diaChiMoi = txtDiaChi.getText().trim();
 
-            Thread luongCapNhatKhachHangVaoCSDL = new Thread(() -> {
-                KhachHangDAO.capNhatThongTinKhachHang(
-                        Integer.parseInt(maKH),
-                        sdtMoi,
-                        diaChiMoi
-                );
+                CountDownLatch countDownLatch = new CountDownLatch(1);
 
-                countDownLatch.countDown();
-            });
+                Thread luongCapNhatKhachHangVaoCSDL = new Thread(() -> {
+                    KhachHangDAO.capNhatThongTinKhachHang(
+                            Integer.parseInt(maKH),
+                            sdtMoi,
+                            diaChiMoi
+                    );
 
-            luongCapNhatKhachHangVaoCSDL.start();
+                    countDownLatch.countDown();
+                });
 
-            try {
-                countDownLatch.await();
-            } catch (Exception ex){
-                ex.printStackTrace();
+                luongCapNhatKhachHangVaoCSDL.start();
+
+                try {
+                    countDownLatch.await();
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                }
+
+                PnlQLKhachHang.suaThongTinTrenTableCuaKhachHangVuaDuocCapNhat(hangDuocChon, sdtMoi, diaChiMoi);
+
+                Thread luongHienThiThongBaoThanhCong = new Thread(() -> {
+                    CacHamDungSan.hienThiThongBaoKetQua(
+                            GDThongBaoKetQua.THONG_BAO_THANH_CONG,
+                            "Đã cập nhật thông tin mới thành công cho khách hàng có mã " + maKH
+                    );
+                });
+
+                luongHienThiThongBaoThanhCong.start();
+
+                dispose();
             }
-
-            PnlQLKhachHang.suaThongTinTrenTableCuaKhachHangVuaDuocCapNhat(hangDuocChon, sdtMoi, diaChiMoi);
-
-            Thread luongHienThiThongBaoThanhCong = new Thread(() -> {
-                CacHamDungSan.hienThiThongBaoKetQua(
-                        GDThongBaoKetQua.THONG_BAO_THANH_CONG,
-                        "Đã cập nhật thông tin mới thành công cho khách hàng có mã " + maKH
-                );
-            });
-
-            luongHienThiThongBaoThanhCong.start();
-
-            dispose();
         }
         else{
             CacHamDungSan.hienThiThongBaoKetQua(

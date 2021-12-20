@@ -849,7 +849,13 @@ public class PnlQLNhapHang implements IDSBienPnlQLNhapHang, ActionListener {
             public void mouseClicked(MouseEvent e) {
                 int hangDuocChon = tbl.getSelectedRow();
 
-                if (hangDuocChon != -1 && hangDuocChon != 0){
+                if (
+                        hangDuocChon != -1 &&
+                        !CacHamDungSan.kiemTraHangTrongTableDuocChonCoPhaiLaHangTongKetKhong(
+                                tbl,
+                                hangDuocChon
+                        )
+                ){
                     if (e.getClickCount() == 2 && e.getButton() == 1){
                         int maHDNH = Integer.parseInt(
                                 tbl.getValueAt(

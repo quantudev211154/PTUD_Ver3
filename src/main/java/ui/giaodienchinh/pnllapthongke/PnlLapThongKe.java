@@ -1,7 +1,7 @@
 package ui.giaodienchinh.pnllapthongke;
 
 import com.formdev.flatlaf.ui.FlatTabbedPaneUI;
-import ui.giaodienchinh.pnllapthongke.pnlThongKeSanPham.PnlThongKeSanPham;
+import ui.giaodienchinh.pnllapthongke.pnlthongkesanpham.PnlThongKeSanPham;
 import ui.giaodienchinh.pnllapthongke.pnlthongkedoanhthutheohdbh.PnlTKDoanhThuTheoHDBH;
 import ui.giaodienchinh.pnllapthongke.pnlthongkedoanhthutheokhachhang.PnlTKDoanhThuTheoKhachHang;
 import ui.giaodienchinh.pnllapthongke.pnlthongkedoanhthutheonhanvien.PnlTKDoanhThuTheoNhanVien;

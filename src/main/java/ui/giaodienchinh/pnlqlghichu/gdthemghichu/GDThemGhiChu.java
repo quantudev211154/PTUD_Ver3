@@ -256,7 +256,7 @@ public class GDThemGhiChu extends JDialog implements IDSBienGDThemGhiChu {
     }
 
     private boolean kiemTraSuHopLeCuaHanThucHien(){
-        int maCaLamViec = GDChinh.getNhanVienDangSuDung().getCaLamViec().isCaSang() ? 0 : 1;
+        int maCaLamViec = GDChinh.getNhanVienDangSuDung().getCaLamViec().isCaSang() ? 1 : 0;
 
         Time gioHienTai = Time.valueOf(LocalTime.now());
         Time gioBatDauCa = CaLamViecDAO.layThoiGianBatDauCaLam(maCaLamViec);

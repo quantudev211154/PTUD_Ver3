@@ -1,4 +1,4 @@
-package ui.giaodienchinh.pnllapthongke.pnlThongKeSanPham;
+package ui.giaodienchinh.pnllapthongke.pnlthongkesanpham;
 
 import connectDB.KetNoiCSDL;
 import dao.SanPhamDAO;
@@ -688,23 +688,31 @@ public class PnlThongKeSanPham implements IDSBienPnlThongKeSanPham, ActionListen
         tblDuLieuTKDoanhThuTheoSanPham.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (radLocTheoMoiSanPham.isSelected()){
-                    int row = tblDuLieuTKDoanhThuTheoSanPham.getSelectedRow();
+                if (e.getClickCount() == 2 && e.getButton() == 1){
+                    if (radLocTheoMoiSanPham.isSelected()){
+                        int row = tblDuLieuTKDoanhThuTheoSanPham.getSelectedRow();
 
-                    if (row != -1 && row != 0){
-                        String maSP = tblDuLieuTKDoanhThuTheoSanPham.getValueAt(
-                                row, 0
-                        ).toString();
+                        if (
+                                row != -1 &&
+                                !CacHamDungSan.kiemTraHangTrongTableDuocChonCoPhaiLaHangTongKetKhong(
+                                        tblDuLieuTKDoanhThuTheoSanPham,
+                                        row
+                                )
+                        ){
+                            String maSP = tblDuLieuTKDoanhThuTheoSanPham.getValueAt(
+                                    row, 0
+                            ).toString();
 
-                        SanPham sanPham = SanPhamDAO.laySanPhamTheoMa(maSP);
+                            SanPham sanPham = SanPhamDAO.laySanPhamTheoMa(maSP);
 
-                        SwingUtilities.invokeLater(() -> {
-                            GDXemThongTinSanPham gdXemThongTinSanPham = GDXemThongTinSanPham.getGdXemTTSanPham();
+                            SwingUtilities.invokeLater(() -> {
+                                GDXemThongTinSanPham gdXemThongTinSanPham = GDXemThongTinSanPham.getGdXemTTSanPham();
 
-                            GDXemThongTinSanPham.hienThiThongTinSanPham(sanPham);
+                                GDXemThongTinSanPham.hienThiThongTinSanPham(sanPham);
 
-                            gdXemThongTinSanPham.setVisible(true);
-                        });
+                                gdXemThongTinSanPham.setVisible(true);
+                            });
+                        }
                     }
                 }
             }
@@ -1021,7 +1029,7 @@ public class PnlThongKeSanPham implements IDSBienPnlThongKeSanPham, ActionListen
         dtmTKDTTheoSanPham.insertRow(
                 0,
                 new Object[]{
-                        "Tổng kết:",
+                        "Tổng cộng:",
                         dtmTKDTTheoSanPham.getRowCount() + " danh mục",
                         "",
                         soLuongTon,

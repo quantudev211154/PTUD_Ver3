@@ -165,6 +165,7 @@ public class GDCapNhatThongTinSanPham extends JFrame implements IDSBienGDCapNhat
         datHanhDongChoTxtDonGia();
         CacHamDungSan.datMauVienChoTxtDuocPhepChinhSua(txtDonGia);
         CacHamDungSan.datPhimTatXoaTrangCtrlDChoTxt(txtDonGia);
+        CacHamDungSan.nganCanViecNhapKiTuKhongPhaiSoVaoTxt(txtDonGia);
         panelChuaDonGiaVaSLTon.add(panelDonGia);
 
         dungCacPanelConLoai2(panelSLTon, lbSLTon, txtSLTon);

@@ -486,7 +486,13 @@ public class PnlQLNhanVien implements IDSBienQLNhanVien, ActionListener{
             public void mouseClicked(MouseEvent e) {
                 int hangDuocChon = tblDSNVTimDuoc.getSelectedRow();
 
-                if (hangDuocChon != -1){
+                if (
+                        hangDuocChon != -1 &&
+                        !CacHamDungSan.kiemTraHangTrongTableDuocChonCoPhaiLaHangTongKetKhong(
+                                tblDSNVTimDuoc,
+                                hangDuocChon
+                        )
+                ){
                     String maNV = (String) tblDSNVTimDuoc.getValueAt(
                             hangDuocChon, 0
                     );
@@ -739,7 +745,13 @@ public class PnlQLNhanVien implements IDSBienQLNhanVien, ActionListener{
 
                 int hangDuocChon = tblDuLieuTraCuuDuoc.getSelectedRow();
 
-                if (hangDuocChon != -1 && hangDuocChon != 0){
+                if (
+                        hangDuocChon != -1 &&
+                        !CacHamDungSan.kiemTraHangTrongTableDuocChonCoPhaiLaHangTongKetKhong(
+                                tblDuLieuTraCuuDuoc,
+                                hangDuocChon
+                        )
+                ){
                     String maNV = (String) tblDuLieuTraCuuDuoc.getValueAt(
                             hangDuocChon, 0
                     );

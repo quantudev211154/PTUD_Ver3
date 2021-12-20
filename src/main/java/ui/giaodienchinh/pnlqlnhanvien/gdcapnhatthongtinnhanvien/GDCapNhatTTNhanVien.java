@@ -247,23 +247,21 @@ public class GDCapNhatTTNhanVien extends JFrame implements I_DSBienGDCapNhatTTNh
                    );
 
                    if (luaChon == JOptionPane.YES_OPTION){
-
                        capNhatThongTinMoi();
 
-                       };
+                       dispose();
 
-                        if(NhanVienDAO.capNhatThongTinNhanVien(nhanVienHienTai.getMaNV(), nhanVienHienTai)){
-                            CacHamDungSan.hienThiThongBaoKetQua(
-                                    GDThongBaoKetQua.THONG_BAO_THANH_CONG,
-                                    "Cập nhật thông tin nhân viên thành công!"
-                            );
+                       if(NhanVienDAO.capNhatThongTinNhanVien(nhanVienHienTai.getMaNV(), nhanVienHienTai)){
+                           CacHamDungSan.hienThiThongBaoKetQua(
+                                   GDThongBaoKetQua.THONG_BAO_THANH_CONG,
+                                   "Cập nhật thông tin nhân viên thành công!"
+                           );
 
-                            PnlQLNhanVien.locLaiDuLieuSauKhiThemHoacCapNhat();
+                           PnlQLNhanVien.locLaiDuLieuSauKhiThemHoacCapNhat();
 
-                            PnlQLNhanVien.capNhatDSNhanVien();
-                        }
-
-                    dispose();
+                           PnlQLNhanVien.capNhatDSNhanVien();
+                       }
+                   };
                    }
         });
     }
@@ -329,14 +327,18 @@ public class GDCapNhatTTNhanVien extends JFrame implements I_DSBienGDCapNhatTTNh
 
         AtomicBoolean rsKiemTraKhongTrungSoSDT = new AtomicBoolean(true);
 
-        dsNhanVien.values().forEach(V -> {
-            if (V.getSoCMND().equals(sdt) && V.getSoDT().equals(sdt)){
-                rsKiemTraKhongTrungSoSDT.set(true);
+        String maNVHienTai = txtMaNhanVien.getText().trim();
 
-                CacHamDungSan.hienThiThongBaoKetQua(
-                        -1, "Số CMND này đang thuộc về nhân viên khác!"
-                );
-                txtSoCMND.requestFocus();
+        dsNhanVien.values().forEach(V -> {
+            if (!V.getMaNV().equals(maNVHienTai)){
+                if (V.getSoDT().equals(sdt)){
+                    rsKiemTraKhongTrungSoSDT.set(false);
+
+                    CacHamDungSan.hienThiThongBaoKetQua(
+                            -1, "Số điện thoại này đang thuộc sở hữu của nhân viên khác!"
+                    );
+                    txtSDT.requestFocus();
+                }
             }
         });
 
@@ -345,9 +347,10 @@ public class GDCapNhatTTNhanVien extends JFrame implements I_DSBienGDCapNhatTTNh
 
     private boolean kiemTraCMND(){
         String soCMND = txtSoCMND.getText().trim();
+
         if(soCMND.isEmpty()){
             CacHamDungSan.hienThiThongBaoKetQua(
-                    -1, "Vui lòng nhập số CMND!"
+                    -1, "Vui lòng nhập số số chứng minh nhân dân!"
             );
             txtSoCMND.requestFocus();
             return false;
@@ -363,14 +366,18 @@ public class GDCapNhatTTNhanVien extends JFrame implements I_DSBienGDCapNhatTTNh
 
         AtomicBoolean rsKiemTraKhongTrungSoCMND = new AtomicBoolean(true);
 
-        dsNhanVien.values().forEach(V -> {
-            if (V.getSoCMND().equals(soCMND) && V.getSoCMND().equals(soCMND)){
-                rsKiemTraKhongTrungSoCMND.set(true);
+        String maNVHienTai = txtMaNhanVien.getText().trim();
 
-                CacHamDungSan.hienThiThongBaoKetQua(
-                        -1, "Số CMND này đang thuộc về nhân viên khác!"
-                );
-                txtSoCMND.requestFocus();
+        dsNhanVien.values().forEach(V -> {
+            if (!V.getMaNV().equals(maNVHienTai)){
+                if (V.getSoCMND().equals(soCMND)){
+                    rsKiemTraKhongTrungSoCMND.set(false);
+
+                    CacHamDungSan.hienThiThongBaoKetQua(
+                            -1, "Số CMND này đang thuộc về nhân viên khác!"
+                    );
+                    txtSoCMND.requestFocus();
+                }
             }
         });
 

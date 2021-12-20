@@ -130,7 +130,15 @@ public class GDThemKhachHang extends JDialog implements IDSBienMacDinh {
                     boolean rs = kiemTraSoDienThoat();
 
                     if (rs) {
-                        txtHoTen.requestFocus();
+                        if (!kiemTraTrungSoDienThoai()){
+                            txtHoTen.requestFocus();
+                        }
+                        else{
+                            CacHamDungSan.hienThiThongBaoKetQua(
+                                    GDThongBaoKetQua.THONG_BAO_LOI,
+                                    "Số điện thoại này đã thuộc sở hữu của một khách hàng khác!"
+                            );
+                        }
                     }
                     else{
                       CacHamDungSan.hienThiThongBaoKetQua(
@@ -240,7 +248,12 @@ public class GDThemKhachHang extends JDialog implements IDSBienMacDinh {
         btnThemKH.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if ( kiemTraSoDienThoat() && kiemTraHoTenHoacDiaChi(txtHoTen) && kiemTraHoTenHoacDiaChi(txtDiaChi) ){
+                if (
+                        kiemTraSoDienThoat() &&
+                        !kiemTraTrungSoDienThoai() &&
+                        kiemTraHoTenHoacDiaChi(txtHoTen) &&
+                        kiemTraHoTenHoacDiaChi(txtDiaChi)
+                ){
                     String sdtKH = txtSoDT.getText().trim();
                     String hoTen = txtHoTen.getText().trim();
                     String diaChi = txtDiaChi.getText().trim();
@@ -290,6 +303,18 @@ public class GDThemKhachHang extends JDialog implements IDSBienMacDinh {
         });
     }
 
+
+    private boolean kiemTraTrungSoDienThoai(){
+        for (KhachHang kh : GDTaoHoaDonBanHang.dsKhachHang){
+            if (kh.getSoDT().equals(txtSoDT.getText().trim())){
+                txtSoDT.setText("");
+                txtSoDT.requestFocus();
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /**
      * Danh sach bien

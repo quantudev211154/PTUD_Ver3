@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 public class TaiKhoanDAO {
 
     public static boolean kiemTraThongTinDangNhap(String tenDangNhap, String matKhau){
-
         String matKhauTam = layMatKhauChuaGiaiMaTheoTenDangNhap(tenDangNhap);
 
         return !matKhauTam.equals("") && MaHoaDuLieu.giaiMa(matKhauTam).equals(matKhau);
@@ -104,7 +103,7 @@ public class TaiKhoanDAO {
         return rs;
     }
 
-    public static int layTrangThaiKichHoatCuaTaiKhoan(String maNhanVien){
+    public static int layTrangThaiKichHoatCuaTaiKhoan(String tenDangNhap){
         int trangThaiKichHoat = -1;
 
         try{
@@ -113,7 +112,7 @@ public class TaiKhoanDAO {
                     "where maNhanVien = ?";
 
             PreparedStatement ps = KetNoiCSDL.layKetNoi().prepareStatement(sql);
-            ps.setString(1, maNhanVien);
+            ps.setString(1, tenDangNhap);
 
             ResultSet rs = ps.executeQuery();
 

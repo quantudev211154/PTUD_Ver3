@@ -924,7 +924,13 @@ public class PnlQLKhachHang implements IDSBienPnlQLKhachHang, ActionListener{
                 if (e.getButton() == 1 && e.getClickCount() == 2){
                     int hangDuocChon = tblDuLieuTraCuuDuoc.getSelectedRow();
 
-                    if (hangDuocChon != -1 && hangDuocChon != 0){
+                    if (
+                            hangDuocChon != -1 &&
+                            !CacHamDungSan.kiemTraHangTrongTableDuocChonCoPhaiLaHangTongKetKhong(
+                                    tblDuLieuTraCuuDuoc,
+                                    hangDuocChon
+                            )
+                    ){
                         int maKH = Integer.parseInt(
                                 (String) tblDuLieuTraCuuDuoc.getValueAt(
                                         hangDuocChon, 0
@@ -955,7 +961,13 @@ public class PnlQLKhachHang implements IDSBienPnlQLKhachHang, ActionListener{
                 if (e.getClickCount() == 2 && e.getButton() == 3){
                     int hangDuocChon = tblDuLieuTraCuuDuoc.getSelectedRow();
 
-                    if (hangDuocChon != -1){
+                    if (
+                            hangDuocChon != -1 &&
+                            !CacHamDungSan.kiemTraHangTrongTableDuocChonCoPhaiLaHangTongKetKhong(
+                                    tblDuLieuTraCuuDuoc,
+                                    hangDuocChon
+                            )
+                    ){
                         String maKH = (String) tblDuLieuTraCuuDuoc.getValueAt(
                                 hangDuocChon, 0
                         );

@@ -1,4 +1,4 @@
-package ui.giaodienchinh.pnllapthongke.pnlThongKeSanPham;
+package ui.giaodienchinh.pnllapthongke.pnlthongkesanpham;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import ui.cauhinhchung.IDSBienMacDinh;

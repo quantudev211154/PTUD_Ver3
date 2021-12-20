@@ -1212,7 +1212,15 @@ public class PnlQLThuChi implements IDSBienGDQLThuChi, ActionListener {
             public void mouseClicked(MouseEvent e) {
                 int hangDuocChon = tbl.getSelectedRow();
 
-                if (hangDuocChon != -1 && e.getClickCount() == 2 && e.getButton() == 1){
+                if (
+                        hangDuocChon != -1 &&
+                        e.getClickCount() == 2 &&
+                        e.getButton() == 1 &&
+                        !CacHamDungSan.kiemTraHangTrongTableDuocChonCoPhaiLaHangTongKetKhong(
+                                tbl,
+                                hangDuocChon
+                        )
+                ){
                     int maPhieu = Integer.parseInt(tbl.getValueAt(
                             hangDuocChon, 0
                     ).toString());
@@ -1237,7 +1245,14 @@ public class PnlQLThuChi implements IDSBienGDQLThuChi, ActionListener {
             public void mouseClicked(MouseEvent e) {
                 int hangDuocChon = tbl.getSelectedRow();
 
-                if (hangDuocChon != -1 && e.getClickCount() == 2 && e.getButton() == 1){
+                if (
+                        hangDuocChon != -1 &&
+                        e.getClickCount() == 2 &&
+                        e.getButton() == 1 &&
+                        !CacHamDungSan.kiemTraHangTrongTableDuocChonCoPhaiLaHangTongKetKhong(
+                                tbl, hangDuocChon
+                        )
+                ){
                     int maPhieu = Integer.parseInt(tbl.getValueAt(
                             hangDuocChon, 0
                     ).toString());
