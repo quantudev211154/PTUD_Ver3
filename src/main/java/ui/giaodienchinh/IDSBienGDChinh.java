@@ -41,7 +41,7 @@ public interface IDSBienGDChinh extends IDSBienMacDinh {
     JPanel pnlLogo = new JPanel();
     Dimension dimPnlLoGoMacDinh = new Dimension(
             dimPnlDieuHuongMacDinh.width,
-            160
+            55
     );
     Dimension dimPnlLogoMoRong = new Dimension(
             dimPnlDieuHuongMoRong.width,

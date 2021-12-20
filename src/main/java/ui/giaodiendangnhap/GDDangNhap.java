@@ -271,38 +271,49 @@ public class GDDangNhap extends JFrame implements IDSBienGDDangNhap {
                         tenDangNhap
                 );
 
-                boolean hienTaiLaCaSang =
-                        Time.valueOf(LocalTime.now()).before(Time.valueOf("16:00:00"));
+                Time thoiDiemHienTai = Time.valueOf(LocalTime.now());
 
-                if (nhanVien.getCaLamViec().isCaSang() == hienTaiLaCaSang){
-                    if (trangThaiKichHoatCuaTaiKhoanTuongUng == 1){
-                        SwingUtilities.invokeLater(() -> {
-                            dispose();
-
-                            GDChinh gd = GDChinh.getInstance();
-                            gd.datNhanVienDangSuDung(nhanVien);
-                            gd.setVisible(true);
-                        });
-                    }
-                    else{
-                        dispose();
-
-                        SwingUtilities.invokeLater(() -> {
-                            GDDoiMatKhau gdDoiMatKhau = GDDoiMatKhau.getGdDoiMatKhau();
-
-                            gdDoiMatKhau.setCheDoSuDung(GDDoiMatKhau.DOI_MAT_KHAU_BAT_BUOC);
-                            gdDoiMatKhau.setTenDangNhap(tenDangNhap);
-
-                            gdDoiMatKhau.setVisible(true);
-                            gdDoiMatKhau.requestFocusInWindow();
-                        });
-                    }
-                }
-                else{
+                if (
+                        ! (
+                                nhanVien.getCaLamViec().isCaSang() &&
+                                thoiDiemHienTai.after(Time.valueOf("08:00:00")) &&
+                                thoiDiemHienTai.before(Time.valueOf("16:00:00"))
+                        )
+                        ||
+                        ! (
+                                 ! nhanVien.getCaLamViec().isCaSang() &&
+                                 thoiDiemHienTai.after(Time.valueOf("16:00:00")) &&
+                                 thoiDiemHienTai.before(Time.valueOf("22:00:00"))
+                        )
+                ){
                     CacHamDungSan.hienThiThongBaoKetQua(
                             GDThongBaoKetQua.THONG_BAO_LOI,
                             "Bạn đã vào nhầm ca. Ca làm của bạn không phải lúc này!"
                     );
+                    return;
+                }
+
+                if (trangThaiKichHoatCuaTaiKhoanTuongUng == 1){
+                    SwingUtilities.invokeLater(() -> {
+                        dispose();
+
+                        GDChinh gd = GDChinh.getInstance();
+                        gd.datNhanVienDangSuDung(nhanVien);
+                        gd.setVisible(true);
+                    });
+                }
+                else{
+                    dispose();
+
+                    SwingUtilities.invokeLater(() -> {
+                        GDDoiMatKhau gdDoiMatKhau = GDDoiMatKhau.getGdDoiMatKhau();
+
+                        gdDoiMatKhau.setCheDoSuDung(GDDoiMatKhau.DOI_MAT_KHAU_BAT_BUOC);
+                        gdDoiMatKhau.setTenDangNhap(tenDangNhap);
+
+                        gdDoiMatKhau.setVisible(true);
+                        gdDoiMatKhau.requestFocusInWindow();
+                    });
                 }
             }
             else{

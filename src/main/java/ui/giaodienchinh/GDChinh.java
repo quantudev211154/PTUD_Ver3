@@ -359,7 +359,7 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
     private void dungPnlLogo(){
         pnlLogo.setPreferredSize(dimPnlLoGoMacDinh);
         pnlLogo.setBackground(bgrPnlDieuHuong);
-        pnlLogo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 10));
+        pnlLogo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 5));
 
         datThuocTinhVaHanhDongChoLblLogo();
         pnlLogo.add(lblLogo);
@@ -419,15 +419,31 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         pnlLogo.setPreferredSize(dimPnlLogoMoRong);
 
         pnlNutQLBanHang.setPreferredSize(dimBtnDieuHuongMoRong);
+        pnlNutQLBanHang.setMaximumSize(dimBtnDieuHuongMoRong);
+
         pnlNutQLKhachHang.setPreferredSize(dimBtnDieuHuongMoRong);
+        pnlNutQLKhachHang.setMaximumSize(dimBtnDieuHuongMoRong);
+
         pnlNutQLSanPham.setPreferredSize(dimBtnDieuHuongMoRong);
+        pnlNutQLSanPham.setMaximumSize(dimBtnDieuHuongMoRong);
+
         pnlNutQLNhapHang.setPreferredSize(dimBtnDieuHuongMoRong);
+        pnlNutQLNhapHang.setMaximumSize(dimBtnDieuHuongMoRong);
+
         pnlNutQLThuChi.setPreferredSize(dimBtnDieuHuongMoRong);
+        pnlNutQLThuChi.setMaximumSize(dimBtnDieuHuongMoRong);
+
         pnlNutQLGhiChu.setPreferredSize(dimBtnDieuHuongMoRong);
+        pnlNutQLGhiChu.setMaximumSize(dimBtnDieuHuongMoRong);
+
         pnlNutQLNhanVien.setPreferredSize(dimBtnDieuHuongMoRong);
+        pnlNutQLNhanVien.setMaximumSize(dimBtnDieuHuongMoRong);
+
         pnlNutThongKe.setPreferredSize(dimBtnDieuHuongMoRong);
+        pnlNutThongKe.setMaximumSize(dimBtnDieuHuongMoRong);
 
         pnlNutDangXuat.setPreferredSize(dimBtnDieuHuongMoRong);
+        pnlNutDangXuat.setMaximumSize(dimBtnDieuHuongMoRong);
 
         pnlThanhDieuHuongChinh.revalidate();
     }
@@ -454,24 +470,47 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         pnlLogo.setPreferredSize(dimPnlLoGoMacDinh);
 
         pnlNutQLBanHang.setPreferredSize(dimBtnDieuHuongMacDinh);
+        pnlNutQLBanHang.setMaximumSize(dimBtnDieuHuongMacDinh);
+
         pnlNutQLKhachHang.setPreferredSize(dimBtnDieuHuongMacDinh);
+        pnlNutQLKhachHang.setMaximumSize(dimBtnDieuHuongMacDinh);
+
         pnlNutQLSanPham.setPreferredSize(dimBtnDieuHuongMacDinh);
+        pnlNutQLSanPham.setMaximumSize(dimBtnDieuHuongMacDinh);
+
         pnlNutQLNhapHang.setPreferredSize(dimBtnDieuHuongMacDinh);
+        pnlNutQLNhapHang.setMaximumSize(dimBtnDieuHuongMacDinh);
+
         pnlNutQLThuChi.setPreferredSize(dimBtnDieuHuongMacDinh);
+        pnlNutQLThuChi.setMaximumSize(dimBtnDieuHuongMacDinh);
+
         pnlNutQLGhiChu.setPreferredSize(dimBtnDieuHuongMacDinh);
+        pnlNutQLGhiChu.setMaximumSize(dimBtnDieuHuongMacDinh);
+
         pnlNutQLNhanVien.setPreferredSize(dimBtnDieuHuongMacDinh);
+        pnlNutQLNhanVien.setMaximumSize(dimBtnDieuHuongMacDinh);
+
         pnlNutThongKe.setPreferredSize(dimBtnDieuHuongMacDinh);
+        pnlNutThongKe.setMaximumSize(dimBtnDieuHuongMacDinh);
 
         pnlNutDangXuat.setPreferredSize(dimBtnDieuHuongMacDinh);
+        pnlNutDangXuat.setMaximumSize(dimBtnDieuHuongMacDinh);
 
         pnlThanhDieuHuongChinh.revalidate();
     }
 
     private void dungPnlThanhDieuHuongChinh(){
+        pnlThanhDieuHuongChinh.setLayout(new BoxLayout(pnlThanhDieuHuongChinh, BoxLayout.Y_AXIS));
         pnlThanhDieuHuongChinh.setBackground(bgrPnlDieuHuong);
         pnlThanhDieuHuongChinh.setPreferredSize(dimPnlThanhDieuHuongChinhMacDinh);
-        pnlThanhDieuHuongChinh.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
+        pnlThanhDieuHuongChinh.add(
+                Box.createVerticalStrut(
+                        dimPnlThanhDieuHuongChinhMacDinh.height / 2
+                        - (dimBtnDieuHuongMacDinh.height * 8) / 2
+                        - 5
+                )
+        );
         themCacNutDieuHuongVaoPnlThanhDieuHuong();
     }
 
@@ -686,7 +725,6 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
                 pnlNoiDung.removeAll();
 
                 pnlNoiDung.add(PnlQLGhiChu.getPnlQLGhiChu());
-//                PnlQLGhiChu.phanLoaiGhiChuTheoThoiGian();
 
                 pnlNoiDung.revalidate();
                 pnlNoiDung.repaint();
@@ -772,6 +810,7 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
         boDanhDauNutDieuHuong(pnl, lblTieuDe);
 
         pnl.setPreferredSize(dimBtnDieuHuongMacDinh);
+        pnl.setMaximumSize(dimBtnDieuHuongMacDinh);
         pnl.setLayout(new BoxLayout(pnl, BoxLayout.X_AXIS));
 
         pnl.add(Box.createHorizontalStrut(15));
