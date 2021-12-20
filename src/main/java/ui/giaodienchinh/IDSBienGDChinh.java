@@ -1,5 +1,6 @@
 package ui.giaodienchinh;
 
+import services.TienIch;
 import ui.cauhinhchung.IDSBienMacDinh;
 
 import javax.swing.*;

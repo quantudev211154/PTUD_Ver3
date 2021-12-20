@@ -507,4 +507,22 @@ public class TienIch {
                         .replace(" ", "")
         );
     }
+
+    /**
+     * <p>Đây là một hàm cực kì nhạy cảm</p>
+     * <p>Đường dẫn sẽ trông như thế này:   "/duongDan"</p>
+     * <p>Ví dụ, cần khởi tạo một ảnh tại class Test thì hàm sẽ được gọi như sau:</p>
+     * <li><b>layIconTuongUngTheoDuongDan(Test.class, "/duongDan")</b></li>
+     *
+     * @param cls: Class tương ứng cần set ImageIcon
+     * @param duongDan: đường dẫn tương đối đến file ảnh
+     * @return: ImageIcon tương ứng
+     */
+    public static ImageIcon layIconTuongUngTheoDuongDan(Class cls, String duongDan){
+        return new ImageIcon(
+                Toolkit.getDefaultToolkit().getImage(
+                        cls.getResource(duongDan)
+                )
+        );
+    }
 }

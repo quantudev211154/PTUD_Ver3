@@ -58,6 +58,7 @@ public class PnlQLThuChi implements IDSBienGDQLThuChi, ActionListener {
             dungPnlTaoPDCHoacNhatKiBHTC(pnlTaoNhatKiBHTC, lblBtTaoNhatKiBHTC, lblTieuDeTaoNhatKiBHTC);
             datThuocTinhChoPblTaoPDCVaNhatKiBHTC(pnlTaoNhatKiBHTC, mauVienPnlTaoNhatKiBHTC);
             datHanhDongChoPnlTaoNhatKiBHTC();
+            pnlQLTC.add(Box.createHorizontalStrut(30));
             pnlQLTC.add(pnlTaoNhatKiBHTC);
         }
 

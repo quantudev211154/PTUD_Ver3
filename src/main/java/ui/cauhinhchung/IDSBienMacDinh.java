@@ -9,7 +9,7 @@ public interface IDSBienMacDinh {
             .getMaximumWindowBounds();
 
     String tenFontMacDinh = "Helvetica World";
-    File fontFile = new File("src/main/resources/Fonts/Helvetica-World.ttf");
+    String fontFile = "src/main/resources/Fonts/HelveticaWorld.ttf";
 
     Font fntMacDinh = new Font(
             tenFontMacDinh,

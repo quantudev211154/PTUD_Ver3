@@ -1,8 +1,11 @@
 package ui.giaodiendoimatkhau;
 
+import dao.NhanVienDAO;
 import dao.TaiKhoanDAO;
+import entity.NhanVien;
 import services.CacHamDungSan;
 import services.MaHoaDuLieu;
+import ui.giaodienchinh.GDChinh;
 import ui.giaodienthongbaongoaivi.GDThongBaoKetQua;
 
 import javax.swing.*;
@@ -14,6 +17,11 @@ import java.awt.event.MouseEvent;
 
 public class GDDoiMatKhau extends JFrame implements IDSBienGDDoiMatKhau {
     private static GDDoiMatKhau gdDoiMatKhau = null;
+
+    public static int DOI_MAT_KHAU_BAT_BUOC = 1;
+    public static int DOI_MAT_KHAU_KHONG_BAT_BUOC = -1;
+
+    private int cheDoSuDung = DOI_MAT_KHAU_KHONG_BAT_BUOC;
     private String tenDangNhap;
 
     private GDDoiMatKhau(){
@@ -26,6 +34,7 @@ public class GDDoiMatKhau extends JFrame implements IDSBienGDDoiMatKhau {
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        requestFocusInWindow();
 
         addKeyListener(new KeyAdapter() {
             @Override
@@ -43,6 +52,10 @@ public class GDDoiMatKhau extends JFrame implements IDSBienGDDoiMatKhau {
 
     public void setTenDangNhap(String tenDangNhap) {
         this.tenDangNhap = tenDangNhap;
+    }
+
+    public void setCheDoSuDung(int cheDoSuDung) {
+        this.cheDoSuDung = cheDoSuDung;
     }
 
     private void dungUI(){
@@ -291,13 +304,29 @@ public class GDDoiMatKhau extends JFrame implements IDSBienGDDoiMatKhau {
             boolean rsDoiMatKhau = TaiKhoanDAO.doiMatKhau(tenDangNhap, new String(pwfXacNhanMatKhauMoi.getPassword()));
 
             if (rsDoiMatKhau){
-                CacHamDungSan.hienThiThongBaoKetQua(
-                        GDThongBaoKetQua.THONG_BAO_THANH_CONG,
-                        "Đã cập nhật mật khẩu mới cho nhân viên có mã " + tenDangNhap + "."
-                );
-                new Thread(this::datCacPwfTroVeTrangThaiBanDau).start();
+                if (cheDoSuDung == DOI_MAT_KHAU_KHONG_BAT_BUOC){
+                    CacHamDungSan.hienThiThongBaoKetQua(
+                            GDThongBaoKetQua.THONG_BAO_THANH_CONG,
+                            "Đã cập nhật mật khẩu mới cho nhân viên có mã " + tenDangNhap + "."
+                    );
+                    new Thread(this::datCacPwfTroVeTrangThaiBanDau).start();
+                }
+                else if (cheDoSuDung == DOI_MAT_KHAU_BAT_BUOC){
+                    new Thread(() -> {
+                        TaiKhoanDAO.capNhatTrangThaiKichHoatLaDaKichHoatChoTaiKhoan(tenDangNhap);
+                    }).start();
 
-                dispose();
+                    NhanVien nhanVien = NhanVienDAO.timNhanVienTheoMa(tenDangNhap);
+
+                    SwingUtilities.invokeLater(() -> {
+                        GDChinh gd = GDChinh.getInstance();
+                        gd.datNhanVienDangSuDung(nhanVien);
+                        gd.setVisible(true);
+                        gd.requestFocusInWindow();
+                    });
+                }
+
+                new Thread(this::dispose).start();
             }
             else{
                 CacHamDungSan.hienThiThongBaoKetQua(

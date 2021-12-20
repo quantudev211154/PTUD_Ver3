@@ -7,6 +7,7 @@ import services.CacHamDungSan;
 import ui.cauhinhchung.CaNhanHoaLookAndFeel;
 import ui.cauhinhchung.IDSBienMacDinh;
 import ui.giaodienchinh.GDChinh;
+import ui.giaodiendoimatkhau.GDDoiMatKhau;
 import ui.giaodienquenmatkhau.GDQuenMatKhau;
 import ui.giaodienthongbaongoaivi.GDThongBaoKetQua;
 
@@ -17,6 +18,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Map;
 
 public class GDDangNhap extends JFrame implements IDSBienGDDangNhap {
@@ -35,6 +38,8 @@ public class GDDangNhap extends JFrame implements IDSBienGDDangNhap {
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        new Thread(GDThongBaoKetQua::getGdThongBaoKetQua).start();;
 
         addKeyListener(new KeyAdapter() {
             @Override
@@ -256,19 +261,58 @@ public class GDDangNhap extends JFrame implements IDSBienGDDangNhap {
             );
 
             if (ketQuaKiemTraTaiKhoan){
-                SwingUtilities.invokeLater(() -> {
-                    NhanVien nhanVien = NhanVienDAO.timNhanVienTheoMa(
-                            txtTenDangNhap.getText().trim()
-                    );
+                NhanVien nhanVien = NhanVienDAO.timNhanVienTheoMa(
+                        txtTenDangNhap.getText().trim()
+                );
 
-                    dispose();
+                if (nhanVien.isQuanLi()){
+                    SwingUtilities.invokeLater(() -> {
+                        dispose();
 
-//                    GDChinh gdChinh = new GDChinh(nhanVien);
-//                    gdChinh.setVisible(true);
-                    GDChinh gd = GDChinh.getInstance();
-                    gd.datNhanVienDangSuDung(nhanVien);
-                    gd.setVisible(true);
-                });
+                        GDChinh gd = GDChinh.getInstance();
+                        gd.datNhanVienDangSuDung(nhanVien);
+                        gd.setVisible(true);
+                    });
+                }
+                else{
+                    boolean caLamUngVoiThoiGianHienTai =
+                            Time.valueOf(LocalTime.now()).before(Time.valueOf("16:00:00"));
+
+                    if (nhanVien.getCaLamViec().isCaSang()  == caLamUngVoiThoiGianHienTai){
+                        int trangThaiKichHoatCuaTaiKhoanTuongUng = TaiKhoanDAO.layTrangThaiKichHoatCuaTaiKhoan(
+                                nhanVien.getMaNV()
+                        );
+
+                        if (trangThaiKichHoatCuaTaiKhoanTuongUng == 1){
+                            SwingUtilities.invokeLater(() -> {
+                                dispose();
+
+                                GDChinh gd = GDChinh.getInstance();
+                                gd.datNhanVienDangSuDung(nhanVien);
+                                gd.setVisible(true);
+                            });
+                        }
+                        else {
+                            dispose();
+
+                            SwingUtilities.invokeLater(() -> {
+                                GDDoiMatKhau gdDoiMatKhau = GDDoiMatKhau.getGdDoiMatKhau();
+
+                                gdDoiMatKhau.requestFocusInWindow();
+                                gdDoiMatKhau.setCheDoSuDung(GDDoiMatKhau.DOI_MAT_KHAU_BAT_BUOC);
+                                gdDoiMatKhau.setTenDangNhap(nhanVien.getMaNV());
+
+                                gdDoiMatKhau.setVisible(true);
+                            });
+                        }
+                    }
+                    else{
+                        CacHamDungSan.hienThiThongBaoKetQua(
+                                GDThongBaoKetQua.THONG_BAO_LOI,
+                                "Bạn đã vào nhầm ca. Ca làm của bạn không phải lúc này!"
+                        );
+                    }
+                }
             }
             else{
                 CacHamDungSan.hienThiThongBaoKetQua(

@@ -4,6 +4,8 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedInputStream;
+import java.io.File;
 
 public class CaNhanHoaLookAndFeel implements IDSBienMacDinh {
 
@@ -63,7 +65,10 @@ public class CaNhanHoaLookAndFeel implements IDSBienMacDinh {
         Font font = null;
 
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            font = Font.createFont(
+            		Font.TRUETYPE_FONT, 
+            		new File(fontFile)
+            		);
             GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(font);
         } catch (Exception ex){
             ex.printStackTrace();

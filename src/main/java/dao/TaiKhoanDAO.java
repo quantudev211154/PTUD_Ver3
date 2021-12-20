@@ -103,4 +103,44 @@ public class TaiKhoanDAO {
 
         return rs;
     }
+
+    public static int layTrangThaiKichHoatCuaTaiKhoan(String maNhanVien){
+        int trangThaiKichHoat = -1;
+
+        try{
+            String sql =
+                    "select trangThaiKichHoat from TaiKhoan " +
+                    "where maNhanVien = ?";
+
+            PreparedStatement ps = KetNoiCSDL.layKetNoi().prepareStatement(sql);
+            ps.setString(1, maNhanVien);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                trangThaiKichHoat = rs.getInt(1);
+            }
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return trangThaiKichHoat;
+    }
+
+    public static boolean capNhatTrangThaiKichHoatLaDaKichHoatChoTaiKhoan(String maNhanVien){
+        try {
+            String sql = "UPDATE TaiKhoan " +
+                    "set trangThaiKichHoat = 1 " +
+                    "where maNhanVien = ?";
+
+            PreparedStatement ps = KetNoiCSDL.layKetNoi().prepareStatement(sql);
+            ps.setString(1, maNhanVien);
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
 }

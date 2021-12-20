@@ -93,7 +93,7 @@ public interface IDSBienGDTaoHoaDonNhapHang extends IDSBienMacDinh, IDSBienGDChi
     );
 
     Dimension dimBtnThuNhoVaHuyHD = new Dimension(
-            140, 45
+            150, 45
     );
 
     Dimension dimBtnThemCTHDNHVaNhapExcel = new Dimension(
