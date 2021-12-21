@@ -919,7 +919,7 @@ public class PnlThongKeSanPham implements IDSBienPnlThongKeSanPham, ActionListen
     }
 
     private void capNhatDuLieuLenTable(String query) {
-
+    	
         try {
 
             if (radLocTheoMoiSanPham.isSelected()){
@@ -1060,7 +1060,7 @@ public class PnlThongKeSanPham implements IDSBienPnlThongKeSanPham, ActionListen
         if(locTheoTien != -1 && locTheoNgay != -1) {
             if(doiTuong == 0) {
                 if(locTheoNgay == 1) {
-                    query += String.format("where %s group by ct.maSP, sp.tenSP, sp.thuongHieu, sp.soLuongTon %s",
+                    query += String.format("where %s group by sp.maSP, sp.tenSP, sp.thuongHieu, sp.soLuongTon %s",
                             sinhCauTruyVanLocTheoMocThoiGian(cbbCacMocThoiGian.getSelectedIndex()),
                             sinhCauTruyVanLocTheoDoanhThu(locTheoTien));
 
@@ -1094,7 +1094,7 @@ public class PnlThongKeSanPham implements IDSBienPnlThongKeSanPham, ActionListen
         else if(locTheoTien == -1 && locTheoNgay != -1) {
             if(doiTuong == 0) {
                 if(locTheoNgay == 1) {
-                    query += String.format("where %s group by ct.maSP, sp.tenSP, sp.thuongHieu, sp.soLuongTon",
+                    query += String.format("where %s group by sp.maSP, sp.tenSP, sp.thuongHieu, sp.soLuongTon",
                             sinhCauTruyVanLocTheoMocThoiGian(cbbCacMocThoiGian.getSelectedIndex()));
 
                 } else if(locTheoNgay == 0) {
