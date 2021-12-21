@@ -919,7 +919,6 @@ public class PnlThongKeSanPham implements IDSBienPnlThongKeSanPham, ActionListen
     }
 
     private void capNhatDuLieuLenTable(String query) {
-    	
         try {
 
             if (radLocTheoMoiSanPham.isSelected()){

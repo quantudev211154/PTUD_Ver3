@@ -963,8 +963,8 @@ public class PnlQLThuChi implements IDSBienGDQLThuChi, ActionListener {
             tcm.getColumn(2).setMaxWidth(250);
         }
 
-        tcm.getColumn(0).setPreferredWidth(100);
-        tcm.getColumn(0).setMaxWidth(100);
+        tcm.getColumn(0).setPreferredWidth(110);
+        tcm.getColumn(0).setMaxWidth(110);
     }
 
     private void datThuocTinhChoTieuDeCuaTable(){

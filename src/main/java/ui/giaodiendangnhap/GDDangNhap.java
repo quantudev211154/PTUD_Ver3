@@ -61,6 +61,25 @@ public class GDDangNhap extends JFrame implements IDSBienGDDangNhap {
         getContentPane().add(pnlChinh, BorderLayout.CENTER);
     }
 
+    public void datTaiKhoanMacDinh(){
+        Time thoiDiemHienTai = Time.valueOf(LocalTime.now());
+
+        if (
+                thoiDiemHienTai.after(Time.valueOf("08:00:00")) &&
+                        thoiDiemHienTai.before(Time.valueOf("16:00:00"))
+        ){
+            txtTenDangNhap.setText("21100061");
+            pwfMatKhau.setText("1111");
+        }
+        else if (
+                thoiDiemHienTai.after(Time.valueOf("16:00:00")) &&
+                        thoiDiemHienTai.before(Time.valueOf("23:00:00"))
+        ){
+            txtTenDangNhap.setText("21100011");
+            pwfMatKhau.setText("1111");
+        }
+    }
+
     private void dungPnlChinh(){
         pnlChinh.setPreferredSize(dimGDDangNhap);
         pnlChinh.setBackground(bgrMacDinh);

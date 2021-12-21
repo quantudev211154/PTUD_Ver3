@@ -19,6 +19,7 @@ public class BoKhoiDongChuongTrinh {
             if (isKetNoiCSDLThanhCong){
                 SwingUtilities.invokeLater(() -> {
                     GDDangNhap gd = GDDangNhap.getGdDangNhap();
+                    gd.datTaiKhoanMacDinh();
                     gd.setVisible(true);
                     gd.requestFocusInWindow();
                 });
