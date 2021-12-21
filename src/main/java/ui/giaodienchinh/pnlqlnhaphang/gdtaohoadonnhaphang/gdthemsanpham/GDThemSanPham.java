@@ -318,7 +318,7 @@ public class GDThemSanPham extends JDialog implements IDSBienGDThemSanPham {
                     String thuongHieu = txtThuongHieu.getText().trim();
                     String nguonGoc = txtNguonGoc.getText().trim();
                     String moTa = txaMoTa.getText().trim();
-                    Double donGiaNhap = Double.parseDouble(txtDonGiaNhap.getText().trim().replace(".", ""));
+                    double donGiaNhap = TienIch.chuyenDinhDangTienTeDaFormatSangNguyenGoc(txtDonGiaNhap);
                     int slNhap = Integer.parseInt(txtSLNhap.getText().trim());
 
                     SanPham sp = new SanPham(
@@ -358,16 +358,16 @@ public class GDThemSanPham extends JDialog implements IDSBienGDThemSanPham {
     }
 
     private void datCacTruongThongTinVeTrangThaiBanDau() {
-        txtTenSanPham.setText("");
-        txtMaSP.setText("");
-        txtNguonGoc.setText("");
-        txtThuongHieu.setText("");
-        txtMauSac.setText("");
-        txtChatLieu.setText("");
-        txtSize.setText("");
-        txaMoTa.setText("");
-        txtSLNhap.setText("");
-        txtDonGiaNhap.setText("");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtTenSanPham, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtMaSP, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtNguonGoc, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtThuongHieu, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtMauSac, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtChatLieu, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtSize, "");
+        CacHamDungSan.duaTxaVeTrangThaiSanSangHienThiThongTin(txaMoTa, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtSLNhap, "");
+        CacHamDungSan.duaTxtVeTrangThaiSanSangHienThiThongTin(txtDonGiaNhap, "");
     }
 
     private boolean kiemTraTenSanPham(){
