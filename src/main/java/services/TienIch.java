@@ -499,13 +499,21 @@ public class TienIch {
     }
 
     public static double chuyenDinhDangTienTeDaFormatSangNguyenGoc(JTextField txt){
-        return Double.parseDouble(
-                txt.getText().trim()
-                        .replace(".", "")
-                        .replace(",", "")
-                        .replace("₫", "")
-                        .replace(" ", "")
-        );
+        double rs = 0.0;
+
+        try {
+            rs = Double.parseDouble(
+                            txt.getText().trim()
+                            .replace(".", "")
+                            .replace(",", "")
+                            .replace("₫", "")
+                            .replace(" ", "")
+            );
+        } catch (Exception ignored){
+
+        }
+
+        return rs;
     }
 
     /**

@@ -1,4 +1,4 @@
-package ui.giaodienchinh.pnlqlthuchi.gdtaonhatkibanhangtheoca;
+package ui.giaodienchinh.pnlqlthuchi.gdxemnhatkibanhangtheoca;
 
 import entity.NhatKiBanHangTheoCa;
 import services.CacHamDungSan;
@@ -11,11 +11,11 @@ import java.text.NumberFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class GDTaoNhatKiBanHangTheoCa extends JDialog implements IDSBienGDTaoNhatKiBanHangTheoCa {
-    private static GDTaoNhatKiBanHangTheoCa gdTaoNhatKiBanHangTheoCa = null;
+public class GDXemNhatKiBanHangTheoCa extends JDialog implements IDSBienGDXemNhatKiBanHangTheoCa {
+    private static GDXemNhatKiBanHangTheoCa gdXemNhatKiBanHangTheoCa = null;
     private static boolean isDaLapNhatKiBanHangTheoCa = false;
 
-    private GDTaoNhatKiBanHangTheoCa() {
+    private GDXemNhatKiBanHangTheoCa() {
         setTitle("Nhật kí bán hàng ca này");
         setIconImage(Toolkit.getDefaultToolkit().getImage(pathLogoMacDinh));
 
@@ -36,12 +36,12 @@ public class GDTaoNhatKiBanHangTheoCa extends JDialog implements IDSBienGDTaoNha
      *
      * @return: Giao diện chứa thông tin về nhật kí bán hàng theo ca
      */
-    public static GDTaoNhatKiBanHangTheoCa getGdTaoNhatKiBanHangTheoCa() {
-        if (gdTaoNhatKiBanHangTheoCa == null) {
+    public static GDXemNhatKiBanHangTheoCa getGdTaoNhatKiBanHangTheoCa() {
+        if (gdXemNhatKiBanHangTheoCa == null) {
             isDaLapNhatKiBanHangTheoCa = true;
-            gdTaoNhatKiBanHangTheoCa = new GDTaoNhatKiBanHangTheoCa();
+            gdXemNhatKiBanHangTheoCa = new GDXemNhatKiBanHangTheoCa();
         }
-        return gdTaoNhatKiBanHangTheoCa;
+        return gdXemNhatKiBanHangTheoCa;
     }
 
     private void dungUI() {

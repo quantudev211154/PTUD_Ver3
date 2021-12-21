@@ -36,7 +36,7 @@ public interface IDSBienGDTaoHoaDonBanHang extends IDSBienMacDinh, IDSBienGDChin
     Dimension dimPnlHopTienIch = new Dimension(
             500,
             dimPnlThanhCongCu.height
-            - 30
+            - 25
     );
 
     /**
@@ -102,7 +102,8 @@ public interface IDSBienGDTaoHoaDonBanHang extends IDSBienMacDinh, IDSBienGDChin
     );
 
     Dimension dimBtnThuNhoVaHuyHD = new Dimension(
-            150, 40
+            150,
+            dimTxtTimKiemSanPham.height
     );
 
     Color mauNenBtnThuNhoManHinh = new Color(16, 188, 194);

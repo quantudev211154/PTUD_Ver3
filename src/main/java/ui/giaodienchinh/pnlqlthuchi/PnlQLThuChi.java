@@ -9,7 +9,7 @@ import services.CacHamDungSan;
 import services.TienIch;
 import ui.cauhinhchung.IDSBienMacDinh;
 import ui.giaodienchinh.GDChinh;
-import ui.giaodienchinh.pnlqlthuchi.gdtaonhatkibanhangtheoca.GDTaoNhatKiBanHangTheoCa;
+import ui.giaodienchinh.pnlqlthuchi.gdxemnhatkibanhangtheoca.GDXemNhatKiBanHangTheoCa;
 import ui.giaodienchinh.pnlqlthuchi.gdtaophieudoichung.GDTaoPhieuDoiChung;
 import ui.giaodienchinh.pnlqlthuchi.gdxemthongtinphieudoichung.GDXemTTPhieuDoiChung;
 import ui.giaodienthongbaongoaivi.GDThongBaoKetQua;
@@ -833,9 +833,9 @@ public class PnlQLThuChi implements IDSBienGDQLThuChi, ActionListener {
         NhatKiBanHangTheoCa nhatKiBanHangTheoCaMoiLap = NhatKiBanHangTheoCaDAO.layLenNhatKiBanHangTheoCaMoiLap();
 
         SwingUtilities.invokeLater(() -> {
-            GDTaoNhatKiBanHangTheoCa gd = GDTaoNhatKiBanHangTheoCa.getGdTaoNhatKiBanHangTheoCa();
+            GDXemNhatKiBanHangTheoCa gd = GDXemNhatKiBanHangTheoCa.getGdTaoNhatKiBanHangTheoCa();
 
-            GDTaoNhatKiBanHangTheoCa.hienThiDuLieuCuaNhatKiBanHangTheoCa(nhatKiBanHangTheoCaMoiLap);
+            GDXemNhatKiBanHangTheoCa.hienThiDuLieuCuaNhatKiBanHangTheoCa(nhatKiBanHangTheoCaMoiLap);
 
             gd.setVisible(true);
         });
@@ -1260,8 +1260,8 @@ public class PnlQLThuChi implements IDSBienGDQLThuChi, ActionListener {
                     NhatKiBanHangTheoCa nhatKiBanHangTheoCa = NhatKiBanHangTheoCaDAO.timNhatKiBanHangTheoMa(maPhieu);
 
                     SwingUtilities.invokeLater(() -> {
-                        GDTaoNhatKiBanHangTheoCa gd = GDTaoNhatKiBanHangTheoCa.getGdTaoNhatKiBanHangTheoCa();
-                        GDTaoNhatKiBanHangTheoCa.hienThiDuLieuCuaNhatKiBanHangTheoCa(nhatKiBanHangTheoCa);
+                        GDXemNhatKiBanHangTheoCa gd = GDXemNhatKiBanHangTheoCa.getGdTaoNhatKiBanHangTheoCa();
+                        GDXemNhatKiBanHangTheoCa.hienThiDuLieuCuaNhatKiBanHangTheoCa(nhatKiBanHangTheoCa);
                         gd.setVisible(true);
                     });
                 }

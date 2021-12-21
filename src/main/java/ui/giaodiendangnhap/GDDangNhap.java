@@ -273,25 +273,31 @@ public class GDDangNhap extends JFrame implements IDSBienGDDangNhap {
 
                 Time thoiDiemHienTai = Time.valueOf(LocalTime.now());
 
-                if (
-                        ! (
-                                nhanVien.getCaLamViec().isCaSang() &&
-                                thoiDiemHienTai.after(Time.valueOf("08:00:00")) &&
-                                thoiDiemHienTai.before(Time.valueOf("16:00:00"))
-                        )
-                        ||
-                        ! (
-                                 ! nhanVien.getCaLamViec().isCaSang() &&
-                                 thoiDiemHienTai.after(Time.valueOf("16:00:00")) &&
-                                 thoiDiemHienTai.before(Time.valueOf("22:00:00"))
-                        )
-                ){
-                    CacHamDungSan.hienThiThongBaoKetQua(
-                            GDThongBaoKetQua.THONG_BAO_LOI,
-                            "Bạn đã vào nhầm ca. Ca làm của bạn không phải lúc này!"
-                    );
-                    return;
+                if (nhanVien.getCaLamViec().isCaSang()){
+                    if (
+                            !(thoiDiemHienTai.after(Time.valueOf("08:00:00")) &&
+                            thoiDiemHienTai.before(Time.valueOf("16:00:00")))
+                    ){
+                        CacHamDungSan.hienThiThongBaoKetQua(
+                                GDThongBaoKetQua.THONG_BAO_LOI,
+                                "Bạn đã vào nhầm ca. Ca làm của bạn không phải lúc này!"
+                        );
+                        return;
+                    }
                 }
+                else if (!nhanVien.getCaLamViec().isCaSang()){
+                    if (
+                            !(thoiDiemHienTai.after(Time.valueOf("16:00:00")) &&
+                                    thoiDiemHienTai.before(Time.valueOf("22:00:00")))
+                    ){
+                        CacHamDungSan.hienThiThongBaoKetQua(
+                                GDThongBaoKetQua.THONG_BAO_LOI,
+                                "Bạn đã vào nhầm ca. Ca làm của bạn không phải lúc này!"
+                        );
+                        return;
+                    }
+                }
+
 
                 if (trangThaiKichHoatCuaTaiKhoanTuongUng == 1){
                     SwingUtilities.invokeLater(() -> {

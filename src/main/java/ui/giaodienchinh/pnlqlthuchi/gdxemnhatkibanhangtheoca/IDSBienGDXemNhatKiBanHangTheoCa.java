@@ -1,11 +1,11 @@
-package ui.giaodienchinh.pnlqlthuchi.gdtaonhatkibanhangtheoca;
+package ui.giaodienchinh.pnlqlthuchi.gdxemnhatkibanhangtheoca;
 
 import ui.cauhinhchung.IDSBienMacDinh;
 
 import javax.swing.*;
 import java.awt.*;
 
-public interface IDSBienGDTaoNhatKiBanHangTheoCa extends IDSBienMacDinh {
+public interface IDSBienGDXemNhatKiBanHangTheoCa extends IDSBienMacDinh {
     Color mauNenMacDinh = new Color(209, 229, 237);
     Dimension kichThuocGDTaoNhatKiBanHangTheoCa = new Dimension(500, 480);
 

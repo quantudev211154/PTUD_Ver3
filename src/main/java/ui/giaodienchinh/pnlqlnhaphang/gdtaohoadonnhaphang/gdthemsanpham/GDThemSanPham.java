@@ -3,6 +3,7 @@ package ui.giaodienchinh.pnlqlnhaphang.gdtaohoadonnhaphang.gdthemsanpham;
 import entity.ChiTietHoaDonNhapHang;
 import entity.SanPham;
 import services.CacHamDungSan;
+import services.TienIch;
 import ui.giaodienchinh.pnlqlnhaphang.gdtaohoadonnhaphang.GDTaoHoaDonNhapHang;
 import ui.giaodienthongbaongoaivi.GDThongBaoKetQua;
 
@@ -189,11 +190,15 @@ public class GDThemSanPham extends JDialog implements IDSBienGDThemSanPham {
                     }
                 }
                 else{
-                    String s = txtDonGiaNhap.getText().trim().replace(".", "");
+                    try{
+                        txtDonGiaNhap.setText(
+                                df.format(
+                                        TienIch.chuyenDinhDangTienTeDaFormatSangNguyenGoc(txtDonGiaNhap)
+                                )
+                        );
+                    } catch (Exception ignored){
 
-                    txtDonGiaNhap.setText(
-                            df.format(Double.parseDouble(s))
-                    );
+                    }
                 }
             }
         });

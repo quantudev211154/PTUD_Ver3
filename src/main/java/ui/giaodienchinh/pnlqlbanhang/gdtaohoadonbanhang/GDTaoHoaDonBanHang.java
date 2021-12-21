@@ -164,7 +164,7 @@ public class GDTaoHoaDonBanHang extends JFrame implements IDSBienGDTaoHoaDonBanH
     private void dungPnlThanhCongCu(){
         pnlThanhCongCu.setBackground(mauNenPnlThanhCongCu);
         pnlThanhCongCu.setPreferredSize(dimPnlThanhCongCu);
-        pnlThanhCongCu.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 15));
+        pnlThanhCongCu.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 12));
 
         dungPnlHopTienIch();
         pnlThanhCongCu.add(pnlHopTienIch);
