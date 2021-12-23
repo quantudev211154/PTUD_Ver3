@@ -45,8 +45,7 @@ public class HoaDonNhapHangDAO {
             ps.setDouble(7, hoaDonNhapHang.getTongTien());
 
             return ps.executeUpdate() > 0;
-        } catch (Exception ex){
-            ex.printStackTrace();
+        } catch (Exception ignored){
         }
 
         return false;
@@ -88,12 +87,12 @@ public class HoaDonNhapHangDAO {
                     pState.setInt(5, maHDNHMoiNhat);
 
                     kqInsert.set(pState.executeUpdate() > 0);
-                } catch (Exception ex){
-                    ex.printStackTrace();
+                } catch (Exception ignored){
+
                 }
             });
-        } catch (Exception ex){
-            ex.printStackTrace();
+        } catch (Exception ignored){
+
         }
 
         return kqInsert.get();
@@ -115,8 +114,7 @@ public class HoaDonNhapHangDAO {
 
                 break;
             }
-        } catch (Exception ex){
-            ex.printStackTrace();
+        } catch (Exception ignored){
         }
 
         return maHDNHMoiNhat.get();
@@ -135,8 +133,7 @@ public class HoaDonNhapHangDAO {
             ps.setString(2, "%" + tuKhoa + "%");
 
             resultSet = ps.executeQuery();
-        } catch (Exception ex){
-            ex.printStackTrace();
+        } catch (Exception ignored){
         }
 
         return resultSet;
@@ -176,8 +173,7 @@ public class HoaDonNhapHangDAO {
                         dsChiTietHDNH
                 );
             }
-        } catch (Exception ex){
-            ex.printStackTrace();
+        } catch (Exception ignored){
         }
 
         return hoaDonNhapHang;
@@ -195,8 +191,7 @@ public class HoaDonNhapHangDAO {
 
             if (rs.isBeforeFirst())
                 return true;
-        } catch (Exception ex){
-            ex.printStackTrace();
+        } catch (Exception ignored){
         }
         return false;
     }
@@ -220,8 +215,7 @@ public class HoaDonNhapHangDAO {
 
                 break;
             }
-        } catch (Exception ex){
-            ex.printStackTrace();
+        } catch (Exception ignored){
         }
 
         return slspDaNhap.get();

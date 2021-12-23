@@ -636,15 +636,17 @@ public class GDTaoHoaDonNhapHang extends JFrame implements IDSBienGDTaoHoaDonNha
         txtMaLoHang.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                if (txtMaLoHang.getText().trim().isEmpty()){
-                    CacHamDungSan.hienThiThongBaoKetQua(
-                            GDThongBaoKetQua.THONG_BAO_LOI,
-                            "Mã lô hàng không được rỗng."
-                    );
-                    txtMaLoHang.requestFocus();
-                }
-                else{
-                    txtTenNguoiGiaoHang.requestFocus();
+                if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                    if (txtMaLoHang.getText().trim().isEmpty()){
+                        CacHamDungSan.hienThiThongBaoKetQua(
+                                GDThongBaoKetQua.THONG_BAO_LOI,
+                                "Mã lô hàng không được rỗng."
+                        );
+                        txtMaLoHang.requestFocus();
+                    }
+                    else{
+                        txtTenNguoiGiaoHang.requestFocus();
+                    }
                 }
             }
         });
