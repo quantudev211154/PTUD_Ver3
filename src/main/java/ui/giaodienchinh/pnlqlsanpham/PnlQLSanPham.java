@@ -624,9 +624,9 @@ public class PnlQLSanPham implements IDSBienPnlQLSanPham, ActionListener{
         });
     }
 
-    private java.util.List<JRadioButton> btnsLocTheoGia = Arrays.asList(radTatCaMucGia, radDuoi500k,
+    private static final java.util.List<JRadioButton> btnsLocTheoGia = Arrays.asList(radTatCaMucGia, radDuoi500k,
             radTu500kDen2tr, radTu2trDen5tr, radTren5tr);
-    private java.util.List<JRadioButton> btnsLocTheoTinhTrang = Arrays.asList(radMoiTinhTrang, radConHang, radHetHang);
+    private static final java.util.List<JRadioButton> btnsLocTheoTinhTrang = Arrays.asList(radMoiTinhTrang, radConHang, radHetHang);
 
     /**
      * @author Hiếu
@@ -771,5 +771,17 @@ public class PnlQLSanPham implements IDSBienPnlQLSanPham, ActionListener{
         };
 
         dtmDuLieuTraCuuDuoc.insertRow(0, o);
+    }
+
+    public static void locLaiDuLieuSauKhiThemHoacCapNhat(){
+        btnsLocTheoGia.forEach(btn -> {
+            if (btn.isSelected())
+                btn.doClick();
+        });
+
+        btnsLocTheoTinhTrang.forEach(btn -> {
+            if (btn.isSelected())
+                btn.doClick();
+        });
     }
 }

@@ -24,7 +24,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
-public class GDChinh extends JFrame implements IDSBienGDChinh {
+public class GDChinh extends JFrame implements ui.giaodienchinh.IDSBienGDChinh {
     private static NhanVien nhanVienDangSuDung;
     private static GDChinh instance = null;
 
@@ -633,6 +633,7 @@ public class GDChinh extends JFrame implements IDSBienGDChinh {
                 pnlNoiDung.removeAll();
 
                 pnlNoiDung.add(PnlQLSanPham.getPnlQLSanPham());
+                PnlQLSanPham.locLaiDuLieuSauKhiThemHoacCapNhat();
 
                 pnlNoiDung.revalidate();
                 pnlNoiDung.repaint();
